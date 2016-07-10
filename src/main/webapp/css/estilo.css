@@ -47,7 +47,17 @@ header h1{
 
 .vertical-nav .profile{
     position: fixed;
-    bottom: 0;
+    bottom: 30px;
+    left: 20px;
+}
+
+.profile .welcome-msg{
+    color: #fff;
+    font-size: 1.2em;
+}
+
+.welcome-msg span{
+    color: rgb(8,102,198);
 }
 
 .navigation{
@@ -197,7 +207,7 @@ header h1{
 /*END OF PERSONALIZED BOOTSTRAP TABLE*/
 
 .login-body{
-	background-color: lightblue;
+	background-image: url(../img/school.png);
 }
 
 .login-container{

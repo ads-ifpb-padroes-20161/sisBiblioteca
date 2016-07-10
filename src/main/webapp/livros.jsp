@@ -37,7 +37,8 @@
 		</ul>
                 
                 <div class="profile">
-                    <p>Bem Vindo, <span>Fulano!</span></p>
+                    <p class="welcome-msg">Bem vindo, <span>${sessionScope.loggedUser.getNome()}</span></p>
+                    <a class="submit-button" href="Logout">Sair</a>
                 </div>
 	</aside>
 	<div class='content-container'>

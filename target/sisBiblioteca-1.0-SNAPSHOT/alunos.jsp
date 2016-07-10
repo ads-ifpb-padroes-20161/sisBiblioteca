@@ -36,6 +36,10 @@
 			<li><a href="livros.jsp"><i class="fa fa-book" aria-hidden="true"></i> Livros</a></li>
 			<li><a href="#"><i class="fa fa-sticky-note-o" aria-hidden="true"></i> Empréstimos</a></li>
 		</ul>
+                <div class="profile">
+                    <p class="welcome-msg">Bem vindo, <span>${sessionScope.loggedUser.getNome()}</span></p>
+                    <a class="submit-button" href="Logout">Sair</a>
+                </div>
 	</aside>
 	<div class='content-container'>
 
