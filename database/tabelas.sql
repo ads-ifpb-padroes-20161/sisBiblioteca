@@ -1,0 +1,72 @@
+CREATE TABLE Endereco(
+	id SERIAL,
+	pais TEXT,
+	estado TEXT,
+	cidade TEXT,
+	bairro TEXT,
+	rua TEXT,
+	numero INT,
+	PRIMARY KEY(id)
+);
+
+CREATE TABLE PESSOA(
+	cpf VARCHAR(14) NOT NULL,
+	nome TEXT NOT NULL,
+	dataNascimento DATE NOT NULL,
+	idEndereco INT NOT NULL,
+	PRIMARY KEY(cpf),
+	FOREIGN KEY(idEndereco) REFERENCES ENDERECO(id)
+);
+
+CREATE TABLE TIPOUSUARIO(
+	id INT NOT NULL,
+	tipo TEXT,
+	PRIMARY KEY(id)
+);
+
+INSERT INTO TIPOUSUARIO VALUES(1,"BIBLIOTECÁRIO");
+
+CREATE TABLE USUARIO(
+	matricula VARCHAR(20) NOT NULL,
+	senha TEXT,
+	idTipoUsuario INT NOT NULL,
+	cpfPessoa VARCHAR(14) NOT NULL,
+	PRIMARY KEY(matricula),
+	FOREIGN KEY(cpfPessoa) REFERENCES PESSOA(cpf),
+	FOREIGN KEY(idTipoUsuario) REFERENCES TIPOUSUARIO(id)
+);
+
+CREATE TABLE ALUNO(
+	matricula TEXT NOT NULL,
+	email TEXT UNIQUE NOT NULL,
+	idEstado INT NOT NULL,
+	cpfPessoa VARCHAR(14) NOT NULL,
+	FOREIGN KEY(cpfPessoa) REFERENCES Pessoa(cpf),
+	PRIMARY KEY(matricula)
+);
+
+CREATE TABLE LIVRO(
+	isbn BIGINT NOT NULL,
+	titulo TEXT,
+	autor TEXT,
+	descricao TEXT,
+	PRIMARY KEY(isbn)
+);
+
+CREATE TABLE ESTADOITEMLIVRO(
+	id INT NOT NULL,
+	estado TEXT,
+	PRIMARY KEY(id)
+);
+
+INSERT INTO estadoitemlivro VALUES(1,'Disponível');
+INSERT INTO estadoitemlivro VALUES(2,'Indisponível');
+
+CREATE TABLE ITEMLIVRO(
+	isbnLivro BIGINT NOT NULL,
+	estoque INT DEFAULT 0,
+	idEstado INT DEFAULT 1,
+	FOREIGN KEY(isbnLivro) REFERENCES LIVRO(isbn),
+	FOREIGN KEY(idEstado) REFERENCES ESTADOITEMLIVRO(id),
+	PRIMARY KEY(isbnLivro)
+);
