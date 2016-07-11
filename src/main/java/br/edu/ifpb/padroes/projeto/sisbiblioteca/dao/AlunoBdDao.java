@@ -14,7 +14,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -72,6 +75,43 @@ public class AlunoBdDao implements Dao<Aluno, String>
     public Aluno get(String obj)
     {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    public List<Aluno> getByAttributes(Map<String, String> attributes){
+        
+        StringBuilder sql = new StringBuilder("SELECT * FROM aluno WHERE ");
+        
+        Set<String> keys = attributes.keySet();
+        Iterator<String> it = keys.iterator();
+        
+        String key;
+        while(it.hasNext()){
+            key = it.next();
+            sql.append(key);
+            sql.append(" = ");
+            sql.append("'").append(attributes.get(key)).append("'");
+            if(it.hasNext())
+                sql.append(" AND ");
+        }
+        
+        List<Aluno> alunos = new ArrayList<>();
+        
+        try{
+            PreparedStatement pstm = FactoryConnection.createConnection().prepareStatement(sql.toString());
+            
+            ResultSet rs = pstm.executeQuery();
+            
+            while(rs.next()){
+                alunos.add(formaAluno(rs));
+            }
+            
+            return alunos;
+        }
+        catch (ClassNotFoundException | SQLException ex)
+        {
+            Logger.getLogger(AlunoBdDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return alunos;
     }
 
     @Override

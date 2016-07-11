@@ -45,7 +45,7 @@
 
 
 		<!-- Aluno view -->
-		<div class='cad-container'>
+		<div class='cad-container cad-aluno-container'>
 			<div class='cad-header'>
 				<h2>Cadastro de <span>Alunos</span></h2>
 			</div>
@@ -125,7 +125,7 @@
                                         </c:if>
 			</div>
 		</div>
-		<div class='cad-container'>
+		<div class='cad-container cad-aluno-container'>
 			<div class='cad-header'>
 				<h2>Alunos cadastrados</h2>
 			</div>
