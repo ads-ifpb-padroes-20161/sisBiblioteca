@@ -5,7 +5,7 @@
  */
 package br.edu.ifpb.padroes.projeto.sisbiblioteca.dao;
 
-import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.ItemLivro;
+import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.ItemLivroPadrao;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.Livro;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.enums.EstadoLivroEnum;
 import java.sql.PreparedStatement;
@@ -20,7 +20,7 @@ import java.util.logging.Logger;
  *
  * @author kieckegard
  */
-public class ItemLivroBdDao implements Dao<ItemLivro, Long>
+public class ItemLivroBdDao implements Dao<ItemLivroPadrao, Long>
 {
     
     private Dao<Livro, Long> livroBdDao;
@@ -30,7 +30,7 @@ public class ItemLivroBdDao implements Dao<ItemLivro, Long>
     }
 
     @Override
-    public void add(ItemLivro obj)
+    public void add(ItemLivroPadrao obj)
     {   
         String sql = "INSERT INTO itemLivro VALUES(?,?,?)";
         
@@ -57,28 +57,28 @@ public class ItemLivroBdDao implements Dao<ItemLivro, Long>
     }
 
     @Override
-    public void rem(ItemLivro obj)
+    public void rem(ItemLivroPadrao obj)
     {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void update(ItemLivro obj)
+    public void update(ItemLivroPadrao obj)
     {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public ItemLivro get(Long obj)
+    public ItemLivroPadrao get(Long obj)
     {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public List<ItemLivro> list()
+    public List<ItemLivroPadrao> list()
     {
         String sql = "SELECT * FROM itemLivro";
-        List<ItemLivro> itensLivros = new ArrayList<>();
+        List<ItemLivroPadrao> itensLivros = new ArrayList<>();
         
         try
         {
@@ -99,7 +99,7 @@ public class ItemLivroBdDao implements Dao<ItemLivro, Long>
         return itensLivros;
     }
     
-    private ItemLivro formaItemLivro(ResultSet rs) throws SQLException{
+    private ItemLivroPadrao formaItemLivro(ResultSet rs) throws SQLException{
         long isbn = rs.getLong("isbnLivro");
         int estoque = rs.getInt("estoque");
         int estado = rs.getInt("idEstado");
@@ -112,7 +112,7 @@ public class ItemLivroBdDao implements Dao<ItemLivro, Long>
         
         Livro livro = livroBdDao.get(isbn);
         
-        ItemLivro item = new ItemLivro(livro, estoque, estadoEnum);
+        ItemLivroPadrao item = new ItemLivroPadrao(livro, estoque, estadoEnum);
         
         return item;
     }

@@ -7,7 +7,7 @@ package br.edu.ifpb.padroes.projeto.sisbiblioteca.model;
 
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.dao.Dao;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.dao.FactoryProvider;
-import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.ItemLivro;
+import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.ItemLivroPadrao;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.exceptions.ISBNJaExisteException;
 
 
@@ -17,7 +17,7 @@ import br.edu.ifpb.padroes.projeto.sisbiblioteca.exceptions.ISBNJaExisteExceptio
  */
 public class ItemLivroBo
 {
-    private final Dao<ItemLivro, Long> itemLivroDao;
+    private final Dao<ItemLivroPadrao, Long> itemLivroDao;
     private final LivroBo livroBo;
     
     public ItemLivroBo(){
@@ -25,16 +25,16 @@ public class ItemLivroBo
         livroBo = new LivroBo();
     }
     
-    public void cadastrarLivro(ItemLivro itemLivro) throws ISBNJaExisteException{
+    public void cadastrarLivro(ItemLivroPadrao itemLivro) throws ISBNJaExisteException{
         verificaLivro(itemLivro);
         itemLivroDao.add(itemLivro);
     }
     
-    public void removerLivro(ItemLivro itemLivro){
+    public void removerLivro(ItemLivroPadrao itemLivro){
         itemLivroDao.rem(itemLivro);
     }
     
-    public void verificaLivro(ItemLivro itemLivro) throws ISBNJaExisteException{
+    public void verificaLivro(ItemLivroPadrao itemLivro) throws ISBNJaExisteException{
         livroBo.verificaLivro(itemLivro.getItemLivro());
     }
     

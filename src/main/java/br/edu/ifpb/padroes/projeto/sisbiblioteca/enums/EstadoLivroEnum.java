@@ -5,7 +5,7 @@
  */
 package br.edu.ifpb.padroes.projeto.sisbiblioteca.enums;
 
-import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.ItemLivro;
+import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.ItemLivroPadrao;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.exceptions.LivroIndisponivelException;
 
 /**
@@ -17,7 +17,7 @@ public enum EstadoLivroEnum implements EstadoLivroIF
     DISPONIVEL{
 
         @Override
-        public EstadoLivroIF emprestar(ItemLivro livro)
+        public EstadoLivroIF emprestar(ItemLivroPadrao livro)
         {
             livro.decrementarEstoque();
             if(livro.getEstoque() == 0) return INDISPONIVEL;
@@ -25,7 +25,7 @@ public enum EstadoLivroEnum implements EstadoLivroIF
         }
 
         @Override
-        public EstadoLivroIF devolver(ItemLivro livro)
+        public EstadoLivroIF devolver(ItemLivroPadrao livro)
         {
             livro.incrementarEstoque();
             return this;
@@ -46,13 +46,13 @@ public enum EstadoLivroEnum implements EstadoLivroIF
     INDISPONIVEL{
 
         @Override
-        public EstadoLivroIF emprestar(ItemLivro livro) throws LivroIndisponivelException
+        public EstadoLivroIF emprestar(ItemLivroPadrao livro) throws LivroIndisponivelException
         {
             throw new LivroIndisponivelException("O livro encontra-se indisponível.");
         }
 
         @Override
-        public EstadoLivroIF devolver(ItemLivro livro)
+        public EstadoLivroIF devolver(ItemLivroPadrao livro)
         {
             livro.incrementarEstoque();
             return DISPONIVEL;

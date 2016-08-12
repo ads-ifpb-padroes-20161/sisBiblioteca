@@ -9,9 +9,6 @@ import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.Usuario;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.exceptions.PrimeiroLoginException;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.model.LoginBo;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.security.auth.login.LoginException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -23,8 +20,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author kieckegard
  */
-public class Login extends HttpServlet
-{
+public class Login extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,38 +31,35 @@ public class Login extends HttpServlet
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
-    {
-       String matricula = request.getParameter("matricula");
-       String senha = request.getParameter("senha");
-       
-       LoginBo bo = new LoginBo();
-       RequestDispatcher dispatcher = null;
-       
-        try
-        {
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String matricula = request.getParameter("matricula");
+        String senha = request.getParameter("senha");
+
+        LoginBo bo = new LoginBo();
+        RequestDispatcher dispatcher = null;
+
+        try {
             Usuario usuario = bo.login(matricula, senha);
             request.getSession().setAttribute("loggedUser", usuario);
             dispatcher = request.getRequestDispatcher("home.jsp");
             request.setAttribute("success", true);
         }
-        catch (PrimeiroLoginException ex)
-        {
+        catch (PrimeiroLoginException ex) {
             System.out.println(ex.getMessage());
             dispatcher = request.getRequestDispatcher("login.jsp");
             request.setAttribute("success", false);
             request.setAttribute("errorMsg", ex.getMessage());
         }
-        catch (LoginException ex)
-        {
-             System.out.println(ex.getMessage());
+        catch (LoginException ex) {
+            System.out.println(ex.getMessage());
             dispatcher = request.getRequestDispatcher("login.jsp");
             request.setAttribute("success", false);
             request.setAttribute("errorMsg", ex.getMessage());
-        } finally {
+        }
+        finally {
             dispatcher.forward(request, response);
         }
-       
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -80,8 +73,7 @@ public class Login extends HttpServlet
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException
-    {
+            throws ServletException, IOException {
         processRequest(request, response);
     }
 
@@ -95,8 +87,7 @@ public class Login extends HttpServlet
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException
-    {
+            throws ServletException, IOException {
         processRequest(request, response);
     }
 
@@ -106,8 +97,7 @@ public class Login extends HttpServlet
      * @return a String containing servlet description
      */
     @Override
-    public String getServletInfo()
-    {
+    public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
 

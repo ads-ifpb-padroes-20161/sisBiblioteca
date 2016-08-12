@@ -7,7 +7,7 @@ package br.edu.ifpb.padroes.projeto.sisbiblioteca.dao;
 
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.Aluno;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.Endereco;
-import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.ItemLivro;
+import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.ItemLivroPadrao;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.Livro;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.Pessoa;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.Usuario;
@@ -26,7 +26,7 @@ public class FactoryBdDao implements FactoryDaoIF
     }
 
     @Override
-    public Dao<ItemLivro, Long> getItemLivroDao()
+    public Dao<ItemLivroPadrao, Long> getItemLivroDao()
     {
         return new ItemLivroBdDao();
     }

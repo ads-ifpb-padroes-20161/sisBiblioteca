@@ -11,56 +11,49 @@ import java.time.LocalDate;
  *
  * @author kieckegard
  */
-public abstract class Pessoa
-{
+public abstract class Pessoa {
+
     private String cpf;
     private String nome;
     private LocalDate dataNascimento;
     private Endereco endereco;
-    
-    public Pessoa(String cpf, String nome, LocalDate dataNascimento, Endereco endereco){
-        this.cpf            = cpf;
-        this.nome           = nome;
+
+    public Pessoa(String cpf, String nome, LocalDate dataNascimento, Endereco endereco) {
+        this.cpf = cpf;
+        this.nome = nome;
         this.dataNascimento = dataNascimento;
-        this.endereco       = endereco;
+        this.endereco = endereco;
     }
-    
-    public Pessoa(String cpf, String nome, LocalDate dataNascimento){
-        this.cpf            = cpf;
-        this.nome           = nome;
+
+    public Pessoa(String cpf, String nome, LocalDate dataNascimento) {
+        this.cpf = cpf;
+        this.nome = nome;
         this.dataNascimento = dataNascimento;
     }
 
-    public String getCpf()
-    {
+    public String getCpf() {
         return cpf;
     }
 
-    public String getNome()
-    {
+    public String getNome() {
         return nome;
     }
 
-    public LocalDate getDataNascimento()
-    {
+    public LocalDate getDataNascimento() {
         return dataNascimento;
     }
 
-    public Endereco getEndereco()
-    {
+    public Endereco getEndereco() {
         return endereco;
     }
-    
-    public void setEndereco(Endereco e){
+
+    public void setEndereco(Endereco e) {
         this.endereco = e;
     }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return "Pessoa{" + "cpf=" + cpf + ", nome=" + nome + ", dataNascimento=" + dataNascimento + ", endereco=" + endereco + '}';
     }
-    
-    
-    
+
 }

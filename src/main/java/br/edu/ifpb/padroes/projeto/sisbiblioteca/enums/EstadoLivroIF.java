@@ -5,7 +5,7 @@
  */
 package br.edu.ifpb.padroes.projeto.sisbiblioteca.enums;
 
-import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.ItemLivro;
+import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.ItemLivroPadrao;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.exceptions.LivroIndisponivelException;
 
 /**
@@ -14,8 +14,8 @@ import br.edu.ifpb.padroes.projeto.sisbiblioteca.exceptions.LivroIndisponivelExc
  */
 public interface EstadoLivroIF
 {
-    public EstadoLivroIF emprestar(ItemLivro livro) throws LivroIndisponivelException;
-    public EstadoLivroIF devolver(ItemLivro livro);
+    public EstadoLivroIF emprestar(ItemLivroPadrao livro) throws LivroIndisponivelException;
+    public EstadoLivroIF devolver(ItemLivroPadrao livro);
     public int getIndex();
     public String getValue();
 }

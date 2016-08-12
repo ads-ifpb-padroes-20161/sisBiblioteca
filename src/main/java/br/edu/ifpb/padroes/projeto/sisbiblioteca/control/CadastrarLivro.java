@@ -5,15 +5,12 @@
  */
 package br.edu.ifpb.padroes.projeto.sisbiblioteca.control;
 
-import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.ItemLivro;
+import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.ItemLivroPadrao;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.Livro;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.enums.EstadoLivroEnum;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.exceptions.ISBNJaExisteException;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.model.ItemLivroBo;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -24,8 +21,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author kieckegard
  */
-public class CadastrarLivro extends HttpServlet
-{
+public class CadastrarLivro extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,29 +32,30 @@ public class CadastrarLivro extends HttpServlet
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
-    {
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
-        
+
         long isbn = Long.valueOf(request.getParameter("isbn"));
         String titulo = request.getParameter("titulo");
         String autor = request.getParameter("autor");
         String descricao = request.getParameter("descricao");
         int estoque = Integer.valueOf(request.getParameter("estoque"));
-        
-        ItemLivro item = new ItemLivro(new Livro(isbn,titulo,autor,descricao),estoque,EstadoLivroEnum.DISPONIVEL);
-        
+
+        ItemLivroPadrao item = new ItemLivroPadrao(new Livro(isbn, titulo, autor, descricao), estoque, EstadoLivroEnum.DISPONIVEL);
+
         ItemLivroBo bo = new ItemLivroBo();
-        
+
         RequestDispatcher dispatcher = request.getRequestDispatcher("livros.jsp");
-        
-        try{
+
+        try {
             bo.cadastrarLivro(item);
             request.setAttribute("success", true);
-        } catch (ISBNJaExisteException ex) {
+        }
+        catch (ISBNJaExisteException ex) {
             request.setAttribute("success", false);
-        } finally {
-           dispatcher.forward(request, response);
+        }
+        finally {
+            dispatcher.forward(request, response);
         }
     }
 
@@ -73,8 +70,7 @@ public class CadastrarLivro extends HttpServlet
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException
-    {
+            throws ServletException, IOException {
         processRequest(request, response);
     }
 
@@ -88,8 +84,7 @@ public class CadastrarLivro extends HttpServlet
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException
-    {
+            throws ServletException, IOException {
         processRequest(request, response);
     }
 
@@ -99,8 +94,7 @@ public class CadastrarLivro extends HttpServlet
      * @return a String containing servlet description
      */
     @Override
-    public String getServletInfo()
-    {
+    public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
 

@@ -7,7 +7,7 @@ package br.edu.ifpb.padroes.projeto.sisbiblioteca.model;
 
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.dao.Dao;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.dao.FactoryProvider;
-import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.ItemLivro;
+import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.ItemLivroPadrao;
 import java.util.Collections;
 import java.util.List;
 
@@ -17,13 +17,13 @@ import java.util.List;
  */
 public class QueryItemLivroBo
 {
-    private final Dao<ItemLivro, Long> itemLivroDao;
+    private final Dao<ItemLivroPadrao, Long> itemLivroDao;
     
     public QueryItemLivroBo(){
         itemLivroDao = FactoryProvider.createFactory(1).getItemLivroDao();
     }
     
-    public List<ItemLivro> listar(){
+    public List<ItemLivroPadrao> listar(){
         return Collections.unmodifiableList(itemLivroDao.list());
     }
 }

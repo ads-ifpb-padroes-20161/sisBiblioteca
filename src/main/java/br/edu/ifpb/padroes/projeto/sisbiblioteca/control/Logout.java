@@ -7,7 +7,6 @@ package br.edu.ifpb.padroes.projeto.sisbiblioteca.control;
 
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.Usuario;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -18,8 +17,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author kieckegard
  */
-public class Logout extends HttpServlet
-{
+public class Logout extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -30,10 +28,9 @@ public class Logout extends HttpServlet
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
-    {
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Usuario loggedUser = (Usuario) request.getAttribute("loggedUser");
-        if(loggedUser != null){
+        if (loggedUser != null) {
             request.getSession().invalidate();
         }
         RequestDispatcher dispatcher = request.getRequestDispatcher("login.jsp");
@@ -51,8 +48,7 @@ public class Logout extends HttpServlet
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException
-    {
+            throws ServletException, IOException {
         processRequest(request, response);
     }
 
@@ -66,8 +62,7 @@ public class Logout extends HttpServlet
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException
-    {
+            throws ServletException, IOException {
         processRequest(request, response);
     }
 
@@ -77,8 +72,7 @@ public class Logout extends HttpServlet
      * @return a String containing servlet description
      */
     @Override
-    public String getServletInfo()
-    {
+    public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
 

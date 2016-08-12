@@ -13,14 +13,14 @@ import java.time.format.DateTimeParseException;
  *
  * @author kieckegard
  */
-public class DateUtils
-{
-    public static String formatToBrazilPattern(LocalDate date){
+public class DateUtils {
+
+    public static String formatToBrazilPattern(LocalDate date) {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         return dtf.format(date);
     }
-    
-    public static LocalDate fromBrazilPattern(String date) throws DateTimeParseException{
+
+    public static LocalDate fromBrazilPattern(String date) throws DateTimeParseException {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         return LocalDate.parse(date, dtf);
     }

@@ -9,43 +9,38 @@ package br.edu.ifpb.padroes.projeto.sisbiblioteca.entities;
  *
  * @author kieckegard
  */
-public class Livro
-{
+public class Livro {
+
     private long isbn;
     private String titulo;
     private String autor;
     private String descricao;
-    
-    public Livro(long isbn, String titulo, String autor, String descricao){
-        this.isbn      = isbn;
-        this.titulo    = titulo;
-        this.autor     = autor;
+
+    public Livro(long isbn, String titulo, String autor, String descricao) {
+        this.isbn = isbn;
+        this.titulo = titulo;
+        this.autor = autor;
         this.descricao = descricao;
     }
 
-    public long getIsbn()
-    {
+    public long getIsbn() {
         return isbn;
     }
 
-    public String getTitulo()
-    {
+    public String getTitulo() {
         return titulo;
     }
 
-    public String getAutor()
-    {
+    public String getAutor() {
         return autor;
     }
 
-    public String getDescricao()
-    {
+    public String getDescricao() {
         return descricao;
     }
-    
+
     @Override
-    public String toString()
-    {
+    public String toString() {
         return "Livro{" + "isbn=" + isbn + ", titulo=" + titulo + ", autor=" + autor + ", descricao=" + descricao + '}';
     }
 }
