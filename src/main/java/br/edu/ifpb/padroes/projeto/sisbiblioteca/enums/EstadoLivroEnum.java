@@ -12,61 +12,57 @@ import br.edu.ifpb.padroes.projeto.sisbiblioteca.exceptions.LivroIndisponivelExc
  *
  * @author kieckegard
  */
-public enum EstadoLivroEnum implements EstadoLivroIF
-{
-    DISPONIVEL{
+public enum EstadoLivroEnum implements EstadoLivroIF {
 
-        @Override
-        public EstadoLivroIF emprestar(ItemLivroPadrao livro)
-        {
-            livro.decrementarEstoque();
-            if(livro.getEstoque() == 0) return INDISPONIVEL;
-            return this;
-        }
+    DISPONIVEL {
 
-        @Override
-        public EstadoLivroIF devolver(ItemLivroPadrao livro)
-        {
-            livro.incrementarEstoque();
-            return this;
-        }
-        
-        @Override
-        public int getIndex(){
-            return 1;
-        }
+                @Override
+                public EstadoLivroIF emprestar(ItemLivroPadrao livro) {
+                    livro.decrementarEstoque();
+                    if (livro.getEstoque() == 0) {
+                        return INDISPONIVEL;
+                    }
+                    return this;
+                }
 
-        @Override
-        public String getValue()
-        {
-            return this.name();
-        }
-        
-    },
-    INDISPONIVEL{
+                @Override
+                public EstadoLivroIF devolver(ItemLivroPadrao livro) {
+                    livro.incrementarEstoque();
+                    return this;
+                }
 
-        @Override
-        public EstadoLivroIF emprestar(ItemLivroPadrao livro) throws LivroIndisponivelException
-        {
-            throw new LivroIndisponivelException("O livro encontra-se indisponível.");
-        }
+                @Override
+                public int getIndex() {
+                    return 1;
+                }
 
-        @Override
-        public EstadoLivroIF devolver(ItemLivroPadrao livro)
-        {
-            livro.incrementarEstoque();
-            return DISPONIVEL;
-        }
-        
-        @Override
-        public int getIndex(){
-            return 2;
-        }
+                @Override
+                public String getValue() {
+                    return this.name();
+                }
 
-        @Override
-        public String getValue()
-        {
-            return this.name();
-        }
-    }
+            },
+    INDISPONIVEL {
+
+                @Override
+                public EstadoLivroIF emprestar(ItemLivroPadrao livro) throws LivroIndisponivelException {
+                    throw new LivroIndisponivelException("O livro encontra-se indisponível.");
+                }
+
+                @Override
+                public EstadoLivroIF devolver(ItemLivroPadrao livro) {
+                    livro.incrementarEstoque();
+                    return DISPONIVEL;
+                }
+
+                @Override
+                public int getIndex() {
+                    return 2;
+                }
+
+                @Override
+                public String getValue() {
+                    return this.name();
+                }
+            }
 }

@@ -12,18 +12,21 @@ import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.Livro;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.Pessoa;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.Usuario;
 
-
 /**
  *
  * @author kieckegard
  */
-public interface FactoryDaoIF
-{
-    
+public interface FactoryDaoIF {
+
     Dao<Usuario, String> getUsuarioDao();
+
     Dao<Aluno, String> getAlunoDao();
+
     Dao<Endereco, Pessoa> getEnderecoDao();
+
     Dao<ItemLivroPadrao, Long> getItemLivroDao();
+
     Dao<Livro, Long> getLivroDao();
+
     SimpleDao<Pessoa, String> getPessoaDao();
 }

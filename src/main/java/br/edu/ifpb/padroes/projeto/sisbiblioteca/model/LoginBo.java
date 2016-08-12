@@ -15,24 +15,27 @@ import javax.security.auth.login.LoginException;
  *
  * @author kieckegard
  */
-public class LoginBo
-{
+public class LoginBo {
+
     private final Dao<Usuario, String> usuarioDao;
-    
-    public LoginBo(){
+
+    public LoginBo() {
         usuarioDao = FactoryProvider.createFactory(FactoryProvider.jdbc).getUsuarioDao();
     }
-    
-    private void verifyFirstLogin() throws PrimeiroLoginException{
-        if(usuarioDao.list().isEmpty())
-            throw new PrimeiroLoginException("Ainda não possui contas de usuário no Sistema.");       
+
+    private void verifyFirstLogin() throws PrimeiroLoginException {
+        if (usuarioDao.list().isEmpty()) {
+            throw new PrimeiroLoginException("Ainda não possui contas de usuário no Sistema.");
+        }
     }
-    
-    public Usuario login(String matricula, String senha) throws PrimeiroLoginException, LoginException{
+
+    public Usuario login(String matricula, String senha) throws PrimeiroLoginException, LoginException {
         verifyFirstLogin();
-        for(Usuario u : usuarioDao.list())
-            if(u.getMatricula().equals(matricula) && u.getSenha().equals(senha))
+        for (Usuario u : usuarioDao.list()) {
+            if (u.getMatricula().equals(matricula) && u.getSenha().equals(senha)) {
                 return u;
+            }
+        }
         throw new LoginException("Usuário e(ou) Senha inválido(os)!");
     }
 }

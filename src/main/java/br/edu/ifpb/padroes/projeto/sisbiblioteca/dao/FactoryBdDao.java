@@ -16,43 +16,36 @@ import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.Usuario;
  *
  * @author kieckegard
  */
-public class FactoryBdDao implements FactoryDaoIF
-{
+public class FactoryBdDao implements FactoryDaoIF {
 
     @Override
-    public Dao<Aluno, String> getAlunoDao()
-    {
+    public Dao<Aluno, String> getAlunoDao() {
         return new AlunoBdDao();
     }
 
     @Override
-    public Dao<ItemLivroPadrao, Long> getItemLivroDao()
-    {
+    public Dao<ItemLivroPadrao, Long> getItemLivroDao() {
         return new ItemLivroBdDao();
     }
 
     @Override
-    public Dao<Livro, Long> getLivroDao()
-    {
+    public Dao<Livro, Long> getLivroDao() {
         return new LivroBdDao();
     }
 
     @Override
-    public SimpleDao<Pessoa, String> getPessoaDao()
-    {
+    public SimpleDao<Pessoa, String> getPessoaDao() {
         return new PessoaBdDao();
     }
 
     @Override
-    public Dao<Usuario, String> getUsuarioDao()
-    {
+    public Dao<Usuario, String> getUsuarioDao() {
         return new UsuarioBdDao();
     }
 
     @Override
-    public Dao<Endereco, Pessoa> getEnderecoDao()
-    {
+    public Dao<Endereco, Pessoa> getEnderecoDao() {
         return new EnderecoBdDao();
     }
-    
+
 }

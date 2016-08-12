@@ -22,103 +22,93 @@ import java.util.logging.Logger;
  *
  * @author kieckegard
  */
-public class UsuarioBdDao implements Dao<Usuario, String>
-{
+public class UsuarioBdDao implements Dao<Usuario, String> {
 
     private Dao<Endereco, Pessoa> enderecoDao;
     private SimpleDao<Pessoa, String> pessoaDao;
-    
-    public UsuarioBdDao(){
+
+    public UsuarioBdDao() {
         enderecoDao = FactoryProvider.createFactory(1).getEnderecoDao();
         pessoaDao = FactoryProvider.createFactory(1).getPessoaDao();
     }
-    
+
     @Override
-    public void add(Usuario obj)
-    {
+    public void add(Usuario obj) {
         String sql = "INSERT INTO usuario VALUES(?,?,?,?)";
         pessoaDao.add(obj);
-        try
-        {
+        try {
             PreparedStatement pstm = FactoryConnection.createConnection().prepareStatement(sql);
-            
+
             int i = 1;
-            
+
             pstm.setString(i++, obj.getMatricula());
             pstm.setString(i++, obj.getSenha());
             pstm.setInt(i++, obj.getTipoUsuario().getValue());
             pstm.setString(i++, obj.getCpf());
-            
+
             pstm.executeUpdate();
         }
-        catch (ClassNotFoundException | SQLException ex)
-        {
+        catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(UsuarioBdDao.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     @Override
-    public void rem(Usuario obj)
-    {
+    public void rem(Usuario obj) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void update(Usuario obj)
-    {
+    public void update(Usuario obj) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Usuario get(String obj)
-    {
+    public Usuario get(String obj) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public List<Usuario> list()
-    {
+    public List<Usuario> list() {
         String sql = "SELECT * FROM usuario u JOIN Pessoa p ON u.cpfPessoa = p.cpf";
         List<Usuario> usuarios = new ArrayList<>();
-        
-        try
-        {
+
+        try {
             PreparedStatement pstm = FactoryConnection.createConnection().prepareStatement(sql);
-            
+
             ResultSet rs = pstm.executeQuery();
-            
-            while(rs.next())
+
+            while (rs.next()) {
                 usuarios.add(formaUsuario(rs));
-            
+            }
+
             return usuarios;
         }
-        catch (ClassNotFoundException | SQLException ex)
-        {
+        catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(UsuarioBdDao.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        return usuarios; 
+
+        return usuarios;
     }
-    
-    private Usuario formaUsuario(ResultSet rs) throws SQLException{
+
+    private Usuario formaUsuario(ResultSet rs) throws SQLException {
         //Usuário
         String matricula = rs.getString("matricula");
         String senha = rs.getString("senha");
         TipoUsuario tipoUsuario = TipoUsuario.getEnum(rs.getInt("idTipoUsuario"));
-        
+
         //Pessoa
         String cpf = rs.getString("cpf");
         String nome = rs.getString("nome");
         LocalDate dataNascimento = rs.getDate("dataNascimento").toLocalDate();
-        
-        
-        Usuario usuario = new Usuario(cpf,nome,dataNascimento,matricula,senha,tipoUsuario);
-        
+
+        Usuario usuario = new Usuario(cpf, nome, dataNascimento, matricula, senha, tipoUsuario);
+
         Endereco endereco = enderecoDao.get(usuario);
-        
+
         usuario.setEndereco(endereco);
-        
+
         return usuario;
     }
-    
+
 }

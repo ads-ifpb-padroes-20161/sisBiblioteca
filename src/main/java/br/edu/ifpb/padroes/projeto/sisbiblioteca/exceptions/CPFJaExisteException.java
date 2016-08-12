@@ -9,9 +9,9 @@ package br.edu.ifpb.padroes.projeto.sisbiblioteca.exceptions;
  *
  * @author kieckegard
  */
-public class CPFJaExisteException extends Exception
-{
-    public CPFJaExisteException(String msg){
+public class CPFJaExisteException extends Exception {
+
+    public CPFJaExisteException(String msg) {
         super(msg);
     }
 }

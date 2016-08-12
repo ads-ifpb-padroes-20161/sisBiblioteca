@@ -12,10 +12,13 @@ import br.edu.ifpb.padroes.projeto.sisbiblioteca.exceptions.LivroIndisponivelExc
  *
  * @author kieckegard
  */
-public interface EstadoLivroIF
-{
+public interface EstadoLivroIF {
+
     public EstadoLivroIF emprestar(ItemLivroPadrao livro) throws LivroIndisponivelException;
+
     public EstadoLivroIF devolver(ItemLivroPadrao livro);
+
     public int getIndex();
+
     public String getValue();
 }

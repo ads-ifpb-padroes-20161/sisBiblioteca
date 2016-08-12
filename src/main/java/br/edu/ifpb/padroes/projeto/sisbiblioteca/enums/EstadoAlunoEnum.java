@@ -9,24 +9,25 @@ package br.edu.ifpb.padroes.projeto.sisbiblioteca.enums;
  *
  * @author kieckegard
  */
-public enum EstadoAlunoEnum
-{
-    REGULAR(1),BLOQUEADO(2);
-    
+public enum EstadoAlunoEnum {
+
+    REGULAR(1), BLOQUEADO(2);
+
     int tipo;
-    
-    EstadoAlunoEnum(int tipo){
+
+    EstadoAlunoEnum(int tipo) {
         this.tipo = tipo;
     }
-    
-    public int getIndex(){
+
+    public int getIndex() {
         return this.tipo;
     }
-    
-    public static EstadoAlunoEnum get(int tipo){
-        for(EstadoAlunoEnum estado : EstadoAlunoEnum.values()){
-            if(estado.getIndex() == tipo)
+
+    public static EstadoAlunoEnum get(int tipo) {
+        for (EstadoAlunoEnum estado : EstadoAlunoEnum.values()) {
+            if (estado.getIndex() == tipo) {
                 return estado;
+            }
         }
         return null;
     }

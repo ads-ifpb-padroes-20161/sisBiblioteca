@@ -9,9 +9,9 @@ package br.edu.ifpb.padroes.projeto.sisbiblioteca.exceptions;
  *
  * @author kieckegard
  */
-public class LivroIndisponivelException extends Exception
-{
-    public LivroIndisponivelException(String msg){
+public class LivroIndisponivelException extends Exception {
+
+    public LivroIndisponivelException(String msg) {
         super(msg);
     }
 }

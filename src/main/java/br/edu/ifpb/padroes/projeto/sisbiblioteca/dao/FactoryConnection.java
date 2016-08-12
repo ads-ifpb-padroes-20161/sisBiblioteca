@@ -13,18 +13,18 @@ import java.sql.SQLException;
  *
  * @author kieckegard
  */
-public class FactoryConnection
-{
-     private static final String url = "jdbc:postgresql://localhost:5432/sisBiblioteca";
+public class FactoryConnection {
+
+    private static final String url = "jdbc:postgresql://localhost:5432/sisBiblioteca";
     private static final String user = "postgres";
     private static final String pass = "123456";
     private static Connection conn;
     private static final String driver = "org.postgresql.Driver";
-    
-    public static Connection createConnection() throws ClassNotFoundException, SQLException{
-        if(conn == null){
+
+    public static Connection createConnection() throws ClassNotFoundException, SQLException {
+        if (conn == null) {
             Class.forName(driver);
-            conn = DriverManager.getConnection(url,user,pass);
+            conn = DriverManager.getConnection(url, user, pass);
         }
         return conn;
     }

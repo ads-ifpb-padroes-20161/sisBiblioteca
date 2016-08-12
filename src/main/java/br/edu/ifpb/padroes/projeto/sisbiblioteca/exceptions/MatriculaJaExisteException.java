@@ -9,9 +9,9 @@ package br.edu.ifpb.padroes.projeto.sisbiblioteca.exceptions;
  *
  * @author kieckegard
  */
-public class MatriculaJaExisteException extends Exception
-{
-    public MatriculaJaExisteException(String msg){
+public class MatriculaJaExisteException extends Exception {
+
+    public MatriculaJaExisteException(String msg) {
         super(msg);
     }
 }

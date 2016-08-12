@@ -9,9 +9,11 @@ package br.edu.ifpb.padroes.projeto.sisbiblioteca.dao;
  *
  * @author kieckegard
  */
-public interface SimpleDao<T,I>
-{
+public interface SimpleDao<T, I> {
+
     void add(T obj);
+
     void rem(T obj);
+
     void update(T obj);
 }

@@ -15,15 +15,15 @@ import java.util.List;
  *
  * @author kieckegard
  */
-public class QueryItemLivroBo
-{
+public class QueryItemLivroBo {
+
     private final Dao<ItemLivroPadrao, Long> itemLivroDao;
-    
-    public QueryItemLivroBo(){
+
+    public QueryItemLivroBo() {
         itemLivroDao = FactoryProvider.createFactory(1).getItemLivroDao();
     }
-    
-    public List<ItemLivroPadrao> listar(){
+
+    public List<ItemLivroPadrao> listar() {
         return Collections.unmodifiableList(itemLivroDao.list());
     }
 }

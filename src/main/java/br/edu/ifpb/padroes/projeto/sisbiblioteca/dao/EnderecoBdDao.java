@@ -19,115 +19,105 @@ import java.util.logging.Logger;
  *
  * @author kieckegard
  */
-public class EnderecoBdDao implements Dao<Endereco, Pessoa>
-{
+public class EnderecoBdDao implements Dao<Endereco, Pessoa> {
+
     private PreparedStatement pstm;
-    
-    public EnderecoBdDao(){
+
+    public EnderecoBdDao() {
     }
 
     @Override
-    public void add(Endereco e)
-    {
+    public void add(Endereco e) {
         String sql = "INSERT INTO endereco(pais,cidade,estado,bairro,rua,numero) VALUES(?,?,?,?,?,?) RETURNING id";
-        
-        try
-        {
+
+        try {
             pstm = FactoryConnection.createConnection().prepareStatement(sql);
-            
-            int i=1;
+
+            int i = 1;
             pstm.setString(i++, e.getPais());
             pstm.setString(i++, e.getEstado());
             pstm.setString(i++, e.getCidade());
             pstm.setString(i++, e.getBairro());
             pstm.setString(i++, e.getRua());
             pstm.setInt(i++, e.getNumero());
-            
+
             ResultSet rs = pstm.executeQuery();
-            
-            if(rs.next())
+
+            if (rs.next()) {
                 e.setId(rs.getInt("id"));
-                
+            }
+
         }
-        catch (ClassNotFoundException | SQLException ex)
-        {
+        catch (ClassNotFoundException | SQLException ex) {
             ex.printStackTrace();
         }
     }
 
     @Override
-    public void rem(Endereco e)
-    {
+    public void rem(Endereco e) {
         String sql = "DELETE FROM endereco WHERE id = ?";
-        
-        try
-        {
+
+        try {
             pstm = FactoryConnection.createConnection().prepareStatement(sql);
-            
+
             pstm.setInt(1, e.getId());
-            
+
             pstm.executeUpdate();
         }
-        catch (ClassNotFoundException | SQLException ex)
-        {
+        catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(EnderecoBdDao.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     @Override
-    public Endereco get(Pessoa p)
-    {
+    public Endereco get(Pessoa p) {
         String sql = "SELECT * FROM Endereco e JOIN Pessoa p ON e.id = p.idEndereco WHERE p.cpf = ?";
-        
-        try
-        {
+
+        try {
             pstm = FactoryConnection.createConnection().prepareStatement(sql);
-            
+
             pstm.setString(1, p.getCpf());
-            
+
             ResultSet rs = pstm.executeQuery();
-            
+
             Endereco endereco = null;
-            
-            if(rs.next()){
+
+            if (rs.next()) {
                 endereco = formaEndereco(rs);
             }
-            
+
             return endereco;
         }
-        catch (ClassNotFoundException | SQLException ex)
-        {
+        catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(EnderecoBdDao.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         return null;
     }
-    
-    private Endereco formaEndereco(ResultSet rs) throws SQLException{
-        int id        = rs.getInt("id");
-        String pais   = rs.getString("pais");
+
+    private Endereco formaEndereco(ResultSet rs) throws SQLException {
+        int id = rs.getInt("id");
+        String pais = rs.getString("pais");
         String estado = rs.getString("estado");
         String cidade = rs.getString("cidade");
         String bairro = rs.getString("bairro");
-        String rua    = rs.getString("rua");
-        int numero    = rs.getInt("numero");
-        
-        Endereco endereco = new Endereco(pais,estado,cidade,bairro,rua,numero);
+        String rua = rs.getString("rua");
+        int numero = rs.getInt("numero");
+
+        Endereco endereco = new Endereco(pais, estado, cidade, bairro, rua, numero);
         endereco.setId(id);
-        
+
         return endereco;
     }
 
     @Override
-    public void update(Endereco obj)
-    {
+    public void update(Endereco obj) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public List<Endereco> list()
-    {
+    public List<Endereco> list() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
 }

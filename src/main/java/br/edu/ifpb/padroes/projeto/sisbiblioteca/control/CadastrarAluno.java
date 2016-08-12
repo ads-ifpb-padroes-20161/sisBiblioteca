@@ -25,8 +25,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author kieckegard
  */
-public class CadastrarAluno extends HttpServlet
-{
+public class CadastrarAluno extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,20 +36,19 @@ public class CadastrarAluno extends HttpServlet
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
-    {
-        
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
         request.setCharacterEncoding("UTF-8");
-        
+
         //Pessoa
         String cpf = request.getParameter("cpf");
         String nome = request.getParameter("nome");
         LocalDate dataNascimento = DateUtils.fromBrazilPattern(request.getParameter("dataNascimento"));
-        
+
         //Aluno
         String matricula = request.getParameter("matricula");
         String email = request.getParameter("email");
-        
+
         //Endereço
         String pais = request.getParameter("pais");
         String estado = request.getParameter("estado");
@@ -58,30 +56,28 @@ public class CadastrarAluno extends HttpServlet
         String bairro = request.getParameter("bairro");
         String rua = request.getParameter("rua");
         int numero = Integer.valueOf(request.getParameter("numero"));
-        Endereco endereco = new Endereco(pais,estado,cidade,bairro,rua,numero);
-        
-        Aluno aluno = new Aluno(cpf,nome,dataNascimento,endereco,matricula,email);
-        
+        Endereco endereco = new Endereco(pais, estado, cidade, bairro, rua, numero);
+
+        Aluno aluno = new Aluno(cpf, nome, dataNascimento, endereco, matricula, email);
+
         AlunoBo bo = new AlunoBo();
-        
+
         RequestDispatcher dispatcher = request.getRequestDispatcher("alunos.jsp");
-        
-        try
-        {
+
+        try {
             bo.cadastrarAluno(aluno);
-            
+
             request.setAttribute("success", true);
         }
-        catch (InvalidStateException ex)
-        {
+        catch (InvalidStateException ex) {
             request.setAttribute("success", false);
             request.setAttribute("errorMsg", "O CPF digitado é inválido!");
         }
-        catch (CPFJaExisteException | MatriculaJaExisteException | EmailJaExisteException ex)
-        {
+        catch (CPFJaExisteException | MatriculaJaExisteException | EmailJaExisteException ex) {
             request.setAttribute("success", false);
             request.setAttribute("errorMsg", ex.getMessage());
-        } finally {
+        }
+        finally {
             dispatcher.forward(request, response);
         }
     }
@@ -97,8 +93,7 @@ public class CadastrarAluno extends HttpServlet
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException
-    {
+            throws ServletException, IOException {
         processRequest(request, response);
     }
 
@@ -112,8 +107,7 @@ public class CadastrarAluno extends HttpServlet
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException
-    {
+            throws ServletException, IOException {
         processRequest(request, response);
     }
 
@@ -123,8 +117,7 @@ public class CadastrarAluno extends HttpServlet
      * @return a String containing servlet description
      */
     @Override
-    public String getServletInfo()
-    {
+    public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
 

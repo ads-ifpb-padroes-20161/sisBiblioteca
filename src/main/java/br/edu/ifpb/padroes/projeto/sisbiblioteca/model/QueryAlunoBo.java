@@ -15,15 +15,15 @@ import java.util.List;
  *
  * @author kieckegard
  */
-public class QueryAlunoBo
-{
+public class QueryAlunoBo {
+
     private final Dao<Aluno, String> alunoDao;
-    
-    public QueryAlunoBo(){
+
+    public QueryAlunoBo() {
         alunoDao = FactoryProvider.createFactory(1).getAlunoDao();
     }
-    
-    public List<Aluno> listar(){
+
+    public List<Aluno> listar() {
         return Collections.unmodifiableList(alunoDao.list());
     }
 }

@@ -9,9 +9,9 @@ package br.edu.ifpb.padroes.projeto.sisbiblioteca.exceptions;
  *
  * @author kieckegard
  */
-public class PrimeiroLoginException extends Exception
-{
-    public PrimeiroLoginException(String msg){
+public class PrimeiroLoginException extends Exception {
+
+    public PrimeiroLoginException(String msg) {
         super(msg);
     }
 }

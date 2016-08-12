@@ -9,23 +9,26 @@ package br.edu.ifpb.padroes.projeto.sisbiblioteca.enums;
  *
  * @author kieckegard
  */
-public enum TipoUsuario
-{
+public enum TipoUsuario {
+
     BIBLIOTECARIO(1);
-    
+
     int tipo;
-    
-    TipoUsuario(int tipo){
+
+    TipoUsuario(int tipo) {
         this.tipo = tipo;
     }
-    
-    public int getValue(){
+
+    public int getValue() {
         return this.tipo;
     }
-    
-    public static TipoUsuario getEnum(int tipo){
-       for(TipoUsuario tipoUsuario : TipoUsuario.values())
-           if(tipoUsuario.getValue() == tipo) return tipoUsuario;
-       return null;
+
+    public static TipoUsuario getEnum(int tipo) {
+        for (TipoUsuario tipoUsuario : TipoUsuario.values()) {
+            if (tipoUsuario.getValue() == tipo) {
+                return tipoUsuario;
+            }
+        }
+        return null;
     }
 }

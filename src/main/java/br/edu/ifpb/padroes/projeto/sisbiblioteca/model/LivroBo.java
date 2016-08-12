@@ -14,21 +14,23 @@ import br.edu.ifpb.padroes.projeto.sisbiblioteca.exceptions.ISBNJaExisteExceptio
  *
  * @author kieckegard
  */
-public class LivroBo
-{
+public class LivroBo {
+
     private Dao<Livro, Long> livroDao;
-    
-    public LivroBo(){
+
+    public LivroBo() {
         livroDao = FactoryProvider.createFactory(1).getLivroDao();
     }
-    
-    public void verificaLivro(Livro livro) throws ISBNJaExisteException{
+
+    public void verificaLivro(Livro livro) throws ISBNJaExisteException {
         verificaIsbn(livro.getIsbn());
     }
-    
-    public void verificaIsbn(long isbn) throws ISBNJaExisteException{
-        for(Livro l : livroDao.list())
-            if(l.getIsbn() == isbn)
+
+    public void verificaIsbn(long isbn) throws ISBNJaExisteException {
+        for (Livro l : livroDao.list()) {
+            if (l.getIsbn() == isbn) {
                 throw new ISBNJaExisteException("Já existe um livro salvo no banco com esse mesmo ISBN!");
+            }
+        }
     }
 }

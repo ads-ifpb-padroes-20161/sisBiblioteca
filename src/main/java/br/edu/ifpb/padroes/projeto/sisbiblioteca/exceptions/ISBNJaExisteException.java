@@ -9,9 +9,9 @@ package br.edu.ifpb.padroes.projeto.sisbiblioteca.exceptions;
  *
  * @author kieckegard
  */
-public class ISBNJaExisteException extends Exception
-{
-    public ISBNJaExisteException(String msg){
+public class ISBNJaExisteException extends Exception {
+
+    public ISBNJaExisteException(String msg) {
         super(msg);
     }
 }

@@ -9,13 +9,14 @@ package br.edu.ifpb.padroes.projeto.sisbiblioteca.dao;
  *
  * @author kieckegard
  */
-public class FactoryProvider
-{
+public class FactoryProvider {
+
     public static final int jdbc = 1;
-    
-    public static FactoryDaoIF createFactory(int tipo){
-        if(tipo == jdbc)
+
+    public static FactoryDaoIF createFactory(int tipo) {
+        if (tipo == jdbc) {
             return new FactoryBdDao();
+        }
         return null;
     }
 }

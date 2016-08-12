@@ -9,9 +9,9 @@ package br.edu.ifpb.padroes.projeto.sisbiblioteca.exceptions;
  *
  * @author kieckegard
  */
-public class EmailJaExisteException extends Exception
-{
-    public EmailJaExisteException(String msg){
+public class EmailJaExisteException extends Exception {
+
+    public EmailJaExisteException(String msg) {
         super(msg);
     }
 }
