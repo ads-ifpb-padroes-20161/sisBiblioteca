@@ -11,25 +11,30 @@ import br.edu.ifpb.padroes.projeto.sisbiblioteca.exceptions.LivroIndisponivelExc
  *
  * @author kieckegard
  */
-public class ItemLivroNulo implements ItemLivro {
+public class LivroNulo implements Livro{
 
     @Override
-    public Livro getLivro() {
+    public long getIsbn() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Integer getEstoque() {
+    public String getTitulo() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public String getEstadoDescription() {
+    public String getAutor() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Integer getEstadoValue() {
+    public String getDescricao() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public int getEstoque() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -42,5 +47,5 @@ public class ItemLivroNulo implements ItemLivro {
     public void devolver() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
+    
 }

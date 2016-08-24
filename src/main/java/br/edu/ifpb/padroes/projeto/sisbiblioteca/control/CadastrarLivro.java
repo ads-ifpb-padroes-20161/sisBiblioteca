@@ -5,11 +5,10 @@
  */
 package br.edu.ifpb.padroes.projeto.sisbiblioteca.control;
 
-import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.ItemLivroPadrao;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.Livro;
-import br.edu.ifpb.padroes.projeto.sisbiblioteca.enums.EstadoLivroEnum;
+import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.LivroPadrao;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.exceptions.ISBNJaExisteException;
-import br.edu.ifpb.padroes.projeto.sisbiblioteca.model.ItemLivroBo;
+import br.edu.ifpb.padroes.projeto.sisbiblioteca.model.LivroBo;
 import java.io.IOException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -41,14 +40,14 @@ public class CadastrarLivro extends HttpServlet {
         String descricao = request.getParameter("descricao");
         int estoque = Integer.valueOf(request.getParameter("estoque"));
 
-        ItemLivroPadrao item = new ItemLivroPadrao(new Livro(isbn, titulo, autor, descricao), estoque, EstadoLivroEnum.DISPONIVEL);
+        LivroPadrao livro = new LivroPadrao(isbn,titulo,autor,descricao,estoque);
 
-        ItemLivroBo bo = new ItemLivroBo();
+        LivroBo bo = new LivroBo();
 
         RequestDispatcher dispatcher = request.getRequestDispatcher("livros.jsp");
 
         try {
-            bo.cadastrarLivro(item);
+            bo.cadastraLivro(livro);
             request.setAttribute("success", true);
         }
         catch (ISBNJaExisteException ex) {

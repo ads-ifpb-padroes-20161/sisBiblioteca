@@ -5,7 +5,7 @@
  */
 package br.edu.ifpb.padroes.projeto.sisbiblioteca.dao;
 
-import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.Livro;
+import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.LivroPadrao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -18,11 +18,11 @@ import java.util.logging.Logger;
  *
  * @author kieckegard
  */
-public class LivroBdDao implements Dao<Livro, Long> {
+public class LivroBdDao implements Dao<LivroPadrao, Long> {
 
     @Override
-    public void add(Livro obj) {
-        String sql = "INSERT INTO livro VALUES(?,?,?,?)";
+    public void add(LivroPadrao obj) {
+        String sql = "INSERT INTO livro VALUES(?,?,?,?,?)";
 
         try {
             PreparedStatement pstm = FactoryConnection.createConnection().prepareStatement(sql);
@@ -33,6 +33,7 @@ public class LivroBdDao implements Dao<Livro, Long> {
             pstm.setString(i++, obj.getTitulo());
             pstm.setString(i++, obj.getAutor());
             pstm.setString(i++, obj.getDescricao());
+            pstm.setInt(i++, obj.getEstoque());
 
             pstm.executeUpdate();
         }
@@ -42,17 +43,17 @@ public class LivroBdDao implements Dao<Livro, Long> {
     }
 
     @Override
-    public void rem(Livro obj) {
+    public void rem(LivroPadrao obj) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void update(Livro obj) {
+    public void update(LivroPadrao obj) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Livro get(Long obj) {
+    public LivroPadrao get(Long obj) {
         String sql = "SELECT * FROM livro WHERE isbn = ?";
         try {
             PreparedStatement pstm = FactoryConnection.createConnection().prepareStatement(sql);
@@ -70,9 +71,9 @@ public class LivroBdDao implements Dao<Livro, Long> {
     }
 
     @Override
-    public List<Livro> list() {
+    public List<LivroPadrao> list() {
         String sql = "SELECT * FROM livro";
-        List<Livro> livros = new ArrayList<>();
+        List<LivroPadrao> livros = new ArrayList<>();
         try {
             PreparedStatement pstm = FactoryConnection.createConnection().prepareStatement(sql);
 
@@ -90,13 +91,14 @@ public class LivroBdDao implements Dao<Livro, Long> {
         return livros;
     }
 
-    private Livro formaLivro(ResultSet rs) throws SQLException {
+    private LivroPadrao formaLivro(ResultSet rs) throws SQLException {
         long isbn = rs.getLong("isbn");
         String titulo = rs.getString("titulo");
         String autor = rs.getString("autor");
         String descricao = rs.getString("descricao");
+        int estoque = rs.getInt("estoque");
 
-        Livro l = new Livro(isbn, titulo, autor, descricao);
+        LivroPadrao l = new LivroPadrao(isbn, titulo, autor, descricao, estoque);
 
         return l;
     }
