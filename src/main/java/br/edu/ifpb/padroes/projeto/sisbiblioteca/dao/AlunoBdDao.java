@@ -46,7 +46,7 @@ public class AlunoBdDao implements Dao<Aluno, String> {
 
             pstm.setString(i++, obj.getMatricula());
             pstm.setString(i++, obj.getEmail());
-            pstm.setInt(i++, obj.getEstado().getIndex());
+            pstm.setInt(i++, obj.getValorEstado());
             pstm.setString(i++, obj.getCpf());
 
             pstm.executeUpdate();
@@ -135,16 +135,20 @@ public class AlunoBdDao implements Dao<Aluno, String> {
         String email = rs.getString("email");
         String matricula = rs.getString("matricula");
         int estado = rs.getInt("idEstado");
-        EstadoAlunoEnum estadoAluno = EstadoAlunoEnum.get(estado);
+        EstadoAlunoEnum estadoAlunoEnum = EstadoAlunoEnum.values()[estado-1];
+        
         //pessoa
         String cpf = rs.getString("cpf");
         String nome = rs.getString("nome");
         LocalDate dataNascimento = rs.getDate("dataNascimento").toLocalDate();
+        
         //endereco
         Aluno aluno = new Aluno(cpf, nome, dataNascimento, matricula, email);
         Endereco endereco = enderecoBdDao.get(aluno);
+        
+        //Sets
         aluno.setEndereco(endereco);
-        aluno.setEstado(estadoAluno);
+        aluno.setEstado(estadoAlunoEnum);
         return aluno;
     }
 

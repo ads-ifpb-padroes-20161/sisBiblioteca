@@ -5,6 +5,8 @@
  */
 package br.edu.ifpb.padroes.projeto.sisbiblioteca.entities;
 
+import br.edu.ifpb.padroes.projeto.sisbiblioteca.exceptions.AlunoInabilitadoException;
+import br.edu.ifpb.padroes.projeto.sisbiblioteca.exceptions.EmprestimoAtrasadoException;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.exceptions.LivroIndisponivelException;
 import java.time.LocalDate;
 
@@ -14,30 +16,33 @@ import java.time.LocalDate;
  */
 public class Emprestimo {
     
-    private int id;
+    private Integer id;
     private Aluno aluno;
-    private LivroPadrao livro;
+    private Livro livro;
     private LocalDate startDate;
     private LocalDate endDate;
     private EmprestimoEstadoIF estado;
     
-    public Emprestimo(int id, Aluno aluno, LivroPadrao livro, LocalDate startDate, EmprestimoEstadoIF estado) {
-        this.id = id;
+    public Emprestimo(Aluno aluno, Livro livro, LocalDate startDate, EmprestimoEstadoIF estado) {
         this.aluno = aluno;
         this.livro = livro;
         this.startDate = startDate;
         this.estado = estado;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
+    }
+    
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public Aluno getAluno() {
         return aluno;
     }
 
-    public LivroPadrao getLivro() {
+    public Livro getLivro() {
         return livro;
     }
 
@@ -49,13 +54,23 @@ public class Emprestimo {
         return endDate;
     }
     
-    public void processarEmprestimo() throws LivroIndisponivelException {
+    public void processarEmprestimo() throws LivroIndisponivelException, AlunoInabilitadoException {
         this.estado = estado.processarEmprestimo();
         this.livro.emprestar();
+        this.aluno.realizarEmprestimo();
     }
     
-    public void finalizarEmprestimo() {
+    public void finalizarEmprestimo() throws EmprestimoAtrasadoException {
         this.estado = estado.finalizarEmprestimo();
         this.livro.devolver();
+        verificarAtraso();
+        this.aluno.finalizarEmprestimo();
+    }
+    
+    private void verificarAtraso() throws EmprestimoAtrasadoException {
+        LocalDate now = LocalDate.now();
+        if(now.isAfter(endDate))
+            throw new EmprestimoAtrasadoException("O Empréstimo encontra-se atrasado!"
+                    + " O Aluno vai recorrer a um bloqueio de 3 dias!");
     }
 }

@@ -5,30 +5,57 @@
  */
 package br.edu.ifpb.padroes.projeto.sisbiblioteca.enums;
 
+import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.EstadoAlunoIF;
+import br.edu.ifpb.padroes.projeto.sisbiblioteca.exceptions.AlunoInabilitadoException;
+
 /**
  *
  * @author kieckegard
  */
-public enum EstadoAlunoEnum {
+public enum EstadoAlunoEnum implements EstadoAlunoIF {
 
-    REGULAR(1), BLOQUEADO(2);
+    HABILITADO{
 
-    int tipo;
-
-    EstadoAlunoEnum(int tipo) {
-        this.tipo = tipo;
-    }
-
-    public int getIndex() {
-        return this.tipo;
-    }
-
-    public static EstadoAlunoEnum get(int tipo) {
-        for (EstadoAlunoEnum estado : EstadoAlunoEnum.values()) {
-            if (estado.getIndex() == tipo) {
-                return estado;
-            }
+        @Override
+        public EstadoAlunoIF realizarEmprestimo() {
+            return INABILITADO;
         }
-        return null;
+
+        @Override
+        public EstadoAlunoIF finalizarEmprestimo() {
+            return HABILITADO;
+        }      
+
+        @Override
+        public String getDescricao() {
+            return "Habilitado";
+        }
+
+        @Override
+        public Integer getValue() {
+            return 1;
+        }
+    }, 
+    INABILITADO{
+
+        @Override
+        public EstadoAlunoIF realizarEmprestimo() throws AlunoInabilitadoException {
+            throw new AlunoInabilitadoException("O aluno não pode realizar empréstimos agora.");
+        }
+
+        @Override
+        public EstadoAlunoIF finalizarEmprestimo() {
+            return HABILITADO;
+        }   
+
+        @Override
+        public String getDescricao() {
+            return "Inabilitado";
+        }
+
+        @Override
+        public Integer getValue() {
+            return 2;
+        }
     }
 }
