@@ -37,6 +37,10 @@ public class Endereco {
         this.rua = rua;
         this.numero = numero;
     }
+    
+    public Endereco() {
+        
+    }
 
     public String getPais() {
         return pais;
@@ -68,6 +72,30 @@ public class Endereco {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public void setPais(String pais) {
+        this.pais = pais;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    public void setCidade(String cidade) {
+        this.cidade = cidade;
+    }
+
+    public void setBairro(String bairro) {
+        this.bairro = bairro;
+    }
+
+    public void setRua(String rua) {
+        this.rua = rua;
+    }
+
+    public void setNumero(int numero) {
+        this.numero = numero;
     }
 
     @Override

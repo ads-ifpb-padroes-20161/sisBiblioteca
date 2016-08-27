@@ -40,6 +40,10 @@ public class Aluno extends Pessoa {
         this.estado = EstadoAlunoEnum.HABILITADO;
     }
 
+    public Aluno() {
+
+    }
+
     public String getMatricula() {
         return matricula;
     }
@@ -51,15 +55,15 @@ public class Aluno extends Pessoa {
     public Integer getValorEstado() {
         return this.estado.getValue();
     }
-    
+
     public String getDescricaoEstado() {
         return this.estado.getDescricao();
     }
-    
+
     public void realizarEmprestimo() throws AlunoInabilitadoException {
         this.estado = estado.realizarEmprestimo();
     }
-    
+
     public void finalizarEmprestimo() {
         this.estado = estado.finalizarEmprestimo();
     }
@@ -68,6 +72,14 @@ public class Aluno extends Pessoa {
         this.estado = estado;
     }
 
+    public void setMatricula(String matricula) {
+        this.matricula = matricula;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    } 
+    
     @Override
     public String toString() {
         return "Aluno{" + "matricula=" + matricula + ", email=" + email + '}';

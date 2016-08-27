@@ -5,6 +5,7 @@
  */
 package br.edu.ifpb.padroes.projeto.sisbiblioteca.entities;
 
+import br.edu.ifpb.padroes.projeto.sisbiblioteca.utils.DateUtils;
 import java.time.LocalDate;
 
 /**
@@ -30,6 +31,10 @@ public abstract class Pessoa {
         this.nome = nome;
         this.dataNascimento = dataNascimento;
     }
+    
+    public Pessoa() {
+        
+    }
 
     public String getCpf() {
         return cpf;
@@ -42,6 +47,10 @@ public abstract class Pessoa {
     public LocalDate getDataNascimento() {
         return dataNascimento;
     }
+    
+    public String getFormattedDataNascimento() {
+        return DateUtils.formatToBrazilPattern(dataNascimento);
+    }
 
     public Endereco getEndereco() {
         return endereco;
@@ -50,6 +59,18 @@ public abstract class Pessoa {
     public void setEndereco(Endereco e) {
         this.endereco = e;
     }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public void setDataNascimento(LocalDate dataNascimento) {
+        this.dataNascimento = dataNascimento;
+    } 
 
     @Override
     public String toString() {

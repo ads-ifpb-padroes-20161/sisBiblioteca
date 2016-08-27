@@ -26,6 +26,10 @@ public class LivroPadrao implements Comparable<LivroPadrao>, Livro{
         this.descricao = descricao;
         this.estoque = estoque;
     }
+    
+    public LivroPadrao() {
+        
+    }
 
     @Override
     public long getIsbn() {
@@ -66,6 +70,26 @@ public class LivroPadrao implements Comparable<LivroPadrao>, Livro{
     private void verifyEstoque() throws LivroIndisponivelException {
         if(this.estoque == 0)
             throw new LivroIndisponivelException("Não há mais exemplares desse livro!");
+    }
+
+    public void setIsbn(long isbn) {
+        this.isbn = isbn;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+
+    public void setAutor(String autor) {
+        this.autor = autor;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public void setEstoque(int estoque) {
+        this.estoque = estoque;
     }
 
     @Override
