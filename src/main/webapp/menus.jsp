@@ -23,6 +23,7 @@
                 <li><a href="livros.jsp"><i class="fa fa-book" aria-hidden="true"></i> Livros</a></li>
                 <li><a href="emprestimos.jsp"><i class="fa fa-calendar-o" aria-hidden="true"></i> Empréstimos</a></li>
                 <li><a href="realizarEmprestimo.jsp"><i class="fa fa-calendar-plus-o" aria-hidden="true"></i> Novo Empréstimo</a></li>
+                <li><a href="conta.jsp"><i class="fa fa-cog" aria-hidden="true"></i> Sua Conta</a></li>
             </ul>
             <div class="profile">
                 <p class="welcome-msg">Bem vindo, <span class="blue-title">${sessionScope.loggedUser.getNome()}</span></p>

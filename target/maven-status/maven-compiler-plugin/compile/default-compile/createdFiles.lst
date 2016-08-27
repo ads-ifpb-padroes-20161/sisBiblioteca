@@ -9,7 +9,6 @@ br\edu\ifpb\padroes\projeto\sisbiblioteca\exceptions\PrimeiroLoginException.clas
 br\edu\ifpb\padroes\projeto\sisbiblioteca\model\LivroBo.class
 br\edu\ifpb\padroes\projeto\sisbiblioteca\model\LoginBo.class
 br\edu\ifpb\padroes\projeto\sisbiblioteca\model\AlunoBo.class
-br\edu\ifpb\bdnc\maisdenuncia\utils\DateUtils.class
 br\edu\ifpb\padroes\projeto\sisbiblioteca\model\EmprestimoBo.class
 br\edu\ifpb\padroes\projeto\sisbiblioteca\dao\EmprestimoDao.class
 br\edu\ifpb\padroes\projeto\sisbiblioteca\exceptions\AlunoInabilitadoException.class
@@ -57,3 +56,4 @@ br\edu\ifpb\padroes\projeto\sisbiblioteca\control\CadastrarLivro.class
 br\edu\ifpb\padroes\projeto\sisbiblioteca\dao\FactoryConnection.class
 br\edu\ifpb\padroes\projeto\sisbiblioteca\enums\EstadoBloqueioEnum.class
 br\edu\ifpb\padroes\projeto\sisbiblioteca\dao\TesteUsuarioBdDao.class
+br\edu\ifpb\padroes\projeto\sisbiblioteca\utils\DateUtils.class
