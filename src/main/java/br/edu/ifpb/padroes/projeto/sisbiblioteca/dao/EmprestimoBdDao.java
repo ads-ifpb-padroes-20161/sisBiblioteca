@@ -14,8 +14,14 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -165,6 +171,44 @@ public class EmprestimoBdDao implements EmprestimoDao {
         emprestimo.setId(id);
         
         return emprestimo;
+    }
+
+    @Override
+    public List<Emprestimo> listByAttributes(Map<String, String> attributes) {
+
+        StringBuilder sql = new StringBuilder("SELECT * FROM emprestimo WHERE ");
+
+        Set<String> keys = attributes.keySet();
+        Iterator<String> it = keys.iterator();
+
+        String key;
+        while (it.hasNext()) {
+            key = it.next();
+            sql.append(key);
+            sql.append(" = ");
+            sql.append("'").append(attributes.get(key)).append("'");
+            if (it.hasNext()) {
+                sql.append(" AND ");
+            }
+        }
+
+        List<Emprestimo> emprestimos = new LinkedList<>();
+
+        try {
+            PreparedStatement pstm = FactoryConnection.createConnection().prepareStatement(sql.toString());
+
+            ResultSet rs = pstm.executeQuery();
+
+            while (rs.next()) {
+                emprestimos.add(formaEmprestimo(rs));
+            }
+
+            return emprestimos;
+        }
+        catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(AlunoBdDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return emprestimos;
     }
     
 }
