@@ -21,7 +21,7 @@ public class PessoaBdDao implements SimpleDao<Pessoa, String> {
     private final Dao<Endereco, Pessoa> enderecoBdDao;
 
     public PessoaBdDao() {
-        enderecoBdDao = new EnderecoBdDao();
+        enderecoBdDao = FactoryProvider.createFactory(FactoryProvider.jdbc).getEnderecoDao();
     }
 
     @Override
@@ -56,7 +56,23 @@ public class PessoaBdDao implements SimpleDao<Pessoa, String> {
 
     @Override
     public void update(Pessoa obj) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String sql = "UPDATE pessoa SET nome = ?, datanascimento = ? WHERE cpf = ?";
+        
+        try {
+            PreparedStatement pstm = FactoryConnection.createConnection().prepareStatement(sql);
+            
+            int i = 1;
+            
+            pstm.setString(i++, obj.getNome());
+            pstm.setDate(i++, java.sql.Date.valueOf(obj.getDataNascimento()));
+            pstm.setString(i++, obj.getCpf());
+            
+            pstm.executeUpdate();
+            enderecoBdDao.update(obj.getEndereco());
+        }
+        catch (ClassNotFoundException | SQLException ex) {
+            ex.printStackTrace();
+        }
     }
 
 }
