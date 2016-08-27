@@ -7,7 +7,6 @@ package br.edu.ifpb.padroes.projeto.sisbiblioteca.dao;
 
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.Endereco;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.Pessoa;
-import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.Usuario;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -112,7 +111,27 @@ public class EnderecoBdDao implements Dao<Endereco, Pessoa> {
 
     @Override
     public void update(Endereco obj) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String sql = "UPDATE endereco SET pais = ?, estado = ?, cidade = ?, bairro = ?, rua = ?, numero = ?"
+                + " WHERE id = ? ";
+        
+        try {
+            PreparedStatement pstm = FactoryConnection.createConnection().prepareStatement(sql);
+            
+            int i = 1;
+            
+            pstm.setString(i++, obj.getPais());
+            pstm.setString(i++, obj.getEstado());
+            pstm.setString(i++, obj.getCidade());
+            pstm.setString(i++, obj.getBairro());
+            pstm.setString(i++, obj.getRua());
+            pstm.setInt(i++, obj.getNumero());
+            pstm.setInt(i++, obj.getId());
+            
+            pstm.executeUpdate();
+        }
+        catch (ClassNotFoundException | SQLException ex) {
+            ex.printStackTrace();
+        }
     }
 
     @Override
