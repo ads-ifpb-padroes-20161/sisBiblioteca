@@ -5,7 +5,7 @@
  */
 package br.edu.ifpb.padroes.projeto.sisbiblioteca.control;
 
-import br.edu.ifpb.bdnc.maisdenuncia.utils.DateUtils;
+import br.edu.ifpb.padroes.projeto.sisbiblioteca.utils.DateUtils;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.Aluno;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.Emprestimo;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.Livro;

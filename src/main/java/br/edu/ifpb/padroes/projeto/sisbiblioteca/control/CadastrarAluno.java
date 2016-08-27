@@ -6,7 +6,7 @@
 package br.edu.ifpb.padroes.projeto.sisbiblioteca.control;
 
 import br.com.caelum.stella.validation.InvalidStateException;
-import br.edu.ifpb.bdnc.maisdenuncia.utils.DateUtils;
+import br.edu.ifpb.padroes.projeto.sisbiblioteca.utils.DateUtils;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.Aluno;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.Endereco;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.exceptions.CPFJaExisteException;
