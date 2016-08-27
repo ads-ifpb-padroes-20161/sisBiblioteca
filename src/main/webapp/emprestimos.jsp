@@ -5,7 +5,6 @@
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page import="java.util.List"%>
-<%@page import="br.edu.ifpb.bdnc.maisdenuncia.utils.DateUtils"%>
 <%@page import="br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.Emprestimo"%>
 <%@page import="br.edu.ifpb.padroes.projeto.sisbiblioteca.model.EmprestimoBo"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
