@@ -6,6 +6,8 @@
 package br.edu.ifpb.padroes.projeto.sisbiblioteca.dao;
 
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.Emprestimo;
+import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -14,4 +16,5 @@ import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.Emprestimo;
 public interface EmprestimoDao extends Dao<Emprestimo, Integer>{
     
     void finalizarEmprestimo(Emprestimo emprestimo);
+    List<Emprestimo> listByAttributes(Map<String, String> attributes);
 }
