@@ -55,12 +55,38 @@ public class UsuarioBdDao implements Dao<Usuario, String> {
 
     @Override
     public void rem(Usuario obj) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String sql = "DELETE FROM usuario WHERE matricula = ?";
+        
+        try {
+            PreparedStatement pstm = FactoryConnection.createConnection().prepareStatement(sql);
+            
+            pstm.setString(1, obj.getMatricula());
+            
+            pstm.executeUpdate();
+        }
+        catch (ClassNotFoundException | SQLException ex) {
+            ex.printStackTrace();
+        }
     }
 
     @Override
     public void update(Usuario obj) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String sql = "UPDATE usuario SET senha = ? WHERE matricula = ?";
+        
+        try {
+            PreparedStatement pstm = FactoryConnection.createConnection().prepareStatement(sql);
+            
+            int i = 1;
+            
+            pstm.setString(i++, obj.getSenha());
+            pstm.setString(i++, obj.getMatricula());
+            
+            pstm.executeUpdate();
+            pessoaDao.update(obj);
+        }
+        catch (ClassNotFoundException | SQLException ex) {
+            ex.printStackTrace();
+        }
     }
 
     @Override
@@ -110,5 +136,4 @@ public class UsuarioBdDao implements Dao<Usuario, String> {
 
         return usuario;
     }
-
 }
