@@ -46,7 +46,7 @@ public class Login extends HttpServlet {
         }
         catch (PrimeiroLoginException ex) {
             System.out.println(ex.getMessage());
-            dispatcher = request.getRequestDispatcher("login.jsp");
+            dispatcher = request.getRequestDispatcher("minhaconta.jsp");
             request.setAttribute("success", false);
             request.setAttribute("errorMsg", ex.getMessage());
         }
