@@ -5,10 +5,10 @@
  */
 package br.edu.ifpb.padroes.projeto.sisbiblioteca.model;
 
-import br.edu.ifpb.padroes.projeto.sisbiblioteca.dao.AlunoDao;
-import br.edu.ifpb.padroes.projeto.sisbiblioteca.dao.BloqueioDao;
+import br.edu.ifpb.padroes.projeto.sisbiblioteca.dao.aluno.AlunoDao;
+import br.edu.ifpb.padroes.projeto.sisbiblioteca.dao.bloqueio.BloqueioDao;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.dao.FactoryProvider;
-import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.Aluno;
+import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.aluno.Aluno;
 import java.util.Collections;
 import java.util.List;
 
@@ -29,7 +29,7 @@ public class QueryAlunoBo {
 
     public List<Aluno> listar() {
         bloqueioDao.verificaEDesbloqueiaAlunos();
-        return Collections.unmodifiableList(alunoDao.list());
+        return Collections.unmodifiableList(alunoDao.listarAlunos());
     }
     
     public List<Aluno> listarAlunosHabilitados() {
@@ -38,6 +38,6 @@ public class QueryAlunoBo {
     
     public Aluno getAlunoByMatricula(String matricula) {
         bloqueioDao.verificaEDesbloqueiaAlunos();
-        return alunoDao.get(matricula);
+        return alunoDao.recuperarAlunoPorMatricula(matricula);
     }
 }
