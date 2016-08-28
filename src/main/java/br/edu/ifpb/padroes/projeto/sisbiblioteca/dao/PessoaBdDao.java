@@ -6,7 +6,7 @@
 package br.edu.ifpb.padroes.projeto.sisbiblioteca.dao;
 
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.Endereco;
-import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.Pessoa;
+import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.IPessoa;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -16,16 +16,16 @@ import java.util.logging.Logger;
  *
  * @author kieckegard
  */
-public class PessoaBdDao implements SimpleDao<Pessoa, String> {
+public class PessoaBdDao implements PessoaDao {
 
-    private final Dao<Endereco, Pessoa> enderecoBdDao;
+    private final EnderecoDao enderecoBdDao;
 
     public PessoaBdDao() {
         enderecoBdDao = FactoryProvider.createFactory(FactoryProvider.jdbc).getEnderecoDao();
     }
 
     @Override
-    public void add(Pessoa obj) {
+    public void adicionarPessoa(IPessoa obj) {
         String sql = "INSERT INTO pessoa VALUES(?,?,?,?)";
 
         try {
@@ -37,7 +37,7 @@ public class PessoaBdDao implements SimpleDao<Pessoa, String> {
             pstm.setString(i++, obj.getNome());
             pstm.setDate(i++, java.sql.Date.valueOf(obj.getDataNascimento()));
 
-            enderecoBdDao.add(obj.getEndereco());
+            enderecoBdDao.adicionarEndereco(obj.getEndereco());
 
             pstm.setInt(i++, obj.getEndereco().getId());
 
@@ -50,12 +50,12 @@ public class PessoaBdDao implements SimpleDao<Pessoa, String> {
     }
 
     @Override
-    public void rem(Pessoa obj) {
+    public void removerPessoa(String cpf) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void update(Pessoa obj) {
+    public void atualizarPessoa(IPessoa obj) {
         String sql = "UPDATE pessoa SET nome = ?, datanascimento = ? WHERE cpf = ?";
         
         try {
@@ -68,7 +68,7 @@ public class PessoaBdDao implements SimpleDao<Pessoa, String> {
             pstm.setString(i++, obj.getCpf());
             
             pstm.executeUpdate();
-            enderecoBdDao.update(obj.getEndereco());
+            enderecoBdDao.atualizarEndereco(obj.getEndereco());
         }
         catch (ClassNotFoundException | SQLException ex) {
             ex.printStackTrace();
