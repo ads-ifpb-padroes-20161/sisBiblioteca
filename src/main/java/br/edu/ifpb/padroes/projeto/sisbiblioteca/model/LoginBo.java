@@ -5,8 +5,8 @@
  */
 package br.edu.ifpb.padroes.projeto.sisbiblioteca.model;
 
-import br.edu.ifpb.padroes.projeto.sisbiblioteca.dao.Dao;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.dao.FactoryProvider;
+import br.edu.ifpb.padroes.projeto.sisbiblioteca.dao.UsuarioDao;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.Usuario;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.exceptions.PrimeiroLoginException;
 import javax.security.auth.login.LoginException;
@@ -17,21 +17,21 @@ import javax.security.auth.login.LoginException;
  */
 public class LoginBo {
 
-    private final Dao<Usuario, String> usuarioDao;
+    private final UsuarioDao usuarioDao;
 
     public LoginBo() {
         usuarioDao = FactoryProvider.createFactory(FactoryProvider.jdbc).getUsuarioDao();
     }
 
     private void verifyFirstLogin() throws PrimeiroLoginException {
-        if (usuarioDao.list().isEmpty()) {
+        if (usuarioDao.listarUsuarios().isEmpty()) {
             throw new PrimeiroLoginException("Ainda não possui contas de usuário no Sistema.");
         }
     }
 
     public Usuario login(String matricula, String senha) throws PrimeiroLoginException, LoginException {
         verifyFirstLogin();
-        for (Usuario u : usuarioDao.list()) {
+        for (Usuario u : usuarioDao.listarUsuarios()) {
             if (u.getMatricula().equals(matricula) && u.getSenha().equals(senha)) {
                 return u;
             }
