@@ -18,7 +18,7 @@ import java.util.logging.Logger;
  *
  * @author kieckegard
  */
-public class EnderecoBdDao implements Dao<Endereco, Pessoa> {
+public class EnderecoBdDao implements EnderecoDao {
 
     private PreparedStatement pstm;
 
@@ -26,8 +26,8 @@ public class EnderecoBdDao implements Dao<Endereco, Pessoa> {
     }
 
     @Override
-    public void add(Endereco e) {
-        String sql = "INSERT INTO endereco(pais,cidade,estado,bairro,rua,numero) VALUES(?,?,?,?,?,?) RETURNING id";
+    public void adicionarEndereco(Endereco e) {
+        String sql = "INSERT INTO endereco(pais,estado,cidade,bairro,rua,numero) VALUES(?,?,?,?,?,?) RETURNING id";
 
         try {
             pstm = FactoryConnection.createConnection().prepareStatement(sql);
@@ -53,13 +53,13 @@ public class EnderecoBdDao implements Dao<Endereco, Pessoa> {
     }
 
     @Override
-    public void rem(Endereco e) {
+    public void removerEndereco(Integer id) {
         String sql = "DELETE FROM endereco WHERE id = ?";
 
         try {
             pstm = FactoryConnection.createConnection().prepareStatement(sql);
 
-            pstm.setInt(1, e.getId());
+            pstm.setInt(1, id);
 
             pstm.executeUpdate();
         }
@@ -69,13 +69,13 @@ public class EnderecoBdDao implements Dao<Endereco, Pessoa> {
     }
 
     @Override
-    public Endereco get(Pessoa p) {
+    public Endereco recuperarEnderecoPorPessoaCpf(String pessoaCpf) {
         String sql = "SELECT * FROM Endereco e JOIN Pessoa p ON e.id = p.idEndereco WHERE p.cpf = ?";
 
         try {
             pstm = FactoryConnection.createConnection().prepareStatement(sql);
 
-            pstm.setString(1, p.getCpf());
+            pstm.setString(1, pessoaCpf);
 
             ResultSet rs = pstm.executeQuery();
 
@@ -110,7 +110,7 @@ public class EnderecoBdDao implements Dao<Endereco, Pessoa> {
     }
 
     @Override
-    public void update(Endereco obj) {
+    public void atualizarEndereco(Endereco obj) {
         String sql = "UPDATE endereco SET pais = ?, estado = ?, cidade = ?, bairro = ?, rua = ?, numero = ?"
                 + " WHERE id = ? ";
         
@@ -132,11 +132,6 @@ public class EnderecoBdDao implements Dao<Endereco, Pessoa> {
         catch (ClassNotFoundException | SQLException ex) {
             ex.printStackTrace();
         }
-    }
-
-    @Override
-    public List<Endereco> list() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }
