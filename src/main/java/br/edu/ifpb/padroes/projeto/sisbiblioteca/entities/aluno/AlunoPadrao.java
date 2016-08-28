@@ -3,9 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.edu.ifpb.padroes.projeto.sisbiblioteca.entities;
+package br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.aluno;
 
-import br.edu.ifpb.padroes.projeto.sisbiblioteca.enums.EstadoAlunoEnum;
+import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.Endereco;
+import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.EstadoAlunoIF;
+import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.Pessoa;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.exceptions.AlunoInabilitadoException;
 import java.time.LocalDate;
 
@@ -13,35 +15,21 @@ import java.time.LocalDate;
  *
  * @author kieckegard
  */
-public class Aluno extends Pessoa {
+public class AlunoPadrao extends Pessoa implements Aluno{
 
     private String matricula;
     private String email;
     private EstadoAlunoIF estado;
 
-    public Aluno(String cpf, String nome, LocalDate dataNascimento, Endereco endereco, String matricula, String email, EstadoAlunoEnum estado) {
+    public AlunoPadrao(String cpf, String nome, LocalDate dataNascimento, Endereco endereco, String matricula, String email, EstadoAlunoIF estado) {
         super(cpf, nome, dataNascimento, endereco);
         this.matricula = matricula;
         this.email = email;
         this.estado = estado;
     }
-
-    public Aluno(String cpf, String nome, LocalDate dataNascimento, Endereco endereco, String matricula, String email) {
-        super(cpf, nome, dataNascimento, endereco);
-        this.matricula = matricula;
-        this.email = email;
-        this.estado = EstadoAlunoEnum.HABILITADO;
-    }
-
-    public Aluno(String cpf, String nome, LocalDate dataNascimento, String matricula, String email) {
-        super(cpf, nome, dataNascimento);
-        this.matricula = matricula;
-        this.email = email;
-        this.estado = EstadoAlunoEnum.HABILITADO;
-    }
-
-    public Aluno() {
-
+    
+    public AlunoPadrao() {
+        
     }
 
     public String getMatricula() {
@@ -66,14 +54,6 @@ public class Aluno extends Pessoa {
 
     public void finalizarEmprestimo() {
         this.estado = estado.finalizarEmprestimo();
-    }
-
-    public void setEstado(EstadoAlunoEnum estado) {
-        this.estado = estado;
-    }
-
-    public void setMatricula(String matricula) {
-        this.matricula = matricula;
     }
 
     public void setEmail(String email) {

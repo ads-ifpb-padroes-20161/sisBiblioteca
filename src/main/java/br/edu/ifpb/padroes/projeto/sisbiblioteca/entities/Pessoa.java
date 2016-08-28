@@ -12,7 +12,7 @@ import java.time.LocalDate;
  *
  * @author kieckegard
  */
-public abstract class Pessoa {
+public abstract class Pessoa implements IPessoa {
 
     private String cpf;
     private String nome;
@@ -48,13 +48,15 @@ public abstract class Pessoa {
         return dataNascimento;
     }
     
+    public Endereco getEndereco() {
+        return endereco;
+    }
+    
     public String getFormattedDataNascimento() {
         return DateUtils.formatToBrazilPattern(dataNascimento);
     }
 
-    public Endereco getEndereco() {
-        return endereco;
-    }
+    
 
     public void setEndereco(Endereco e) {
         this.endereco = e;

@@ -5,6 +5,8 @@
  */
 package br.edu.ifpb.padroes.projeto.sisbiblioteca.entities;
 
+import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.aluno.Aluno;
+import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.livro.Livro;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.exceptions.AlunoInabilitadoException;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.exceptions.EmprestimoAtrasadoException;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.exceptions.EmprestimoJaFinalizadoException;
@@ -104,10 +106,6 @@ public class Emprestimo implements Comparable<Emprestimo> {
 
     @Override
     public int compareTo(Emprestimo o) {
-        String s;
-        if(estado.getValue() == 0)
-            return -1;
-        else
-            return startDate.compareTo(o.startDate);
+        return o.startDate.compareTo(this.startDate);
     }
 }

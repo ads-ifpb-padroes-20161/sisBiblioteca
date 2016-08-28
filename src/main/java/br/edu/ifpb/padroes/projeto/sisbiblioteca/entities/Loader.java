@@ -5,6 +5,7 @@
  */
 package br.edu.ifpb.padroes.projeto.sisbiblioteca.entities;
 
+import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.aluno.AlunoBuilder;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.enums.EstadoAlunoEnum;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.enums.EstadoEmprestimoEnum;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.exceptions.AlunoInabilitadoException;
@@ -49,5 +50,7 @@ public class Loader {
         
         EmprestimoBo bo = new EmprestimoBo();
         System.out.println(bo.getEmprestimoById(7));
+        
+        AlunoBuilder builder = new AlunoBuilder();
     }
 }

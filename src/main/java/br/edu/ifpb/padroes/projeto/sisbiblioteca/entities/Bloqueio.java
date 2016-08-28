@@ -5,6 +5,7 @@
  */
 package br.edu.ifpb.padroes.projeto.sisbiblioteca.entities;
 
+import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.aluno.Aluno;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.enums.EstadoBloqueioEnum;
 import java.time.LocalDate;
 
