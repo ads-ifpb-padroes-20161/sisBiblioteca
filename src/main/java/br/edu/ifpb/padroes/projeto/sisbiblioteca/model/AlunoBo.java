@@ -7,10 +7,9 @@ package br.edu.ifpb.padroes.projeto.sisbiblioteca.model;
 
 import br.com.caelum.stella.validation.CPFValidator;
 import br.com.caelum.stella.validation.InvalidStateException;
-import br.edu.ifpb.padroes.projeto.sisbiblioteca.dao.BloqueioDao;
-import br.edu.ifpb.padroes.projeto.sisbiblioteca.dao.Dao;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.dao.FactoryProvider;
-import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.Aluno;
+import br.edu.ifpb.padroes.projeto.sisbiblioteca.dao.aluno.AlunoDao;
+import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.aluno.Aluno;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.exceptions.CPFJaExisteException;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.exceptions.EmailJaExisteException;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.exceptions.MatriculaJaExisteException;
@@ -21,7 +20,7 @@ import br.edu.ifpb.padroes.projeto.sisbiblioteca.exceptions.MatriculaJaExisteExc
  */
 public class AlunoBo {
 
-    private final Dao<Aluno, String> alunoDao;
+    private final AlunoDao alunoDao;
 
     public AlunoBo() {
         alunoDao = FactoryProvider.createFactory(1).getAlunoDao();
@@ -31,11 +30,11 @@ public class AlunoBo {
         verificaCpf(aluno.getCpf());
         verificaMatricula(aluno.getMatricula());
         verificaEmail(aluno.getEmail());
-        alunoDao.add(aluno);
+        alunoDao.cadastrarAluno(aluno);
     }
 
     public void verificaMatricula(String matricula) throws MatriculaJaExisteException {
-        for (Aluno a : alunoDao.list()) {
+        for (Aluno a : alunoDao.listarAlunos()) {
             if (a.getMatricula().equals(matricula)) {
                 throw new MatriculaJaExisteException("Já existe um Aluno cadastrado com essa matrícula!");
             }
@@ -43,7 +42,7 @@ public class AlunoBo {
     }
 
     public void verificaEmail(String email) throws EmailJaExisteException {
-        for (Aluno a : alunoDao.list()) {
+        for (Aluno a : alunoDao.listarAlunos()) {
             if (a.getEmail().equals(email)) {
                 throw new EmailJaExisteException("Já existe um Aluno cadastrado com esse e-mail!");
             }
@@ -54,18 +53,10 @@ public class AlunoBo {
         new CPFValidator().assertValid(cpf);
 
         //verifica se existe algum cpf igual
-        for (Aluno a : alunoDao.list()) {
+        for (Aluno a : alunoDao.listarAlunos()) {
             if (a.getCpf().equals(cpf)) {
                 throw new CPFJaExisteException("Já existe um Aluno cadastrado com esse CPF!");
             }
         }
-    }
-
-    public void removerAluno(Aluno aluno) {
-        alunoDao.rem(aluno);
-    }
-
-    public void atualizarAluno(Aluno aluno) {
-        alunoDao.update(aluno);
     }
 }
