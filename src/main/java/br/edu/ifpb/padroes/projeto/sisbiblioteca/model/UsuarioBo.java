@@ -7,8 +7,8 @@ package br.edu.ifpb.padroes.projeto.sisbiblioteca.model;
 
 import br.com.caelum.stella.validation.CPFValidator;
 import br.com.caelum.stella.validation.InvalidStateException;
-import br.edu.ifpb.padroes.projeto.sisbiblioteca.dao.Dao;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.dao.FactoryProvider;
+import br.edu.ifpb.padroes.projeto.sisbiblioteca.dao.UsuarioDao;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.Usuario;
 
 /**
@@ -17,19 +17,24 @@ import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.Usuario;
  */
 public class UsuarioBo {
     
-    private final Dao<Usuario, String> usuarioDao;
+    private final UsuarioDao usuarioDao;
     
     public UsuarioBo() {
         usuarioDao = FactoryProvider.createFactory(FactoryProvider.jdbc).getUsuarioDao();
     }
     
-    public void atualizarConta(Usuario usuario) throws InvalidStateException {
+    public void cadastrarUsuario(Usuario usuario) throws InvalidStateException {
         validaUsuario(usuario);
-        usuarioDao.update(usuario);
+        usuarioDao.cadastrarUsuario(usuario);
     }
     
-    public void removerConta(Usuario usuario) {
-        usuarioDao.rem(usuario);
+    public void atualizarConta(Usuario usuario) throws InvalidStateException {
+        validaUsuario(usuario);
+        usuarioDao.atualizarUsuario(usuario);
+    }
+    
+    public void removerConta(String matricula) {
+        usuarioDao.removerUsuario(matricula);
     }
     
     private void validaUsuario(Usuario usuario) throws InvalidStateException {
