@@ -6,20 +6,16 @@
 package br.edu.ifpb.padroes.projeto.sisbiblioteca.control;
 
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.utils.DateUtils;
-import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.Aluno;
+import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.aluno.Aluno;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.Emprestimo;
-import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.Livro;
+import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.livro.Livro;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.exceptions.AlunoInabilitadoException;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.exceptions.LivroIndisponivelException;
-import br.edu.ifpb.padroes.projeto.sisbiblioteca.model.AlunoBo;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.model.EmprestimoBo;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.model.LivroBo;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.model.QueryAlunoBo;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.time.LocalDate;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;

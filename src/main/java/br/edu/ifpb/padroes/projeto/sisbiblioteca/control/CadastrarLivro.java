@@ -5,8 +5,8 @@
  */
 package br.edu.ifpb.padroes.projeto.sisbiblioteca.control;
 
-import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.Livro;
-import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.LivroPadrao;
+import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.livro.Livro;
+import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.livro.LivroPadrao;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.exceptions.ISBNJaExisteException;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.model.LivroBo;
 import java.io.IOException;

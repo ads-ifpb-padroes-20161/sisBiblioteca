@@ -33,8 +33,8 @@ public class Logout extends HttpServlet {
         if (loggedUser != null) {
             request.getSession().invalidate();
         }
-        RequestDispatcher dispatcher = request.getRequestDispatcher("login.jsp");
-        dispatcher.forward(request, response);
+        response.sendRedirect("login.jsp");
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

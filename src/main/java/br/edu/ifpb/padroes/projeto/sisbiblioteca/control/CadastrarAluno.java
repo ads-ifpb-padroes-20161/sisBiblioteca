@@ -7,8 +7,11 @@ package br.edu.ifpb.padroes.projeto.sisbiblioteca.control;
 
 import br.com.caelum.stella.validation.InvalidStateException;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.utils.DateUtils;
-import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.Aluno;
+import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.aluno.AlunoPadrao;
+import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.aluno.AlunoBuilder;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.Endereco;
+import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.aluno.Aluno;
+import br.edu.ifpb.padroes.projeto.sisbiblioteca.enums.EstadoAlunoEnum;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.exceptions.CPFJaExisteException;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.exceptions.EmailJaExisteException;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.exceptions.MatriculaJaExisteException;
@@ -58,7 +61,9 @@ public class CadastrarAluno extends HttpServlet {
         int numero = Integer.valueOf(request.getParameter("numero"));
         Endereco endereco = new Endereco(pais, estado, cidade, bairro, rua, numero);
 
-        Aluno aluno = new Aluno(cpf, nome, dataNascimento, endereco, matricula, email);
+        Aluno aluno = new AlunoBuilder().setCpf(cpf).setNome(nome)
+                .setDataNascimento(dataNascimento).setMatricula(matricula)
+                .setEmail(email).setEndereco(endereco).setEstado(EstadoAlunoEnum.HABILITADO).getInstance();
 
         AlunoBo bo = new AlunoBo();
 
