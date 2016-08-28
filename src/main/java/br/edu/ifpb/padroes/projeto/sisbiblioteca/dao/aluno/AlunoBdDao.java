@@ -3,11 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.edu.ifpb.padroes.projeto.sisbiblioteca.dao;
+package br.edu.ifpb.padroes.projeto.sisbiblioteca.dao.aluno;
 
-import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.Aluno;
+import br.edu.ifpb.padroes.projeto.sisbiblioteca.dao.EnderecoBdDao;
+import br.edu.ifpb.padroes.projeto.sisbiblioteca.dao.EnderecoDao;
+import br.edu.ifpb.padroes.projeto.sisbiblioteca.dao.FactoryConnection;
+import br.edu.ifpb.padroes.projeto.sisbiblioteca.dao.PessoaBdDao;
+import br.edu.ifpb.padroes.projeto.sisbiblioteca.dao.PessoaDao;
+import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.aluno.AlunoBuilder;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.Endereco;
-import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.Pessoa;
+import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.aluno.Aluno;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.enums.EstadoAlunoEnum;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -27,8 +32,8 @@ import java.util.logging.Logger;
  */
 public class AlunoBdDao implements AlunoDao {
 
-    private final Dao<Endereco, Pessoa> enderecoBdDao;
-    private final SimpleDao<Pessoa, String> pessoaBdDao;
+    private final EnderecoDao enderecoBdDao;
+    private final PessoaDao pessoaBdDao;
 
     public AlunoBdDao() {
         enderecoBdDao = new EnderecoBdDao();
@@ -36,9 +41,9 @@ public class AlunoBdDao implements AlunoDao {
     }
 
     @Override
-    public void add(Aluno obj) {
+    public void cadastrarAluno(Aluno obj) {
         String sql = "INSERT INTO aluno VALUES(?,?,?,?)";
-        pessoaBdDao.add(obj);
+        pessoaBdDao.adicionarPessoa(obj);
         try {
             PreparedStatement pstm = FactoryConnection.createConnection().prepareStatement(sql);
 
@@ -57,17 +62,7 @@ public class AlunoBdDao implements AlunoDao {
     }
 
     @Override
-    public void rem(Aluno obj) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void update(Aluno obj) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public Aluno get(String obj) {
+    public Aluno recuperarAlunoPorMatricula(String obj) {
 
         String sql = "SELECT * FROM Aluno a JOIN Pessoa p ON a.cpfPessoa = p.cpf WHERE a.matricula = ?";
         try{
@@ -128,7 +123,7 @@ public class AlunoBdDao implements AlunoDao {
     }
 
     @Override
-    public List<Aluno> list() {
+    public List<Aluno> listarAlunos() {
         
         String sql = "SELECT * FROM Aluno a JOIN Pessoa p ON a.cpfPessoa = p.cpf";
         return selectAlunos(sql);
@@ -146,13 +141,13 @@ public class AlunoBdDao implements AlunoDao {
         String nome = rs.getString("nome");
         LocalDate dataNascimento = rs.getDate("dataNascimento").toLocalDate();
         
-        //endereco
-        Aluno aluno = new Aluno(cpf, nome, dataNascimento, matricula, email);
-        Endereco endereco = enderecoBdDao.get(aluno);
+        Endereco endereco = enderecoBdDao.recuperarEnderecoPorPessoaCpf(cpf);
         
-        //Sets
-        aluno.setEndereco(endereco);
-        aluno.setEstado(estadoAlunoEnum);
+        //endereco
+        Aluno aluno = new AlunoBuilder().setCpf(cpf)
+                .setNome(nome).setDataNascimento(dataNascimento)
+                .setMatricula(matricula).setEmail(email).setEstado(estadoAlunoEnum).setEndereco(endereco).getInstance();
+        
         return aluno;
     }
 

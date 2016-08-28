@@ -5,9 +5,16 @@
  */
 package br.edu.ifpb.padroes.projeto.sisbiblioteca.dao;
 
-import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.Bloqueio;
+import br.edu.ifpb.padroes.projeto.sisbiblioteca.dao.livro.LivroDao;
+import br.edu.ifpb.padroes.projeto.sisbiblioteca.dao.livro.LivroBdDao;
+import br.edu.ifpb.padroes.projeto.sisbiblioteca.dao.emprestimo.EmprestimoDao;
+import br.edu.ifpb.padroes.projeto.sisbiblioteca.dao.emprestimo.EmprestimoBdDao;
+import br.edu.ifpb.padroes.projeto.sisbiblioteca.dao.bloqueio.BloqueioBdDao;
+import br.edu.ifpb.padroes.projeto.sisbiblioteca.dao.bloqueio.BloqueioDao;
+import br.edu.ifpb.padroes.projeto.sisbiblioteca.dao.aluno.AlunoDao;
+import br.edu.ifpb.padroes.projeto.sisbiblioteca.dao.aluno.AlunoBdDao;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.Endereco;
-import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.Pessoa;
+import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.IPessoa;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.Usuario;
 
 /**
@@ -27,17 +34,17 @@ public class FactoryBdDao implements FactoryDaoIF {
     }
 
     @Override
-    public SimpleDao<Pessoa, String> getPessoaDao() {
+    public PessoaDao getPessoaDao() {
         return new PessoaBdDao();
     }
 
     @Override
-    public Dao<Usuario, String> getUsuarioDao() {
+    public UsuarioDao getUsuarioDao() {
         return new UsuarioBdDao();
     }
 
     @Override
-    public Dao<Endereco, Pessoa> getEnderecoDao() {
+    public EnderecoDao getEnderecoDao() {
         return new EnderecoBdDao();
     }
 

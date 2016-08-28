@@ -3,18 +3,22 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.edu.ifpb.padroes.projeto.sisbiblioteca.dao;
+package br.edu.ifpb.padroes.projeto.sisbiblioteca.dao.emprestimo;
 
-import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.Aluno;
+import br.edu.ifpb.padroes.projeto.sisbiblioteca.dao.FactoryConnection;
+import br.edu.ifpb.padroes.projeto.sisbiblioteca.dao.FactoryProvider;
+import br.edu.ifpb.padroes.projeto.sisbiblioteca.dao.aluno.AlunoBdDao;
+import br.edu.ifpb.padroes.projeto.sisbiblioteca.dao.aluno.AlunoDao;
+import br.edu.ifpb.padroes.projeto.sisbiblioteca.dao.livro.LivroDao;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.Emprestimo;
-import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.Livro;
+import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.aluno.Aluno;
+import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.livro.Livro;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.enums.EstadoEmprestimoEnum;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -29,8 +33,8 @@ import java.util.logging.Logger;
  */
 public class EmprestimoBdDao implements EmprestimoDao {
 
-    private final Dao<Aluno, String> alunoDao;
-    private final Dao<Livro, Long> livroDao;
+    private final AlunoDao alunoDao;
+    private final LivroDao livroDao;
     
     public EmprestimoBdDao() {
         alunoDao = FactoryProvider.createFactory(FactoryProvider.jdbc).getAlunoDao();
@@ -59,7 +63,7 @@ public class EmprestimoBdDao implements EmprestimoDao {
     }
 
     @Override
-    public void add(Emprestimo obj) {
+    public void adicionarEmprestimo(Emprestimo obj) {
         String sql = "INSERT INTO emprestimo(alunoMatricula, livroIsbn, dataInicio, dataFim, idEstado)"
                 + " VALUES(?,?,?,?,?) RETURNING id";
         
@@ -85,17 +89,7 @@ public class EmprestimoBdDao implements EmprestimoDao {
     }
 
     @Override
-    public void rem(Emprestimo obj) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void update(Emprestimo obj) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public Emprestimo get(Integer obj) {
+    public Emprestimo recuperarEmprestimoPorId(Integer obj) {
         try {
             String sql = "SELECT * FROM emprestimo WHERE id = ?";
             
@@ -118,7 +112,7 @@ public class EmprestimoBdDao implements EmprestimoDao {
     }
 
     @Override
-    public List<Emprestimo> list() {
+    public List<Emprestimo> listarEmprestimos() {
         String sql = "SELECT * FROM emprestimo";
         List<Emprestimo> emprestimos = new LinkedList<>();
         
@@ -142,11 +136,11 @@ public class EmprestimoBdDao implements EmprestimoDao {
     }
     
     private Livro getLivroFromIsbn(Long isbn) {
-        return livroDao.get(isbn);
+        return livroDao.recuperarLivroPorIsbn(isbn);
     }
     
     private Aluno getAlunoFromMatricula(String matricula) {
-        return alunoDao.get(matricula);
+        return alunoDao.recuperarAlunoPorMatricula(matricula);
     }
     
     private Emprestimo formaEmprestimo(ResultSet rs) throws SQLException {

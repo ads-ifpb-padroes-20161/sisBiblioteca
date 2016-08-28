@@ -5,10 +5,6 @@
  */
 package br.edu.ifpb.padroes.projeto.sisbiblioteca.dao;
 
-import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.Endereco;
-import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.Usuario;
-import br.edu.ifpb.padroes.projeto.sisbiblioteca.enums.TipoUsuario;
-import java.time.LocalDate;
 
 /**
  *
@@ -17,7 +13,7 @@ import java.time.LocalDate;
 public class TesteUsuarioBdDao {
 
     public static void main(String[] args) {
-        Dao<Usuario, String> usuarioDao = FactoryProvider.createFactory(FactoryProvider.jdbc).getUsuarioDao();
+        /*Dao<Usuario, String> usuarioDao = FactoryProvider.createFactory(FactoryProvider.jdbc).getUsuarioDao();
 
         Usuario usuario = new Usuario("111.111.111-11", "Pedro", LocalDate.now(), "111222333", "123456", TipoUsuario.BIBLIOTECARIO);
 
@@ -29,6 +25,6 @@ public class TesteUsuarioBdDao {
 
         for (Usuario u : usuarioDao.list()) {
             System.out.println(u);
-        }
+        }*/
     }
 }

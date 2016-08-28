@@ -3,11 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.edu.ifpb.padroes.projeto.sisbiblioteca.dao;
+package br.edu.ifpb.padroes.projeto.sisbiblioteca.dao.livro;
 
-import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.Livro;
-import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.LivroNulo;
-import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.LivroPadrao;
+import br.edu.ifpb.padroes.projeto.sisbiblioteca.dao.FactoryConnection;
+import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.livro.Livro;
+import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.livro.LivroNulo;
+import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.livro.LivroPadrao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -23,7 +24,7 @@ import java.util.logging.Logger;
 public class LivroBdDao implements LivroDao {
 
     @Override
-    public void add(Livro obj) {
+    public void cadastrarLivro(Livro obj) {
         String sql = "INSERT INTO livro VALUES(?,?,?,?,?)";
 
         try {
@@ -45,17 +46,7 @@ public class LivroBdDao implements LivroDao {
     }
 
     @Override
-    public void rem(Livro obj) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void update(Livro obj) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public Livro get(Long obj) {
+    public Livro recuperarLivroPorIsbn(Long obj) {
         String sql = "SELECT * FROM livro WHERE isbn = ?";
         try {
             PreparedStatement pstm = FactoryConnection.createConnection().prepareStatement(sql);
@@ -92,7 +83,7 @@ public class LivroBdDao implements LivroDao {
     }
 
     @Override
-    public List<Livro> list() {
+    public List<Livro> listarLivros() {
         String sql = "SELECT * FROM livro";
         return selectLivro(sql);
     }
@@ -133,6 +124,11 @@ public class LivroBdDao implements LivroDao {
     public List<Livro> listarLivrosDisponiveis() {
         String sql = "SELECT * FROM livro WHERE estoque > 0";
         return selectLivro(sql);
+    }
+
+    @Override
+    public void removerLivro(Long isbn) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

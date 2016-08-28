@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.edu.ifpb.padroes.projeto.sisbiblioteca.dao;
+package br.edu.ifpb.padroes.projeto.sisbiblioteca.dao.bloqueio;
 
+import br.edu.ifpb.padroes.projeto.sisbiblioteca.dao.FactoryConnection;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.Bloqueio;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.enums.EstadoBloqueioEnum;
 import java.sql.PreparedStatement;

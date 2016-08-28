@@ -6,7 +6,7 @@
 package br.edu.ifpb.padroes.projeto.sisbiblioteca.dao;
 
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.Endereco;
-import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.Pessoa;
+import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.IPessoa;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.Usuario;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.enums.TipoUsuario;
 import java.sql.PreparedStatement;
@@ -22,10 +22,10 @@ import java.util.logging.Logger;
  *
  * @author kieckegard
  */
-public class UsuarioBdDao implements Dao<Usuario, String> {
+public class UsuarioBdDao implements UsuarioDao {
 
-    private Dao<Endereco, Pessoa> enderecoDao;
-    private SimpleDao<Pessoa, String> pessoaDao;
+    private EnderecoDao enderecoDao;
+    private PessoaDao pessoaDao;
 
     public UsuarioBdDao() {
         enderecoDao = FactoryProvider.createFactory(1).getEnderecoDao();
@@ -33,9 +33,9 @@ public class UsuarioBdDao implements Dao<Usuario, String> {
     }
 
     @Override
-    public void add(Usuario obj) {
+    public void cadastrarUsuario(Usuario obj) {
         String sql = "INSERT INTO usuario VALUES(?,?,?,?)";
-        pessoaDao.add(obj);
+        pessoaDao.adicionarPessoa(obj);
         try {
             PreparedStatement pstm = FactoryConnection.createConnection().prepareStatement(sql);
 
@@ -54,13 +54,13 @@ public class UsuarioBdDao implements Dao<Usuario, String> {
     }
 
     @Override
-    public void rem(Usuario obj) {
+    public void removerUsuario(String matricula) {
         String sql = "DELETE FROM usuario WHERE matricula = ?";
         
         try {
             PreparedStatement pstm = FactoryConnection.createConnection().prepareStatement(sql);
             
-            pstm.setString(1, obj.getMatricula());
+            pstm.setString(1, matricula);
             
             pstm.executeUpdate();
         }
@@ -70,7 +70,7 @@ public class UsuarioBdDao implements Dao<Usuario, String> {
     }
 
     @Override
-    public void update(Usuario obj) {
+    public void atualizarUsuario(Usuario obj) {
         String sql = "UPDATE usuario SET senha = ? WHERE matricula = ?";
         
         try {
@@ -82,7 +82,7 @@ public class UsuarioBdDao implements Dao<Usuario, String> {
             pstm.setString(i++, obj.getMatricula());
             
             pstm.executeUpdate();
-            pessoaDao.update(obj);
+            pessoaDao.atualizarPessoa(obj);
         }
         catch (ClassNotFoundException | SQLException ex) {
             ex.printStackTrace();
@@ -90,12 +90,7 @@ public class UsuarioBdDao implements Dao<Usuario, String> {
     }
 
     @Override
-    public Usuario get(String obj) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public List<Usuario> list() {
+    public List<Usuario> listarUsuarios() {
         String sql = "SELECT * FROM usuario u JOIN Pessoa p ON u.cpfPessoa = p.cpf";
         List<Usuario> usuarios = new ArrayList<>();
 
@@ -130,7 +125,7 @@ public class UsuarioBdDao implements Dao<Usuario, String> {
 
         Usuario usuario = new Usuario(cpf, nome, dataNascimento, matricula, senha, tipoUsuario);
 
-        Endereco endereco = enderecoDao.get(usuario);
+        Endereco endereco = enderecoDao.recuperarEnderecoPorPessoaCpf(usuario.getCpf());
 
         usuario.setEndereco(endereco);
 
