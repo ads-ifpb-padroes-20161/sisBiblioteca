@@ -75,3 +75,16 @@ CREATE TABLE BLOQUEIO(
 	PRIMARY KEY(id),
 	FOREIGN KEY(alunoMatricula) REFERENCES aluno(matricula)
 );
+
+-- TRIGGERS
+
+CREATE TRIGGER deleteUserAccount
+AFTER DELETE ON usuario
+EXECUTE PROCEDURE removePessoa();
+
+CREATE OR REPLACE FUNCTION removePessoa() RETURNS TRIGGER AS'
+BEGIN
+    DELETE FROM pessoa WHERE cpf = OLD.cpfPessoa;
+    RETURN OLD;
+END'
+LANGUAGE plpgsql;
