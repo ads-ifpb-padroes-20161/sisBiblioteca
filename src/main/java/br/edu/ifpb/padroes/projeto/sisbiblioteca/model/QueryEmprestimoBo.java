@@ -5,7 +5,7 @@
  */
 package br.edu.ifpb.padroes.projeto.sisbiblioteca.model;
 
-import br.edu.ifpb.padroes.projeto.sisbiblioteca.dao.EmprestimoDao;
+import br.edu.ifpb.padroes.projeto.sisbiblioteca.dao.emprestimo.EmprestimoDao;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.dao.FactoryProvider;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.Emprestimo;
 import java.util.Collections;
