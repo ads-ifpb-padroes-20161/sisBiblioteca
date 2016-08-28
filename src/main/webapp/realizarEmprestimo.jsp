@@ -10,12 +10,6 @@
 <%@page import="br.edu.ifpb.padroes.projeto.sisbiblioteca.model.EmprestimoBo"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
-
-<%!
-    EmprestimoBo queryBo = new EmprestimoBo();
-    List<Emprestimo> emprestimos = queryBo.listarEmprestimos();
-%>
-
 <!DOCTYPE html>
 <html>
     <head>

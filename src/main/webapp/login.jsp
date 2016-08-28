@@ -44,6 +44,20 @@
                         <strong>Error!</strong> ${requestScope.errorMsg}
                     </div>
                 </c:if>
+                <c:if test="${userChanged == true}">
+                    <div id="warningMsg" class="alert alert-info" style="margin: 10px 10px 5px 10px;">
+                        <a class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        <strong>Olá, ${requestScope.userName}</strong>, as informações da sua conta foram alteradas 
+                        com sucesso! Por favor, insira novamente suas credenciais para continuar usando o sistema! :)
+                    </div>
+                </c:if>
+                <c:if test="${accountCreated == true}">
+                    <div id="warningMsg" class="alert alert-info" style="margin: 10px 10px 5px 10px;">
+                        <a class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        <strong>Olá, ${requestScope.newUserName}</strong>, Sua conta foi criada com sucesso! Agora você pode 
+                        desfrutar das funcionalidades do sistema ao efetuar login! :)
+                    </div>
+                </c:if>
             </div>
 
         </div>

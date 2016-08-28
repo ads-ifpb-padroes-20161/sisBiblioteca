@@ -4,7 +4,7 @@
     Author     : kieckegard
 --%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@page import="br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.Aluno"%>
+<%@page import="br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.aluno.Aluno"%>
 <%@page import="br.edu.ifpb.padroes.projeto.sisbiblioteca.model.QueryAlunoBo"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>

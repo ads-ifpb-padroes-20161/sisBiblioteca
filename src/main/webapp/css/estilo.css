@@ -204,7 +204,13 @@ header h1{
     background-color: rgb(155,13,20);
 }
 
-.cad-content form .submit-button{
+.cad-content form .submit-button {
+    margin-top: 20px;
+    float: right;
+    margin-right: 15px;
+}
+
+.cad-content form .list-buttons{
 	margin-top: 20px;
 	float: right;
 	margin-right: 15px;
@@ -278,5 +284,31 @@ header h1{
 .light-green {
     color: #b2dba1;
 }
+
+.list-buttons {
+    list-style: none;
+    padding: 0px;
+    overflow: auto;
+}
+
+.list-buttons li {
+    float: left;
+}
+
+.submit-button:disabled {
+    background-color : #e6e6e6;
+    color: #777;
+}
+
+.submit-button:disabled {
+    border-color: #adadad;
+}
+
+.group-input input:read-only {
+    background-color : #e6e6e6;
+    border-radius: 7px;
+}
+
+
 
 

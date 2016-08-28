@@ -4,9 +4,9 @@
     Author     : kieckegard
 --%>
 
-<%@page import="br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.Livro"%>
+<%@page import="br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.livro.Livro"%>
 <%@page import="br.edu.ifpb.padroes.projeto.sisbiblioteca.model.LivroBo"%>
-<%@page import="br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.Aluno"%>
+<%@page import="br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.aluno.Aluno"%>
 <%@page import="br.edu.ifpb.padroes.projeto.sisbiblioteca.model.QueryAlunoBo"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
