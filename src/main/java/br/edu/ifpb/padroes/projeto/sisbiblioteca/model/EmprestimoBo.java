@@ -5,15 +5,15 @@
  */
 package br.edu.ifpb.padroes.projeto.sisbiblioteca.model;
 
-import br.edu.ifpb.padroes.projeto.sisbiblioteca.dao.AlunoDao;
-import br.edu.ifpb.padroes.projeto.sisbiblioteca.dao.BloqueioDao;
-import br.edu.ifpb.padroes.projeto.sisbiblioteca.dao.EmprestimoDao;
+import br.edu.ifpb.padroes.projeto.sisbiblioteca.dao.aluno.AlunoDao;
+import br.edu.ifpb.padroes.projeto.sisbiblioteca.dao.bloqueio.BloqueioDao;
+import br.edu.ifpb.padroes.projeto.sisbiblioteca.dao.emprestimo.EmprestimoDao;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.dao.FactoryProvider;
-import br.edu.ifpb.padroes.projeto.sisbiblioteca.dao.LivroDao;
-import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.Aluno;
+import br.edu.ifpb.padroes.projeto.sisbiblioteca.dao.livro.LivroDao;
+import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.aluno.Aluno;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.Bloqueio;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.Emprestimo;
-import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.Livro;
+import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.livro.Livro;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.enums.EstadoBloqueioEnum;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.enums.EstadoEmprestimoEnum;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.exceptions.AlunoInabilitadoException;
@@ -72,7 +72,7 @@ public class EmprestimoBo {
     
     private void newEmprestimoOnDao(Emprestimo emprestimo) {
         
-        emprestimoDao.add(emprestimo);
+        emprestimoDao.adicionarEmprestimo(emprestimo);
         
         updateAlunoAndLivro(emprestimo.getAluno(), emprestimo.getLivro());
     }
@@ -91,12 +91,12 @@ public class EmprestimoBo {
     }
 
     public List<Emprestimo> listarEmprestimos() { 
-        List<Emprestimo> emprestimos = emprestimoDao.list();
+        List<Emprestimo> emprestimos = emprestimoDao.listarEmprestimos();
         Collections.sort(emprestimos);
         return Collections.unmodifiableList(emprestimos);
     }
 
     public Emprestimo getEmprestimoById(Integer id) { 
-        return emprestimoDao.get(id);
+        return emprestimoDao.recuperarEmprestimoPorId(id);
     }
 }
