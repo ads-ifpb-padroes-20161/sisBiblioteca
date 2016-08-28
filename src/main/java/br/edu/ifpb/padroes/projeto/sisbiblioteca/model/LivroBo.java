@@ -5,10 +5,10 @@
  */
 package br.edu.ifpb.padroes.projeto.sisbiblioteca.model;
 
-import br.edu.ifpb.padroes.projeto.sisbiblioteca.dao.Dao;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.dao.FactoryProvider;
-import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.Livro;
-import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.LivroPadrao;
+import br.edu.ifpb.padroes.projeto.sisbiblioteca.dao.livro.LivroDao;
+import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.livro.Livro;
+import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.livro.LivroPadrao;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.exceptions.ISBNJaExisteException;
 import java.util.List;
 
@@ -18,7 +18,7 @@ import java.util.List;
  */
 public class LivroBo {
 
-    private final Dao<Livro, Long> livroDao;
+    private final LivroDao livroDao;
 
     public LivroBo() {
         livroDao = FactoryProvider.createFactory(1).getLivroDao();
@@ -26,11 +26,11 @@ public class LivroBo {
     
     public void cadastraLivro(LivroPadrao livro) throws ISBNJaExisteException {
         verificaIsbn(livro.getIsbn());
-        livroDao.add(livro);
+        livroDao.cadastrarLivro(livro);
     }
 
     private void verificaIsbn(long isbn) throws ISBNJaExisteException {
-        for (Livro l : livroDao.list()) {
+        for (Livro l : livroDao.listarLivros()) {
             if (l.getIsbn() == isbn) {
                 throw new ISBNJaExisteException("Já existe um livro salvo no banco com esse mesmo ISBN!");
             }
@@ -38,11 +38,11 @@ public class LivroBo {
     }
     
     public Livro getLivro(long isbn) {
-        return livroDao.get(isbn);
+        return livroDao.recuperarLivroPorIsbn(isbn);
     }
     
     public List<Livro> list() {
-        return livroDao.list();
+        return livroDao.listarLivros();
     }
     
 }
