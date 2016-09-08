@@ -27,7 +27,5 @@ public interface Aluno extends IPessoa {
     public void realizarEmprestimo() throws AlunoInabilitadoException;
 
     public void finalizarEmprestimo();
-
-    public void setEmail(String email);
     
 }

@@ -55,10 +55,6 @@ public class AlunoPadrao extends Pessoa implements Aluno{
     public void finalizarEmprestimo() {
         this.estado = estado.finalizarEmprestimo();
     }
-
-    public void setEmail(String email) {
-        this.email = email;
-    } 
     
     @Override
     public String toString() {
