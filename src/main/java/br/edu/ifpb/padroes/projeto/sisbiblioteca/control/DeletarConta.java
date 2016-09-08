@@ -39,8 +39,13 @@ public class DeletarConta extends HttpServlet {
         
         bo.removerConta(matricula);
         
-        Logout logout = new Logout();
-        logout.processRequest(request, response);
+        request.getSession().invalidate();
+        
+        RequestDispatcher dispatcher = request.getRequestDispatcher("login.jsp");
+        
+        request.setAttribute("deletedAccount", true);
+        
+        dispatcher.forward(request, response);
         
     }
 

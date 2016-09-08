@@ -3,7 +3,7 @@
     Created on : 10/07/2016, 03:00:56
     Author     : kieckegard
 --%>
-<%@page import="br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.Livro"%>
+<%@page import="br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.livro.Livro"%>
 <%@page import="br.edu.ifpb.padroes.projeto.sisbiblioteca.model.LivroBo"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
