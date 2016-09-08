@@ -84,6 +84,17 @@
                 </div>
             </div>
         </div>
+
+        <div class="centered-container">
+            <div id="alunoNotSelectedError" class="alert alert-danger" style='display: none;'>
+                <strong>Error!</strong> Por favor selecione um <strong>aluno</strong> para realizar o empréstimo!
+            </div>   
+
+            <div id="livroNotSelectedError" class="alert alert-danger" style='margin-top: 10px; display: none;'> 
+                <strong>Error!</strong> Por favor selecione um <strong>livro</strong> para realizar o empréstimo!
+            </div>  
+        </div>
+
         <!-- END OF LIVRO VIEW -->
         <div class="centered-container">
             <form action="RealizarEmprestimo" method="POST">
@@ -123,12 +134,19 @@
             var matricula = $('input[name="matricula"').val();
 
             if (isbn === '') {
-                alert("Selecione um livro!");
+                $('#livroNotSelectedError').slideDown();
+
                 event.preventDefault();
+            } else {
+                $('#livroNotSelectedError').slideUp();
             }
+
             if (matricula === '') {
-                alert("Selecione um Aluno!");
+                $('#alunoNotSelectedError').slideDown();
                 event.preventDefault();
+            } else {
+                $('#alunoNotSelectedError').slideUp();
+
             }
         }
 
