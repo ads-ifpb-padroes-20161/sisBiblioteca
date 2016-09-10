@@ -50,23 +50,28 @@ CREATE TABLE LIVRO(
 	titulo TEXT,
 	autor TEXT,
 	descricao TEXT,
+	estoque INT NOT NULL DEAFULT 0,
 	PRIMARY KEY(isbn)
 );
 
-CREATE TABLE ESTADOITEMLIVRO(
-	id INT NOT NULL,
-	estado TEXT,
-	PRIMARY KEY(id)
+CREATE TABLE EMPRESTIMO(
+	id SERIAL,
+	alunoMatricula TEXT NOT NULL,
+	livroIsbn BIGINT NOT NULL,
+	dataInicio DATE NOT NULL,
+	dataFim DATE NOT NULL,
+	dataEntrega DATE,
+	idEstado INTEGER NOT NULL,
+	PRIMARY KEY(id),
+	FOREIGN KEY(alunoMatricula) REFERENCES aluno(matricula),
+	FOREIGN KEY(livroIsbn) REFERENCES livro(isbn)
 );
 
-INSERT INTO estadoitemlivro VALUES(1,'Disponível');
-INSERT INTO estadoitemlivro VALUES(2,'Indisponível');
-
-CREATE TABLE ITEMLIVRO(
-	isbnLivro BIGINT NOT NULL,
-	estoque INT DEFAULT 0,
-	idEstado INT DEFAULT 1,
-	FOREIGN KEY(isbnLivro) REFERENCES LIVRO(isbn),
-	FOREIGN KEY(idEstado) REFERENCES ESTADOITEMLIVRO(id),
-	PRIMARY KEY(isbnLivro)
+CREATE TABLE BLOQUEIO(
+	id SERIAL,
+	alunoMatricula TEXT NOT NULL,
+	dataInicio DATE NOT NULL,
+	dataFim DATE NOT NULL,
+	PRIMARY KEY(id),
+	FOREIGN KEY(alunoMatricula) REFERENCES aluno(matricula)
 );

@@ -5,6 +5,8 @@
  */
 package br.edu.ifpb.padroes.projeto.sisbiblioteca.dao;
 
+import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.Livro;
+import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.LivroNulo;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.LivroPadrao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -18,10 +20,10 @@ import java.util.logging.Logger;
  *
  * @author kieckegard
  */
-public class LivroBdDao implements Dao<LivroPadrao, Long> {
+public class LivroBdDao implements LivroDao {
 
     @Override
-    public void add(LivroPadrao obj) {
+    public void add(Livro obj) {
         String sql = "INSERT INTO livro VALUES(?,?,?,?,?)";
 
         try {
@@ -43,17 +45,17 @@ public class LivroBdDao implements Dao<LivroPadrao, Long> {
     }
 
     @Override
-    public void rem(LivroPadrao obj) {
+    public void rem(Livro obj) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void update(LivroPadrao obj) {
+    public void update(Livro obj) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public LivroPadrao get(Long obj) {
+    public Livro get(Long obj) {
         String sql = "SELECT * FROM livro WHERE isbn = ?";
         try {
             PreparedStatement pstm = FactoryConnection.createConnection().prepareStatement(sql);
@@ -67,13 +69,13 @@ public class LivroBdDao implements Dao<LivroPadrao, Long> {
         catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(LivroBdDao.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return null;
+        return new LivroNulo();
     }
 
     @Override
-    public List<LivroPadrao> list() {
+    public List<Livro> list() {
         String sql = "SELECT * FROM livro";
-        List<LivroPadrao> livros = new ArrayList<>();
+        List<Livro> livros = new ArrayList<>();
         try {
             PreparedStatement pstm = FactoryConnection.createConnection().prepareStatement(sql);
 
@@ -91,16 +93,36 @@ public class LivroBdDao implements Dao<LivroPadrao, Long> {
         return livros;
     }
 
-    private LivroPadrao formaLivro(ResultSet rs) throws SQLException {
+    private Livro formaLivro(ResultSet rs) throws SQLException {
         long isbn = rs.getLong("isbn");
         String titulo = rs.getString("titulo");
         String autor = rs.getString("autor");
         String descricao = rs.getString("descricao");
         int estoque = rs.getInt("estoque");
 
-        LivroPadrao l = new LivroPadrao(isbn, titulo, autor, descricao, estoque);
+        Livro l = new LivroPadrao(isbn, titulo, autor, descricao, estoque);
 
         return l;
+    }
+
+    @Override
+    public void atualizarEstoque(Livro livro) {
+        
+        String sql = "UPDATE livro SET estoque = ? WHERE isbn = ?";
+        
+        try {
+            PreparedStatement pstm = FactoryConnection.createConnection().prepareStatement(sql);
+            
+            int i = 1;
+            
+            pstm.setInt(i++, livro.getEstoque());
+            pstm.setLong(i++, livro.getIsbn());
+            
+            pstm.executeUpdate();
+        }
+        catch (ClassNotFoundException | SQLException ex) {
+            ex.printStackTrace();
+        }
     }
 
 }

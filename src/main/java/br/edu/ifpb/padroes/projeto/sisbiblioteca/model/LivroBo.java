@@ -18,7 +18,7 @@ import java.util.List;
  */
 public class LivroBo {
 
-    private Dao<LivroPadrao, Long> livroDao;
+    private final Dao<Livro, Long> livroDao;
 
     public LivroBo() {
         livroDao = FactoryProvider.createFactory(1).getLivroDao();
@@ -30,7 +30,7 @@ public class LivroBo {
     }
 
     private void verificaIsbn(long isbn) throws ISBNJaExisteException {
-        for (LivroPadrao l : livroDao.list()) {
+        for (Livro l : livroDao.list()) {
             if (l.getIsbn() == isbn) {
                 throw new ISBNJaExisteException("Já existe um livro salvo no banco com esse mesmo ISBN!");
             }
@@ -41,7 +41,7 @@ public class LivroBo {
         return livroDao.get(isbn);
     }
     
-    public List<LivroPadrao> list() {
+    public List<Livro> list() {
         return livroDao.list();
     }
     

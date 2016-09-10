@@ -21,13 +21,19 @@ public class Emprestimo {
     private Livro livro;
     private LocalDate startDate;
     private LocalDate endDate;
+    private LocalDate dataEntregue;
     private EmprestimoEstadoIF estado;
     
-    public Emprestimo(Aluno aluno, Livro livro, LocalDate startDate, EmprestimoEstadoIF estado) {
+    public Emprestimo(Aluno aluno, Livro livro, LocalDate startDate, LocalDate endDate, EmprestimoEstadoIF estado) {
         this.aluno = aluno;
         this.livro = livro;
         this.startDate = startDate;
+        this.endDate = endDate;
         this.estado = estado;
+    }
+    
+    public boolean estaEmDia() {
+        return (endDate.isAfter(LocalDate.now()));
     }
 
     public Integer getId() {
@@ -54,6 +60,22 @@ public class Emprestimo {
         return endDate;
     }
     
+    public LocalDate getDataEntregue() {
+        return dataEntregue;
+    }
+    
+    public Integer getEstadoValue() {
+        return this.estado.getValue();
+    }
+    
+    public String getEstadoDescricao() {
+        return this.estado.getDescricao();
+    }
+    
+    public void setDataEntrega(LocalDate dataEntregue) {
+        this.dataEntregue = dataEntregue;
+    }
+    
     public void processarEmprestimo() throws LivroIndisponivelException, AlunoInabilitadoException {
         this.estado = estado.processarEmprestimo();
         this.livro.emprestar();
@@ -62,6 +84,7 @@ public class Emprestimo {
     
     public void finalizarEmprestimo() throws EmprestimoAtrasadoException {
         this.estado = estado.finalizarEmprestimo();
+        this.dataEntregue = LocalDate.now();
         this.livro.devolver();
         verificarAtraso();
         this.aluno.finalizarEmprestimo();

@@ -5,9 +5,8 @@
  */
 package br.edu.ifpb.padroes.projeto.sisbiblioteca.dao;
 
-import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.Aluno;
+import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.Bloqueio;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.Endereco;
-import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.LivroPadrao;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.Pessoa;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.Usuario;
 
@@ -19,11 +18,15 @@ public interface FactoryDaoIF {
 
     Dao<Usuario, String> getUsuarioDao();
 
-    Dao<Aluno, String> getAlunoDao();
+    AlunoDao getAlunoDao();
 
     Dao<Endereco, Pessoa> getEnderecoDao();
 
-    Dao<LivroPadrao, Long> getLivroDao();
+    LivroDao getLivroDao();
 
     SimpleDao<Pessoa, String> getPessoaDao();
+    
+    EmprestimoDao getEmprestimoDao();
+    
+    Dao<Bloqueio, Integer> getBloqueioDao();
 }

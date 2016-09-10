@@ -25,7 +25,7 @@ import java.util.logging.Logger;
  *
  * @author kieckegard
  */
-public class AlunoBdDao implements Dao<Aluno, String> {
+public class AlunoBdDao implements AlunoDao {
 
     private final Dao<Endereco, Pessoa> enderecoBdDao;
     private final SimpleDao<Pessoa, String> pessoaBdDao;
@@ -68,6 +68,7 @@ public class AlunoBdDao implements Dao<Aluno, String> {
 
     @Override
     public Aluno get(String obj) {
+        verifyAndDisblock();
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -110,6 +111,7 @@ public class AlunoBdDao implements Dao<Aluno, String> {
 
     @Override
     public List<Aluno> list() {
+        verifyAndDisblock();
         String sql = "SELECT * FROM Aluno a JOIN Pessoa p ON a.cpfPessoa = p.cpf";
         List<Aluno> alunos = new ArrayList<>();
         try {
@@ -150,6 +152,41 @@ public class AlunoBdDao implements Dao<Aluno, String> {
         aluno.setEndereco(endereco);
         aluno.setEstado(estadoAlunoEnum);
         return aluno;
+    }
+
+    @Override
+    public void atualizarEstadoAluno(Aluno aluno) {
+        
+        String sql = "UPDATE aluno SET idEstado = ? WHERE matricula = ?";
+        
+        try {
+            PreparedStatement pstm = FactoryConnection.createConnection().prepareStatement(sql);
+            
+            int i=1;
+            
+            pstm.setInt(i++, aluno.getValorEstado());
+            pstm.setString(i++, aluno.getMatricula());
+            
+            pstm.executeUpdate();
+        }
+        catch (ClassNotFoundException | SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+    
+    private void verifyAndDisblock() {
+        String sql = "UPDATE aluno SET idEstado = 1 "
+                + "FROM bloqueio b WHERE b.alunoMatricula = matricula"
+                + " AND b.dataFim >= current_date";
+        
+        try {
+            PreparedStatement pstm = FactoryConnection.createConnection().prepareStatement(sql);
+            
+            pstm.executeUpdate();
+        }
+        catch (ClassNotFoundException | SQLException ex) {
+            ex.printStackTrace();
+        }
     }
 
 }

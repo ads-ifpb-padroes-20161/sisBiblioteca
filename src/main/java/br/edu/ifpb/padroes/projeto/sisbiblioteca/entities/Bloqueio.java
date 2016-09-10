@@ -13,6 +13,7 @@ import java.time.LocalDate;
  */
 public class Bloqueio {
     
+    private Integer id;
     private LocalDate  dataInicio;
     private LocalDate  dataFim;
     private Aluno      aluno;
@@ -21,6 +22,10 @@ public class Bloqueio {
         this.dataInicio  = dataInicio;
         this.dataFim     = dataFim;
         this.aluno       = aluno;
+    }
+    
+    public Integer getId() {
+        return this.id;
     }
     
     public LocalDate getDataInicio() {
@@ -39,5 +44,9 @@ public class Bloqueio {
     public String toString()
     {
         return "Bloqueio{" + "dataInicio=" + dataInicio + ", dataFim=" + dataFim + ", aluno=" + aluno + '}';
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 }

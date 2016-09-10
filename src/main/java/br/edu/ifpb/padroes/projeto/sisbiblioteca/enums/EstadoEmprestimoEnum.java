@@ -12,7 +12,7 @@ import br.edu.ifpb.padroes.projeto.sisbiblioteca.exceptions.EmprestimoJaFinaliza
  *
  * @author kieckegard
  */
-public enum EstadoEmprestimoEnum implements EmprestimoEstadoIF{
+public enum EstadoEmprestimoEnum implements EmprestimoEstadoIF {
     CORRENTE{
 
         @Override
@@ -23,6 +23,16 @@ public enum EstadoEmprestimoEnum implements EmprestimoEstadoIF{
         @Override
         public EmprestimoEstadoIF finalizarEmprestimo() {
             return FINALIZADO;
+        }
+
+        @Override
+        public String getDescricao() {
+            return "Corrente";
+        }
+
+        @Override
+        public Integer getValue() {
+            return 0;
         }
         
     },
@@ -36,6 +46,16 @@ public enum EstadoEmprestimoEnum implements EmprestimoEstadoIF{
         @Override
         public EmprestimoEstadoIF finalizarEmprestimo() {
             throw new EmprestimoJaFinalizadoException("Este empréstimo já foi finalizado!");
+        }
+        
+        @Override
+        public String getDescricao() {
+            return "Finalizado";
+        }
+
+        @Override
+        public Integer getValue() {
+            return 1;
         }
         
     }

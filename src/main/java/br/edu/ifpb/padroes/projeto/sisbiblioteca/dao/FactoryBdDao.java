@@ -5,9 +5,8 @@
  */
 package br.edu.ifpb.padroes.projeto.sisbiblioteca.dao;
 
-import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.Aluno;
+import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.Bloqueio;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.Endereco;
-import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.LivroPadrao;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.Pessoa;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.Usuario;
 
@@ -18,12 +17,12 @@ import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.Usuario;
 public class FactoryBdDao implements FactoryDaoIF {
 
     @Override
-    public Dao<Aluno, String> getAlunoDao() {
+    public AlunoDao getAlunoDao() {
         return new AlunoBdDao();
     }
 
     @Override
-    public Dao<LivroPadrao, Long> getLivroDao() {
+    public LivroDao getLivroDao() {
         return new LivroBdDao();
     }
 
@@ -40,6 +39,16 @@ public class FactoryBdDao implements FactoryDaoIF {
     @Override
     public Dao<Endereco, Pessoa> getEnderecoDao() {
         return new EnderecoBdDao();
+    }
+
+    @Override
+    public EmprestimoDao getEmprestimoDao() {
+        return new EmprestimoBdDao();
+    }
+
+    @Override
+    public Dao<Bloqueio, Integer> getBloqueioDao() {
+        return new BloqueioBdDao();
     }
 
 }

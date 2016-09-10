@@ -13,4 +13,6 @@ public interface EmprestimoEstadoIF {
     
     EmprestimoEstadoIF processarEmprestimo();
     EmprestimoEstadoIF finalizarEmprestimo();
+    String getDescricao();
+    Integer getValue();
 }
