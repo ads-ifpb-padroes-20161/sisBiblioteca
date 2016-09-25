@@ -9,6 +9,7 @@ import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.aluno.Aluno;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.livro.Livro;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.exceptions.AlunoInabilitadoException;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.exceptions.EmprestimoAtrasadoException;
+import br.edu.ifpb.padroes.projeto.sisbiblioteca.exceptions.EmprestimoEmAndamentoException;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.exceptions.EmprestimoJaFinalizadoException;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.exceptions.LivroIndisponivelException;
 import java.time.LocalDate;
@@ -67,8 +68,11 @@ public class Emprestimo implements Comparable<Emprestimo> {
         return endDate;
     }
     
-    public LocalDate getDataEntregue() {
-        return dataEntregue;
+    public LocalDate getDataEntregue() throws EmprestimoEmAndamentoException {
+        if(estado.getValue() == 0)
+            throw new EmprestimoEmAndamentoException("O empréstimo está em Andamento, portanto,"
+                    + " o mesmo ainda não possui data de finalização.");
+        return this.dataEntregue;
     }
     
     public Integer getEstadoValue() {
