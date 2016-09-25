@@ -56,8 +56,6 @@ public abstract class Pessoa implements IPessoa {
         return DateUtils.formatToBrazilPattern(dataNascimento);
     }
 
-    
-
     public void setEndereco(Endereco e) {
         this.endereco = e;
     }

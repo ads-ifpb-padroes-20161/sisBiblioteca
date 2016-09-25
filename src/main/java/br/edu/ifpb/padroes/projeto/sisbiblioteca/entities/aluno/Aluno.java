@@ -5,10 +5,9 @@
  */
 package br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.aluno;
 
-import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.Endereco;
+import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.EstadoAlunoIF;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.IPessoa;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.exceptions.AlunoInabilitadoException;
-import java.time.LocalDate;
 
 /**
  *
@@ -27,5 +26,11 @@ public interface Aluno extends IPessoa {
     public void realizarEmprestimo() throws AlunoInabilitadoException;
 
     public void finalizarEmprestimo();
+    
+    public void setMatricula(String matricula);
+
+    public void setEmail(String email);
+
+    public void setEstado(EstadoAlunoIF estado);
     
 }

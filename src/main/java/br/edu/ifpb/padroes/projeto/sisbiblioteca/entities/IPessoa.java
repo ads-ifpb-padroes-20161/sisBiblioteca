@@ -20,4 +20,13 @@ public interface IPessoa {
     public LocalDate getDataNascimento();
     
     public Endereco getEndereco();
+    
+    public void setEndereco(Endereco e);
+
+    public void setCpf(String cpf);
+
+    public void setNome(String nome);
+
+    public void setDataNascimento(LocalDate dataNascimento);
+    
 }

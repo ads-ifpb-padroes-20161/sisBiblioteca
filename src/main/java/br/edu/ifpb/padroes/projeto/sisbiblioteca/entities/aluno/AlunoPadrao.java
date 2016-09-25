@@ -32,29 +32,47 @@ public class AlunoPadrao extends Pessoa implements Aluno{
         
     }
 
+    @Override
     public String getMatricula() {
         return matricula;
     }
 
+    @Override
     public String getEmail() {
         return email;
     }
 
+    @Override
     public Integer getValorEstado() {
         return this.estado.getValue();
     }
 
+    @Override
     public String getDescricaoEstado() {
         return this.estado.getDescricao();
     }
 
+    @Override
     public void realizarEmprestimo() throws AlunoInabilitadoException {
         this.estado = estado.realizarEmprestimo();
     }
 
+    @Override
     public void finalizarEmprestimo() {
         this.estado = estado.finalizarEmprestimo();
     }
+
+    public void setMatricula(String matricula) {
+        this.matricula = matricula;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setEstado(EstadoAlunoIF estado) {
+        this.estado = estado;
+    } 
     
     @Override
     public String toString() {
