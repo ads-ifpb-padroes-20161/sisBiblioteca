@@ -28,7 +28,7 @@
                 <h2>Por favor, preencha todos os campos para cadastrar sua conta de <span>Usuário</span></h2>
             </div>
             <div class='cad-content'>
-                <form id="formUserAccount" method="POST" action="CadastrarUsuario">
+                <form id="formUserAccount" method="POST" action="FrontController?action=CadastrarUsuario">
                     <div class='inputs'>
                         <div class='group-form'>
                             <p class='form-title'>Pessoa</p>

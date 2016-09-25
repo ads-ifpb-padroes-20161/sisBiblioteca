@@ -55,7 +55,7 @@
                         <h2>Sua Conta de <span>Usuário</span></h2>
                     </div>
                     <div class='cad-content'>
-                        <form id="formUserAccount" method="POST" action="AlterarConta">
+                        <form id="formUserAccount" method="POST" action="FrontController?action=AlterarConta">
                             <div class='inputs'>
                                 <div class='group-form'>
                                     <p class='form-title'>Pessoa</p>
@@ -122,7 +122,7 @@
                                     <button id='btnUpdate' type='submit' class='submit-button success' disabled><i class="fa fa-floppy-o" aria-hidden="true"></i> Salvar Alterações </button>
                                 </li>
                                 <li>
-                                    <a id="btnRemove" href="DeletarConta?matricula=${sessionScope.loggedUser.getMatricula()}" class='submit-button danger'><i class="fa fa-trash" aria-hidden="true"></i> Excluir Conta </a>
+                                    <a id="btnRemove" href="FrontController?action=DeletarConta&matricula=${sessionScope.loggedUser.getMatricula()}" class='submit-button danger'><i class="fa fa-trash" aria-hidden="true"></i> Excluir Conta </a>
                                 </li>
                             </ul>
                         </form>             

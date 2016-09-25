@@ -111,7 +111,7 @@
                                     <td>${DateUtils.formatToBrazilPattern(emprestimo.endDate)}</td>
                                     <c:if test="${emprestimo.estadoValue == 0}">
                                         <td class='light-green'>${emprestimo.estadoDescricao}</td>
-                                        <td><a href='FinalizarEmprestimo?id=${emprestimo.id}'>Finalizar</a></td>
+                                        <td><a href='FrontController?action=FinalizarEmprestimo&id=${emprestimo.id}'>Finalizar</a></td>
                                     </c:if>
                                     <c:if test="${emprestimo.estadoValue == 1}">
                                         <td style='color: lightblue;'>${DateUtils.formatToBrazilPattern(emprestimo.dataEntregue)}</td>

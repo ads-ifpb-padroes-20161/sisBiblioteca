@@ -33,7 +33,7 @@
                 <c:if test="${requestScope.firstLogin != true}">
                     <p class="welcome-msg">Bem vindo, <span class="blue-title">${sessionScope.loggedUser.getNome()}</span></p>
                 </c:if>
-                <a class="submit-button danger" href="Logout">
+                <a class="submit-button danger" href="FrontController?action=Logout">
                     <i class="fa fa-sign-out" aria-hidden="true"></i> Sair
                 </a>
             </div>

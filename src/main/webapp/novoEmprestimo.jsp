@@ -97,7 +97,7 @@
 
         <!-- END OF LIVRO VIEW -->
         <div class="centered-container">
-            <form action="RealizarEmprestimo" method="POST">
+            <form action="FrontController?action=RealizarEmprestimo" method="POST">
                 <input name="matricula" type="text" style="display: none">
                 <input name="isbn" type="text" style="display: none">
                 <ul style="list-style: none; padding: 0px;">

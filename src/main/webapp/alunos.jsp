@@ -35,7 +35,7 @@
                     <h2>Cadastro de <span>Alunos</span></h2>
                 </div>
                 <div class='cad-content'>
-                    <form id="formCadastroAluno" method="POST" action="CadastrarAluno">
+                    <form id="formCadastroAluno" method="POST" action="FrontController?action=CadastrarAluno">
                         <div class='inputs'>
                             <div class='group-form'>
                                 <p class='form-title'>Pessoa</p>
@@ -138,7 +138,7 @@
                                         else {
                                             out.print("<td class='light-red'>" + aluno.getDescricaoEstado() + "</td>");
                                         }
-                                        out.print("<td><a href='RemoverAluno?matricula=" + aluno.getMatricula() + "'>Remover</a></td>");
+                                        out.print("<td><a href='FrontController?action=RemoverAluno&matricula=" + aluno.getMatricula() + "'>Remover</a></td>");
                                         out.print("</tr>");
                                     }
                                 %>
