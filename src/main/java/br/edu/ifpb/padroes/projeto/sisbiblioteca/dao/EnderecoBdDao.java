@@ -30,7 +30,7 @@ public class EnderecoBdDao implements EnderecoDao {
         String sql = "INSERT INTO endereco(pais,estado,cidade,bairro,rua,numero) VALUES(?,?,?,?,?,?) RETURNING id";
 
         try {
-            pstm = FactoryConnection.createConnection().prepareStatement(sql);
+            pstm = FactoryConnection.getInstance().prepareStatement(sql);
 
             int i = 1;
             pstm.setString(i++, e.getPais());
@@ -57,7 +57,7 @@ public class EnderecoBdDao implements EnderecoDao {
         String sql = "DELETE FROM endereco WHERE id = ?";
 
         try {
-            pstm = FactoryConnection.createConnection().prepareStatement(sql);
+            pstm = FactoryConnection.getInstance().prepareStatement(sql);
 
             pstm.setInt(1, id);
 
@@ -73,7 +73,7 @@ public class EnderecoBdDao implements EnderecoDao {
         String sql = "SELECT * FROM Endereco e JOIN Pessoa p ON e.id = p.idEndereco WHERE p.cpf = ?";
 
         try {
-            pstm = FactoryConnection.createConnection().prepareStatement(sql);
+            pstm = FactoryConnection.getInstance().prepareStatement(sql);
 
             pstm.setString(1, pessoaCpf);
 
@@ -115,7 +115,7 @@ public class EnderecoBdDao implements EnderecoDao {
                 + " WHERE id = ? ";
         
         try {
-            PreparedStatement pstm = FactoryConnection.createConnection().prepareStatement(sql);
+            PreparedStatement pstm = FactoryConnection.getInstance().prepareStatement(sql);
             
             int i = 1;
             

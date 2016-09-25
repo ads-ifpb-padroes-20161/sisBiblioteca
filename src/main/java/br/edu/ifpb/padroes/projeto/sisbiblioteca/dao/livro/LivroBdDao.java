@@ -28,7 +28,7 @@ public class LivroBdDao implements LivroDao {
         String sql = "INSERT INTO livro VALUES(?,?,?,?,?)";
 
         try {
-            PreparedStatement pstm = FactoryConnection.createConnection().prepareStatement(sql);
+            PreparedStatement pstm = FactoryConnection.getInstance().prepareStatement(sql);
 
             int i = 1;
 
@@ -49,7 +49,7 @@ public class LivroBdDao implements LivroDao {
     public Livro recuperarLivroPorIsbn(Long obj) {
         String sql = "SELECT * FROM livro WHERE isbn = ?";
         try {
-            PreparedStatement pstm = FactoryConnection.createConnection().prepareStatement(sql);
+            PreparedStatement pstm = FactoryConnection.getInstance().prepareStatement(sql);
             pstm.setLong(1, obj);
             ResultSet rs = pstm.executeQuery();
 
@@ -66,7 +66,7 @@ public class LivroBdDao implements LivroDao {
     private List<Livro> selectLivro(String sql) {
         List<Livro> livros = new ArrayList<>();
         try {
-            PreparedStatement pstm = FactoryConnection.createConnection().prepareStatement(sql);
+            PreparedStatement pstm = FactoryConnection.getInstance().prepareStatement(sql);
 
             ResultSet rs = pstm.executeQuery();
 
@@ -106,7 +106,7 @@ public class LivroBdDao implements LivroDao {
         String sql = "UPDATE livro SET estoque = ? WHERE isbn = ?";
         
         try {
-            PreparedStatement pstm = FactoryConnection.createConnection().prepareStatement(sql);
+            PreparedStatement pstm = FactoryConnection.getInstance().prepareStatement(sql);
             
             int i = 1;
             

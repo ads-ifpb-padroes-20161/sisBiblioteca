@@ -10,9 +10,9 @@ import br.edu.ifpb.padroes.projeto.sisbiblioteca.dao.EnderecoDao;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.dao.FactoryConnection;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.dao.PessoaBdDao;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.dao.PessoaDao;
-import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.aluno.AlunoBuilder;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.Endereco;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.aluno.Aluno;
+import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.aluno.AlunoPadrao;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.enums.EstadoAlunoEnum;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -45,7 +45,7 @@ public class AlunoBdDao implements AlunoDao {
         String sql = "INSERT INTO aluno VALUES(?,?,?,?)";
         pessoaBdDao.adicionarPessoa(obj);
         try {
-            PreparedStatement pstm = FactoryConnection.createConnection().prepareStatement(sql);
+            PreparedStatement pstm = FactoryConnection.getInstance().prepareStatement(sql);
 
             int i = 1;
 
@@ -65,21 +65,23 @@ public class AlunoBdDao implements AlunoDao {
     public Aluno recuperarAlunoPorMatricula(String obj) {
 
         String sql = "SELECT * FROM Aluno a JOIN Pessoa p ON a.cpfPessoa = p.cpf WHERE a.matricula = ?";
-        try{
-            PreparedStatement pstm = FactoryConnection.createConnection().prepareStatement(sql);
-            
+        try {
+            PreparedStatement pstm = FactoryConnection.getInstance().prepareStatement(sql);
+
             int i = 1;
-            
+
             pstm.setString(i++, obj);
-            
+
             ResultSet rs = pstm.executeQuery();
             Aluno aluno = null;
-            if(rs.next())
+            if (rs.next()) {
                 aluno = formaAluno(rs);
-            
+            }
+
             return aluno;
-            
-        }catch(ClassNotFoundException | SQLException ex) {
+
+        }
+        catch (ClassNotFoundException | SQLException ex) {
             ex.printStackTrace();
         }
         return null;
@@ -106,7 +108,7 @@ public class AlunoBdDao implements AlunoDao {
         List<Aluno> alunos = new ArrayList<>();
 
         try {
-            PreparedStatement pstm = FactoryConnection.createConnection().prepareStatement(sql.toString());
+            PreparedStatement pstm = FactoryConnection.getInstance().prepareStatement(sql.toString());
 
             ResultSet rs = pstm.executeQuery();
 
@@ -124,7 +126,7 @@ public class AlunoBdDao implements AlunoDao {
 
     @Override
     public List<Aluno> listarAlunos() {
-        
+
         String sql = "SELECT * FROM Aluno a JOIN Pessoa p ON a.cpfPessoa = p.cpf";
         return selectAlunos(sql);
     }
@@ -134,47 +136,52 @@ public class AlunoBdDao implements AlunoDao {
         String email = rs.getString("email");
         String matricula = rs.getString("matricula");
         int estado = rs.getInt("idEstado");
-        EstadoAlunoEnum estadoAlunoEnum = EstadoAlunoEnum.values()[estado-1];
-        
+        EstadoAlunoEnum estadoAlunoEnum = EstadoAlunoEnum.values()[estado - 1];
+
         //pessoa
         String cpf = rs.getString("cpf");
         String nome = rs.getString("nome");
         LocalDate dataNascimento = rs.getDate("dataNascimento").toLocalDate();
-        
+
         Endereco endereco = enderecoBdDao.recuperarEnderecoPorPessoaCpf(cpf);
-        
+
         //endereco
-        Aluno aluno = new AlunoBuilder().setCpf(cpf)
-                .setNome(nome).setDataNascimento(dataNascimento)
-                .setMatricula(matricula).setEmail(email).setEstado(estadoAlunoEnum).setEndereco(endereco).getInstance();
-        
+        Aluno aluno = new AlunoPadrao();
+        aluno.setCpf(cpf);
+        aluno.setNome(nome);
+        aluno.setDataNascimento(dataNascimento);
+        aluno.setMatricula(matricula);
+        aluno.setEmail(email);
+        aluno.setEstado(estadoAlunoEnum);
+        aluno.setEndereco(endereco);
+
         return aluno;
     }
 
     @Override
     public void atualizarEstadoAluno(Aluno aluno) {
-        
+
         String sql = "UPDATE aluno SET idEstado = ? WHERE matricula = ?";
-        
+
         try {
-            PreparedStatement pstm = FactoryConnection.createConnection().prepareStatement(sql);
-            
-            int i=1;
-            
+            PreparedStatement pstm = FactoryConnection.getInstance().prepareStatement(sql);
+
+            int i = 1;
+
             pstm.setInt(i++, aluno.getValorEstado());
             pstm.setString(i++, aluno.getMatricula());
-            
+
             pstm.executeUpdate();
         }
         catch (ClassNotFoundException | SQLException ex) {
             ex.printStackTrace();
         }
     }
-    
+
     private List<Aluno> selectAlunos(String sql) {
         List<Aluno> alunos = new ArrayList<>();
         try {
-            PreparedStatement pstm = FactoryConnection.createConnection().prepareStatement(sql);
+            PreparedStatement pstm = FactoryConnection.getInstance().prepareStatement(sql);
 
             ResultSet rs = pstm.executeQuery();
 
@@ -193,7 +200,7 @@ public class AlunoBdDao implements AlunoDao {
 
     @Override
     public List<Aluno> listarAlunosHabilitados() {
-        
+
         String sql = "SELECT * FROM Aluno a JOIN Pessoa p ON a.cpfPessoa = p.cpf WHERE a.idEstado = 1";
         return selectAlunos(sql);
     }

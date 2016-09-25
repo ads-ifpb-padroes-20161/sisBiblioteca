@@ -6,6 +6,7 @@
 package br.edu.ifpb.padroes.projeto.sisbiblioteca.dao.emprestimo;
 
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.Emprestimo;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -20,4 +21,6 @@ public interface EmprestimoDao {
     void finalizarEmprestimo(Emprestimo emprestimo);
     List<Emprestimo> listarEmprestimos();
     List<Emprestimo> listByAttributes(Map<String, String> attributes);
+    List<Emprestimo> listEmprestimosToEndByDaysQuantity(Integer daysQuantity);
+    void registraNotificacao(Integer emprestimoId, LocalDateTime dateTime);
 }

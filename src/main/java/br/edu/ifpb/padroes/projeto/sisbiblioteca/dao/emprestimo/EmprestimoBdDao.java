@@ -19,6 +19,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -45,7 +46,7 @@ public class EmprestimoBdDao implements EmprestimoDao {
     public void finalizarEmprestimo(Emprestimo emprestimo) {
         String sql = "UPDATE emprestimo SET idEstado = ?, dataEntrega = ? WHERE id = ?";
         try {
-            PreparedStatement pstm = FactoryConnection.createConnection().prepareStatement(sql);
+            PreparedStatement pstm = FactoryConnection.getInstance().prepareStatement(sql);
             
             int i = 1;
             
@@ -68,7 +69,7 @@ public class EmprestimoBdDao implements EmprestimoDao {
                 + " VALUES(?,?,?,?,?) RETURNING id";
         
         try {
-            PreparedStatement pstm = FactoryConnection.createConnection().prepareStatement(sql);
+            PreparedStatement pstm = FactoryConnection.getInstance().prepareStatement(sql);
             
             int i=1;
             
@@ -93,7 +94,7 @@ public class EmprestimoBdDao implements EmprestimoDao {
         try {
             String sql = "SELECT * FROM emprestimo WHERE id = ?";
             
-            PreparedStatement pstm = FactoryConnection.createConnection().prepareStatement(sql);
+            PreparedStatement pstm = FactoryConnection.getInstance().prepareStatement(sql);
             
             int i=1;
             
@@ -117,7 +118,7 @@ public class EmprestimoBdDao implements EmprestimoDao {
         List<Emprestimo> emprestimos = new LinkedList<>();
         
         try {
-            PreparedStatement pstm = FactoryConnection.createConnection().prepareStatement(sql);
+            PreparedStatement pstm = FactoryConnection.getInstance().prepareStatement(sql);
             
             ResultSet rs = pstm.executeQuery();
             
@@ -141,6 +142,76 @@ public class EmprestimoBdDao implements EmprestimoDao {
     
     private Aluno getAlunoFromMatricula(String matricula) {
         return alunoDao.recuperarAlunoPorMatricula(matricula);
+    }
+
+    @Override
+    public List<Emprestimo> listByAttributes(Map<String, String> attributes) {
+
+        StringBuilder sql = new StringBuilder("SELECT * FROM emprestimo WHERE ");
+
+        Set<String> keys = attributes.keySet();
+        Iterator<String> it = keys.iterator();
+
+        String key;
+        while (it.hasNext()) {
+            key = it.next();
+            sql.append(key);
+            sql.append(" = ");
+            sql.append("'").append(attributes.get(key)).append("'");
+            if (it.hasNext()) {
+                sql.append(" AND ");
+            }
+        }
+
+        List<Emprestimo> emprestimos = new LinkedList<>();
+
+        try {
+            PreparedStatement pstm = FactoryConnection.getInstance().prepareStatement(sql.toString());
+
+            ResultSet rs = pstm.executeQuery();
+
+            while (rs.next()) {
+                emprestimos.add(formaEmprestimo(rs));
+            }
+
+            return emprestimos;
+        }
+        catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(AlunoBdDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return emprestimos;
+    }
+    
+    @Override
+    public List<Emprestimo> listEmprestimosToEndByDaysQuantity(Integer daysQuantity) {
+        
+        List<Emprestimo> emprestimos = new LinkedList<>();
+        
+        String sql = "SELECT * FROM emprestimo WHERE idEstado = 0"
+                + " AND date_part('day',age(datafim,current_date)) = ?"
+                + " AND id NOT IN(SELECT emprestimoId FROM emprestimos_notificados)";
+        
+        try {
+            PreparedStatement pstm = FactoryConnection.getInstance().prepareStatement(sql);
+            
+            pstm.setInt(1, daysQuantity);
+            
+            ResultSet rs = pstm.executeQuery();
+            
+            System.out.println("Executing Query... ");
+            System.out.println(pstm.toString());
+            
+            while(rs.next()) {
+                emprestimos.add(formaEmprestimo(rs));
+            }
+            
+            return emprestimos;
+        }
+        catch (ClassNotFoundException | SQLException ex) {
+            ex.printStackTrace();
+        }
+        
+        return emprestimos;
     }
     
     private Emprestimo formaEmprestimo(ResultSet rs) throws SQLException {
@@ -168,41 +239,23 @@ public class EmprestimoBdDao implements EmprestimoDao {
     }
 
     @Override
-    public List<Emprestimo> listByAttributes(Map<String, String> attributes) {
-
-        StringBuilder sql = new StringBuilder("SELECT * FROM emprestimo WHERE ");
-
-        Set<String> keys = attributes.keySet();
-        Iterator<String> it = keys.iterator();
-
-        String key;
-        while (it.hasNext()) {
-            key = it.next();
-            sql.append(key);
-            sql.append(" = ");
-            sql.append("'").append(attributes.get(key)).append("'");
-            if (it.hasNext()) {
-                sql.append(" AND ");
-            }
-        }
-
-        List<Emprestimo> emprestimos = new LinkedList<>();
-
+    public void registraNotificacao(Integer emprestimoId, LocalDateTime dateTime) {
+        String sql = "INSERT INTO emprestimos_notificados VALUES(?,?)";
+        
         try {
-            PreparedStatement pstm = FactoryConnection.createConnection().prepareStatement(sql.toString());
-
-            ResultSet rs = pstm.executeQuery();
-
-            while (rs.next()) {
-                emprestimos.add(formaEmprestimo(rs));
-            }
-
-            return emprestimos;
+            PreparedStatement pstm = FactoryConnection.getInstance().prepareStatement(sql);
+            
+            Integer i = 1;
+            
+            pstm.setInt(i++, emprestimoId);
+            pstm.setTimestamp(i++, java.sql.Timestamp.valueOf(dateTime));
+            
+            pstm.executeUpdate();
+            
         }
         catch (ClassNotFoundException | SQLException ex) {
-            Logger.getLogger(AlunoBdDao.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
         }
-        return emprestimos;
     }
     
 }

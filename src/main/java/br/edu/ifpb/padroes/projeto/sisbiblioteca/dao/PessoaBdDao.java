@@ -29,7 +29,7 @@ public class PessoaBdDao implements PessoaDao {
         String sql = "INSERT INTO pessoa VALUES(?,?,?,?)";
 
         try {
-            PreparedStatement pstm = FactoryConnection.createConnection().prepareStatement(sql);
+            PreparedStatement pstm = FactoryConnection.getInstance().prepareStatement(sql);
 
             int i = 1;
 
@@ -59,7 +59,7 @@ public class PessoaBdDao implements PessoaDao {
         String sql = "UPDATE pessoa SET nome = ?, datanascimento = ? WHERE cpf = ?";
         
         try {
-            PreparedStatement pstm = FactoryConnection.createConnection().prepareStatement(sql);
+            PreparedStatement pstm = FactoryConnection.getInstance().prepareStatement(sql);
             
             int i = 1;
             

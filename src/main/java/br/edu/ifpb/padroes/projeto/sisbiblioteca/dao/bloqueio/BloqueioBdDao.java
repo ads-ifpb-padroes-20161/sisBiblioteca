@@ -25,7 +25,7 @@ public class BloqueioBdDao implements BloqueioDao {
                 + " VALUES(?,?,?,?) RETURNING id";
         
         try {
-            PreparedStatement pstm = FactoryConnection.createConnection().prepareStatement(sql);
+            PreparedStatement pstm = FactoryConnection.getInstance().prepareStatement(sql);
             
             int i = 1;
             
@@ -49,7 +49,7 @@ public class BloqueioBdDao implements BloqueioDao {
         String sql = "UPDATE bloqueio SET status = ? WHERE id = ?";
         
         try {
-            PreparedStatement pstm = FactoryConnection.createConnection().prepareStatement(sql);
+            PreparedStatement pstm = FactoryConnection.getInstance().prepareStatement(sql);
             
             int i = 1;
             
@@ -78,7 +78,7 @@ public class BloqueioBdDao implements BloqueioDao {
                 + " WHERE matricula = b.alunoMatricula AND b.datafim <= current_date AND b.status = 0 RETURNING b.id";
         
         try {
-            PreparedStatement pstm = FactoryConnection.createConnection().prepareStatement(sql);
+            PreparedStatement pstm = FactoryConnection.getInstance().prepareStatement(sql);
             
             ResultSet rs = pstm.executeQuery();
             

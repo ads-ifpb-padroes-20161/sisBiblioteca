@@ -37,7 +37,7 @@ public class UsuarioBdDao implements UsuarioDao {
         String sql = "INSERT INTO usuario VALUES(?,?,?,?)";
         pessoaDao.adicionarPessoa(obj);
         try {
-            PreparedStatement pstm = FactoryConnection.createConnection().prepareStatement(sql);
+            PreparedStatement pstm = FactoryConnection.getInstance().prepareStatement(sql);
 
             int i = 1;
 
@@ -58,7 +58,7 @@ public class UsuarioBdDao implements UsuarioDao {
         String sql = "DELETE FROM usuario WHERE matricula = ?";
         
         try {
-            PreparedStatement pstm = FactoryConnection.createConnection().prepareStatement(sql);
+            PreparedStatement pstm = FactoryConnection.getInstance().prepareStatement(sql);
             
             pstm.setString(1, matricula);
             
@@ -74,7 +74,7 @@ public class UsuarioBdDao implements UsuarioDao {
         String sql = "UPDATE usuario SET senha = ? WHERE matricula = ?";
         
         try {
-            PreparedStatement pstm = FactoryConnection.createConnection().prepareStatement(sql);
+            PreparedStatement pstm = FactoryConnection.getInstance().prepareStatement(sql);
             
             int i = 1;
             
@@ -95,7 +95,7 @@ public class UsuarioBdDao implements UsuarioDao {
         List<Usuario> usuarios = new ArrayList<>();
 
         try {
-            PreparedStatement pstm = FactoryConnection.createConnection().prepareStatement(sql);
+            PreparedStatement pstm = FactoryConnection.getInstance().prepareStatement(sql);
 
             ResultSet rs = pstm.executeQuery();
 
