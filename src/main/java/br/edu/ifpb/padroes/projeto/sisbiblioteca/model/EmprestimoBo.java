@@ -20,9 +20,12 @@ import br.edu.ifpb.padroes.projeto.sisbiblioteca.exceptions.AlunoInabilitadoExce
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.exceptions.EmprestimoAtrasadoException;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.exceptions.EmprestimoJaFinalizadoException;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.exceptions.LivroIndisponivelException;
+import br.edu.ifpb.padroes.projeto.sisbiblioteca.mail.EmprestimoEmail;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
+import org.apache.commons.mail.EmailException;
 
 /**
  *
@@ -43,16 +46,15 @@ public class EmprestimoBo {
     }
 
     public Emprestimo realizarEmprestimo(Aluno aluno, Livro livro, LocalDate startDate) throws LivroIndisponivelException, AlunoInabilitadoException {
-        
+
         Emprestimo emprestimo = new Emprestimo(aluno, livro, startDate, startDate.plusDays(10), EstadoEmprestimoEnum.ANDAMENTO);
-        
         emprestimo.processarEmprestimo();
-        
+
         newEmprestimoOnDao(emprestimo);
-        
+
         return emprestimo;
     }
-
+    
     public void finalizaEmprestimo(Emprestimo emprestimo) throws EmprestimoAtrasadoException, EmprestimoJaFinalizadoException {
         try {
             emprestimo.finalizarEmprestimo();
@@ -69,34 +71,59 @@ public class EmprestimoBo {
                     + " durante 3 dias! ");
         }
     }
-    
+
     private void newEmprestimoOnDao(Emprestimo emprestimo) {
-        
+
         emprestimoDao.adicionarEmprestimo(emprestimo);
-        
+
         updateAlunoAndLivro(emprestimo.getAluno(), emprestimo.getLivro());
     }
 
     private void finalizeEmprestimoOnDao(Emprestimo emprestimo) {
-        
+
         emprestimoDao.finalizarEmprestimo(emprestimo);
-        
+
         updateAlunoAndLivro(emprestimo.getAluno(), emprestimo.getLivro());
     }
-    
+
     private void updateAlunoAndLivro(Aluno aluno, Livro livro) {
-        
+
         livroDao.atualizarEstoque(livro);
         alunoDao.atualizarEstadoAluno(aluno);
     }
 
-    public List<Emprestimo> listarEmprestimos() { 
+    public List<Emprestimo> listarEmprestimos() {
+
         List<Emprestimo> emprestimos = emprestimoDao.listarEmprestimos();
         Collections.sort(emprestimos);
+
         return Collections.unmodifiableList(emprestimos);
     }
 
-    public Emprestimo getEmprestimoById(Integer id) { 
+    public Emprestimo getEmprestimoById(Integer id) {
+
         return emprestimoDao.recuperarEmprestimoPorId(id);
+    }
+
+    public void notificaAlunos() {
+        
+        List<Emprestimo> emprestimos = emprestimoDao.listEmprestimosToEndByDaysQuantity(1);
+        
+        EmprestimoEmail emprestimoEmail = new EmprestimoEmail();
+        
+        if(!emprestimos.isEmpty()) {
+            for (Emprestimo emprestimo : emprestimos) {
+                System.out.println("Notificando aluno "+emprestimo.getAluno().getEmail()+", "+emprestimo.getAluno().getMatricula());
+                try {
+                    LocalDateTime dateTime = emprestimoEmail.sendEmail(emprestimo);
+                    System.out.println("E-mail enviado!");
+                    emprestimoDao.registraNotificacao(emprestimo.getId(), dateTime);
+                }
+                catch (EmailException ex) {
+                    System.out.println("Não foi possível enviar o e-mail.");
+                    ex.printStackTrace();
+                }
+            }
+        } else System.out.println("Não há alunos para ser notificado!");
     }
 }
