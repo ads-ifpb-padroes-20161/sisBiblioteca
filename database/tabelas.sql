@@ -76,6 +76,13 @@ CREATE TABLE BLOQUEIO(
 	FOREIGN KEY(alunoMatricula) REFERENCES aluno(matricula)
 );
 
+CREATE TABLE emprestimos_notificados(
+	emprestimoId INT NOT NULL,
+	datetime timestamp NOT NULL,
+	FOREIGN KEY(emprestimoId) REFERENCES emprestimo(id),
+	primary key(emprestimoId,datetime)
+);
+
 -- TRIGGERS
 
 CREATE TRIGGER deleteUserAccount
