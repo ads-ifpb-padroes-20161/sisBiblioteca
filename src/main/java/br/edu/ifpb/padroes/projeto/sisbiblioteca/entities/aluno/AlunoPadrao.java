@@ -9,13 +9,14 @@ import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.Endereco;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.EstadoAlunoIF;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.Pessoa;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.exceptions.AlunoInabilitadoException;
+import java.io.Serializable;
 import java.time.LocalDate;
 
 /**
  *
  * @author kieckegard
  */
-public class AlunoPadrao extends Pessoa implements Aluno{
+public class AlunoPadrao extends Pessoa implements Aluno, Serializable{
 
     private String matricula;
     private String email;

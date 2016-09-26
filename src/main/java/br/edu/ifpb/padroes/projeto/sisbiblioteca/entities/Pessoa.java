@@ -6,13 +6,14 @@
 package br.edu.ifpb.padroes.projeto.sisbiblioteca.entities;
 
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.utils.DateUtils;
+import java.io.Serializable;
 import java.time.LocalDate;
 
 /**
  *
  * @author kieckegard
  */
-public abstract class Pessoa implements IPessoa {
+public abstract class Pessoa implements IPessoa, Serializable {
 
     private String cpf;
     private String nome;

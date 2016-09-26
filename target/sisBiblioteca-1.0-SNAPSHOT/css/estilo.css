@@ -311,4 +311,11 @@ header h1{
 
 
 
+.selected-row td{
+    background-color: #333 !important;
+    color: #fff !important;
+}
+
+
+
 

@@ -7,12 +7,13 @@ package br.edu.ifpb.padroes.projeto.sisbiblioteca.enums;
 
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.EstadoAlunoIF;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.exceptions.AlunoInabilitadoException;
+import java.io.Serializable;
 
 /**
  *
  * @author kieckegard
  */
-public enum EstadoAlunoEnum implements EstadoAlunoIF {
+public enum EstadoAlunoEnum implements EstadoAlunoIF, Serializable {
 
     HABILITADO{
 

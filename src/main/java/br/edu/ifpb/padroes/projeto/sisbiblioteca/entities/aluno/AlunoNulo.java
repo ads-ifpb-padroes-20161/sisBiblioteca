@@ -8,13 +8,14 @@ package br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.aluno;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.Endereco;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.EstadoAlunoIF;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.exceptions.AlunoInabilitadoException;
+import java.io.Serializable;
 import java.time.LocalDate;
 
 /**
  *
  * @author kieckegard
  */
-public class AlunoNulo implements Aluno {
+public class AlunoNulo implements Aluno, Serializable {
 
     @Override
     public String getMatricula() {

@@ -12,13 +12,14 @@ import br.edu.ifpb.padroes.projeto.sisbiblioteca.exceptions.EmprestimoAtrasadoEx
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.exceptions.EmprestimoEmAndamentoException;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.exceptions.EmprestimoJaFinalizadoException;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.exceptions.LivroIndisponivelException;
+import java.io.Serializable;
 import java.time.LocalDate;
 
 /**
  *
  * @author kieckegard
  */
-public class Emprestimo implements Comparable<Emprestimo> {
+public class Emprestimo implements Comparable<Emprestimo>, Serializable {
     
     private Integer id;
     private Aluno aluno;
@@ -68,10 +69,7 @@ public class Emprestimo implements Comparable<Emprestimo> {
         return endDate;
     }
     
-    public LocalDate getDataEntregue() throws EmprestimoEmAndamentoException {
-        if(estado.getValue() == 0)
-            throw new EmprestimoEmAndamentoException("O empréstimo está em Andamento, portanto,"
-                    + " o mesmo ainda não possui data de finalização.");
+    public LocalDate getDataEntregue(){
         return this.dataEntregue;
     }
     
@@ -112,4 +110,11 @@ public class Emprestimo implements Comparable<Emprestimo> {
     public int compareTo(Emprestimo o) {
         return o.startDate.compareTo(this.startDate);
     }
+
+    @Override
+    public String toString() {
+        return "Emprestimo{" + "id=" + id + ", aluno=" + aluno + ", livro=" + livro + ", startDate=" + startDate + ", endDate=" + endDate + ", dataEntregue=" + dataEntregue + ", estado=" + estado + '}';
+    }
+    
+    
 }

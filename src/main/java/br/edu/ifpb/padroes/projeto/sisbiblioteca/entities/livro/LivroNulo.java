@@ -6,12 +6,13 @@
 package br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.livro;
 
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.exceptions.LivroIndisponivelException;
+import java.io.Serializable;
 
 /**
  *
  * @author kieckegard
  */
-public class LivroNulo implements Livro{
+public class LivroNulo implements Livro, Serializable{
 
     @Override
     public long getIsbn() {

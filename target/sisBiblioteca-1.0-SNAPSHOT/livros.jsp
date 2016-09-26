@@ -35,7 +35,7 @@
                     <h2>Cadastro de <span>Livros</span></h2>
                 </div>
                 <div class='cad-content'>
-                    <form id="livroForm" method="POST" action="CadastrarLivro">
+                    <form id="livroForm" method="POST" action="FrontController?action=CadastrarLivro">
                         <div class='inputs'>
                             <div class='group-form'>
                                 <p class='form-title'>Livro</p>
@@ -105,7 +105,7 @@
                                         out.print("<td>" + item.getTitulo() + "</td>");
                                         out.print("<td>" + item.getAutor() + "</td>");
                                         out.print("<td>" + item.getEstoque() + "</td>");
-                                        out.print("<td><a href='RemoverLivro?isbn=" + item.getIsbn() + "'>Remover</a></td>");
+                                        out.print("<td><a href='FrontController?action=RemoverLivro?isbn=" + item.getIsbn() + "'>Remover</a></td>");
                                         out.print("</tr>");
                                     }
                                 %>

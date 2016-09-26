@@ -5,11 +5,13 @@
  */
 package br.edu.ifpb.padroes.projeto.sisbiblioteca.entities;
 
+import java.io.Serializable;
+
 /**
  *
  * @author kieckegard
  */
-public class Endereco {
+public class Endereco implements Serializable {
 
     private int id;
     private String pais;

@@ -40,8 +40,13 @@ public class BuscaEmprestimo implements Command {
         }
         
         List<Emprestimo> emprestimos = new QueryEmprestimoBo().listEmprestimosByAttributes(attributes);
+        System.out.println("Printing search result: ");
+        for(Emprestimo emp : emprestimos){
+            System.out.println(emp);
+        }
         
         request.setAttribute("emprestimos", emprestimos);
+        request.getSession().setAttribute("emprestimosCached", emprestimos);
         
         dispatcher.forward(request, response);
     }

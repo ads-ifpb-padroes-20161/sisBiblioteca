@@ -7,8 +7,6 @@ package br.edu.ifpb.padroes.projeto.sisbiblioteca.control;
 
 import br.edu.ifpb.padroes.projeto.sisbibliotecanotifier.facade.QuartzFacade;
 import br.edu.ifpb.padroes.projeto.sisbibliotecanotifier.job.NotifyStudentsJob;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
@@ -33,7 +31,7 @@ public class InitializeListener implements ServletContextListener {
         try {
             
             this.scheduler = quartzFacade.createScheduler(10, NotifyStudentsJob.class);
-            this.scheduler.start();
+            //this.scheduler.start();
             
             Log.log(1, "Agendador Iniciado. Verificando Alunos...");
         }

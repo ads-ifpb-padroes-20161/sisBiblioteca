@@ -25,7 +25,7 @@
                 <strong>Error!</strong>
             </div>
         </div>
-        
+
         <c:if test="${requestScope.success == true}">
             <div class="centered-container">
                 <div id="successMsg" class="alert alert-success" style="margin: 10px 10px 5px 10px;">
@@ -48,7 +48,7 @@
                 <h2>Buscar por <span class="blue-title">Empréstimos</span></h2>
             </div>
             <div class="cad-content" style='overflow: auto;'>
-                <form style="display: block;" action="BuscaEmprestimo" method="GET">
+                <form style="display: block;" action="FrontController?action=BuscaEmprestimo" method="POST">
                     <div class='row'>
                         <div class='col-md-9'>
                             <div class="form-group">
@@ -80,7 +80,10 @@
 
         <div class='cad-container cad-aluno-container'>
             <div class='cad-header'>
-                <h2>Empréstimos Realizados</h2>
+                <h2>
+                    Empréstimos Realizados 
+                    <a class="btn btn-primary" href="FrontController?action=GerarRelatorio"><i class="fa fa-print" aria-hidden="true"></i></a>
+                </h2>
             </div>
             <div class='cad-content'>
                 <div class='panel panel-default'>
@@ -100,6 +103,7 @@
                                 if (request.getAttribute("emprestimos") == null) {
                                     List<Emprestimo> emprestimos = new EmprestimoBo().listarEmprestimos();
                                     request.setAttribute("emprestimos", emprestimos);
+                                    session.setAttribute("emprestimosCached", emprestimos);
                                 }
                             %>
                             <c:forEach var="emprestimo" items="${requestScope.emprestimos}">

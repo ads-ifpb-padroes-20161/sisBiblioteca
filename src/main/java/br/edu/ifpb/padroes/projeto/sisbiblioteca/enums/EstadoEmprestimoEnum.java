@@ -7,12 +7,13 @@ package br.edu.ifpb.padroes.projeto.sisbiblioteca.enums;
 
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.EmprestimoEstadoIF;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.exceptions.EmprestimoJaFinalizadoException;
+import java.io.Serializable;
 
 /**
  *
  * @author kieckegard
  */
-public enum EstadoEmprestimoEnum implements EmprestimoEstadoIF {
+public enum EstadoEmprestimoEnum implements EmprestimoEstadoIF, Serializable {
     ANDAMENTO{
 
         @Override
