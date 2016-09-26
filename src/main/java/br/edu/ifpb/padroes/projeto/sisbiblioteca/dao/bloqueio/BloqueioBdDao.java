@@ -8,6 +8,7 @@ package br.edu.ifpb.padroes.projeto.sisbiblioteca.dao.bloqueio;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.dao.FactoryConnection;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.Bloqueio;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.enums.EstadoBloqueioEnum;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -25,7 +26,8 @@ public class BloqueioBdDao implements BloqueioDao {
                 + " VALUES(?,?,?,?) RETURNING id";
         
         try {
-            PreparedStatement pstm = FactoryConnection.getInstance().prepareStatement(sql);
+            Connection conn = FactoryConnection.getInstance();
+            PreparedStatement pstm = conn.prepareStatement(sql);
             
             int i = 1;
             
@@ -38,6 +40,9 @@ public class BloqueioBdDao implements BloqueioDao {
             
             if(rs.next())
                 obj.setId(rs.getInt("id"));
+            
+            pstm.close();
+            conn.close();
         }
         catch (ClassNotFoundException | SQLException ex) {
             ex.printStackTrace();
@@ -49,7 +54,8 @@ public class BloqueioBdDao implements BloqueioDao {
         String sql = "UPDATE bloqueio SET status = ? WHERE id = ?";
         
         try {
-            PreparedStatement pstm = FactoryConnection.getInstance().prepareStatement(sql);
+            Connection conn = FactoryConnection.getInstance();
+            PreparedStatement pstm = conn.prepareStatement(sql);
             
             int i = 1;
             
@@ -57,6 +63,9 @@ public class BloqueioBdDao implements BloqueioDao {
             pstm.setInt(i++, bloqueioId);
             
             pstm.executeUpdate();
+            
+            pstm.close();
+            conn.close();
         }
         catch (ClassNotFoundException | SQLException ex) {
             ex.printStackTrace();
@@ -67,10 +76,6 @@ public class BloqueioBdDao implements BloqueioDao {
     public List<Bloqueio> lista() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
-    private Bloqueio formaBloqueio(ResultSet rs) throws SQLException{
-        return null;
-    }
 
     @Override
     public void verificaEDesbloqueiaAlunos() {
@@ -78,13 +83,17 @@ public class BloqueioBdDao implements BloqueioDao {
                 + " WHERE matricula = b.alunoMatricula AND b.datafim <= current_date AND b.status = 0 RETURNING b.id";
         
         try {
-            PreparedStatement pstm = FactoryConnection.getInstance().prepareStatement(sql);
+            Connection conn = FactoryConnection.getInstance();
+            PreparedStatement pstm = conn.prepareStatement(sql);
             
             ResultSet rs = pstm.executeQuery();
             
             if(rs.next()) {
                 alterarEstado(rs.getInt("id"), EstadoBloqueioEnum.FINALIZADO);
             }
+            
+            pstm.close();
+            conn.close();
         }
         catch (ClassNotFoundException | SQLException ex) {
             ex.printStackTrace();

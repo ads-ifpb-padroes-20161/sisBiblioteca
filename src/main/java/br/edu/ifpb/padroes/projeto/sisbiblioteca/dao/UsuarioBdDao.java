@@ -9,6 +9,7 @@ import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.Endereco;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.IPessoa;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.Usuario;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.enums.TipoUsuario;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -37,7 +38,8 @@ public class UsuarioBdDao implements UsuarioDao {
         String sql = "INSERT INTO usuario VALUES(?,?,?,?)";
         pessoaDao.adicionarPessoa(obj);
         try {
-            PreparedStatement pstm = FactoryConnection.getInstance().prepareStatement(sql);
+            Connection conn = FactoryConnection.getInstance();
+            PreparedStatement pstm = conn.prepareStatement(sql);
 
             int i = 1;
 
@@ -47,6 +49,9 @@ public class UsuarioBdDao implements UsuarioDao {
             pstm.setString(i++, obj.getCpf());
 
             pstm.executeUpdate();
+            
+            pstm.close();
+            conn.close();
         }
         catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(UsuarioBdDao.class.getName()).log(Level.SEVERE, null, ex);
@@ -58,11 +63,15 @@ public class UsuarioBdDao implements UsuarioDao {
         String sql = "DELETE FROM usuario WHERE matricula = ?";
         
         try {
-            PreparedStatement pstm = FactoryConnection.getInstance().prepareStatement(sql);
+            Connection conn = FactoryConnection.getInstance();
+            PreparedStatement pstm = conn.prepareStatement(sql);
             
             pstm.setString(1, matricula);
             
             pstm.executeUpdate();
+            
+            pstm.close();
+            conn.close();
         }
         catch (ClassNotFoundException | SQLException ex) {
             ex.printStackTrace();
@@ -74,7 +83,8 @@ public class UsuarioBdDao implements UsuarioDao {
         String sql = "UPDATE usuario SET senha = ? WHERE matricula = ?";
         
         try {
-            PreparedStatement pstm = FactoryConnection.getInstance().prepareStatement(sql);
+            Connection conn = FactoryConnection.getInstance();
+            PreparedStatement pstm = conn.prepareStatement(sql);
             
             int i = 1;
             
@@ -83,6 +93,9 @@ public class UsuarioBdDao implements UsuarioDao {
             
             pstm.executeUpdate();
             pessoaDao.atualizarPessoa(obj);
+            
+            pstm.close();
+            conn.close();
         }
         catch (ClassNotFoundException | SQLException ex) {
             ex.printStackTrace();
@@ -95,18 +108,22 @@ public class UsuarioBdDao implements UsuarioDao {
         List<Usuario> usuarios = new ArrayList<>();
 
         try {
-            PreparedStatement pstm = FactoryConnection.getInstance().prepareStatement(sql);
+            Connection conn = FactoryConnection.getInstance();
+            PreparedStatement pstm = conn.prepareStatement(sql);
 
             ResultSet rs = pstm.executeQuery();
 
             while (rs.next()) {
                 usuarios.add(formaUsuario(rs));
             }
+            
+            pstm.close();
+            conn.close();
 
             return usuarios;
         }
         catch (ClassNotFoundException | SQLException ex) {
-            Logger.getLogger(UsuarioBdDao.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
         }
 
         return usuarios;

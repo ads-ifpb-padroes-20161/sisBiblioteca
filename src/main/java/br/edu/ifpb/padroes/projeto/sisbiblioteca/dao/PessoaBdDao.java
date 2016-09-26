@@ -5,8 +5,8 @@
  */
 package br.edu.ifpb.padroes.projeto.sisbiblioteca.dao;
 
-import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.Endereco;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.IPessoa;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -29,7 +29,8 @@ public class PessoaBdDao implements PessoaDao {
         String sql = "INSERT INTO pessoa VALUES(?,?,?,?)";
 
         try {
-            PreparedStatement pstm = FactoryConnection.getInstance().prepareStatement(sql);
+            Connection conn = FactoryConnection.getInstance();
+            PreparedStatement pstm = conn.prepareStatement(sql);
 
             int i = 1;
 
@@ -42,6 +43,9 @@ public class PessoaBdDao implements PessoaDao {
             pstm.setInt(i++, obj.getEndereco().getId());
 
             pstm.executeUpdate();
+            
+            pstm.close();
+            conn.close();
 
         }
         catch (ClassNotFoundException | SQLException ex) {
@@ -59,7 +63,8 @@ public class PessoaBdDao implements PessoaDao {
         String sql = "UPDATE pessoa SET nome = ?, datanascimento = ? WHERE cpf = ?";
         
         try {
-            PreparedStatement pstm = FactoryConnection.getInstance().prepareStatement(sql);
+            Connection conn = FactoryConnection.getInstance();
+            PreparedStatement pstm = conn.prepareStatement(sql);
             
             int i = 1;
             
@@ -69,6 +74,9 @@ public class PessoaBdDao implements PessoaDao {
             
             pstm.executeUpdate();
             enderecoBdDao.atualizarEndereco(obj.getEndereco());
+            
+            pstm.close();
+            conn.close();
         }
         catch (ClassNotFoundException | SQLException ex) {
             ex.printStackTrace();

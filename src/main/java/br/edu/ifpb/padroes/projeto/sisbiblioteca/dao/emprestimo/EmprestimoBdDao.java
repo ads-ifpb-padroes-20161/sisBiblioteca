@@ -14,6 +14,7 @@ import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.Emprestimo;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.aluno.Aluno;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.livro.Livro;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.enums.EstadoEmprestimoEnum;
+import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -46,17 +47,17 @@ public class EmprestimoBdDao implements EmprestimoDao {
     public void finalizarEmprestimo(Emprestimo emprestimo) {
         String sql = "UPDATE emprestimo SET idEstado = ?, dataEntrega = ? WHERE id = ?";
         try {
-            PreparedStatement pstm = FactoryConnection.getInstance().prepareStatement(sql);
+            Connection conn = FactoryConnection.getInstance();
+            PreparedStatement pstm = conn.prepareStatement(sql);
             
             int i = 1;
             
-            System.out.println("Estou mudando o estado de empréstimo para "+emprestimo.getEstadoValue());
             pstm.setInt(i++, emprestimo.getEstadoValue());
             pstm.setDate(i++, java.sql.Date.valueOf(emprestimo.getDataEntregue()));
             pstm.setInt(i++, emprestimo.getId());
             
-            if(pstm.executeUpdate()>0)
-                System.out.println("Alterei!!!");
+            pstm.close();
+            conn.close();
         }
         catch (ClassNotFoundException | SQLException ex) {
             ex.printStackTrace();
@@ -69,7 +70,8 @@ public class EmprestimoBdDao implements EmprestimoDao {
                 + " VALUES(?,?,?,?,?) RETURNING id";
         
         try {
-            PreparedStatement pstm = FactoryConnection.getInstance().prepareStatement(sql);
+            Connection conn = FactoryConnection.getInstance();
+            PreparedStatement pstm = conn.prepareStatement(sql);
             
             int i=1;
             
@@ -83,6 +85,9 @@ public class EmprestimoBdDao implements EmprestimoDao {
             
             if(rs.next())
                 obj.setId(rs.getInt("id"));
+            
+            pstm.close();
+            conn.close();
         }
         catch (ClassNotFoundException | SQLException ex) {
             ex.printStackTrace();
@@ -94,7 +99,8 @@ public class EmprestimoBdDao implements EmprestimoDao {
         try {
             String sql = "SELECT * FROM emprestimo WHERE id = ?";
             
-            PreparedStatement pstm = FactoryConnection.getInstance().prepareStatement(sql);
+            Connection conn = FactoryConnection.getInstance();
+            PreparedStatement pstm = conn.prepareStatement(sql);
             
             int i=1;
             
@@ -104,6 +110,9 @@ public class EmprestimoBdDao implements EmprestimoDao {
             
             if(rs.next())
                 return formaEmprestimo(rs);
+            
+            pstm.close();
+            conn.close();
         }
         catch (ClassNotFoundException | SQLException ex) {
             ex.printStackTrace();
@@ -118,7 +127,8 @@ public class EmprestimoBdDao implements EmprestimoDao {
         List<Emprestimo> emprestimos = new LinkedList<>();
         
         try {
-            PreparedStatement pstm = FactoryConnection.getInstance().prepareStatement(sql);
+            Connection conn = FactoryConnection.getInstance();
+            PreparedStatement pstm = conn.prepareStatement(sql);
             
             ResultSet rs = pstm.executeQuery();
             
@@ -126,8 +136,10 @@ public class EmprestimoBdDao implements EmprestimoDao {
                 emprestimos.add(formaEmprestimo(rs));
             }
             
-            return emprestimos;
+            pstm.close();
+            conn.close();
             
+            return emprestimos;
         }
         catch (ClassNotFoundException | SQLException ex) {
             ex.printStackTrace();
@@ -166,13 +178,17 @@ public class EmprestimoBdDao implements EmprestimoDao {
         List<Emprestimo> emprestimos = new LinkedList<>();
 
         try {
-            PreparedStatement pstm = FactoryConnection.getInstance().prepareStatement(sql.toString());
+            Connection conn = FactoryConnection.getInstance();
+            PreparedStatement pstm = conn.prepareStatement(sql.toString());
 
             ResultSet rs = pstm.executeQuery();
 
             while (rs.next()) {
                 emprestimos.add(formaEmprestimo(rs));
             }
+            
+            pstm.close();
+            conn.close();
 
             return emprestimos;
         }
@@ -192,7 +208,9 @@ public class EmprestimoBdDao implements EmprestimoDao {
                 + " AND id NOT IN(SELECT emprestimoId FROM emprestimos_notificados)";
         
         try {
-            PreparedStatement pstm = FactoryConnection.getInstance().prepareStatement(sql);
+            
+            Connection conn = FactoryConnection.getInstance();
+            PreparedStatement pstm = conn.prepareStatement(sql);
             
             pstm.setInt(1, daysQuantity);
             
@@ -204,6 +222,9 @@ public class EmprestimoBdDao implements EmprestimoDao {
             while(rs.next()) {
                 emprestimos.add(formaEmprestimo(rs));
             }
+            
+            pstm.close();
+            conn.close();
             
             return emprestimos;
         }
@@ -243,7 +264,8 @@ public class EmprestimoBdDao implements EmprestimoDao {
         String sql = "INSERT INTO emprestimos_notificados VALUES(?,?)";
         
         try {
-            PreparedStatement pstm = FactoryConnection.getInstance().prepareStatement(sql);
+            Connection conn = FactoryConnection.getInstance();
+            PreparedStatement pstm = conn.prepareStatement(sql);
             
             Integer i = 1;
             
@@ -252,6 +274,8 @@ public class EmprestimoBdDao implements EmprestimoDao {
             
             pstm.executeUpdate();
             
+            pstm.close();
+            conn.close();
         }
         catch (ClassNotFoundException | SQLException ex) {
             ex.printStackTrace();

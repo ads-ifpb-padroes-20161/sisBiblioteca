@@ -9,6 +9,7 @@ import br.edu.ifpb.padroes.projeto.sisbiblioteca.dao.FactoryConnection;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.livro.Livro;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.livro.LivroNulo;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.livro.LivroPadrao;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -28,7 +29,8 @@ public class LivroBdDao implements LivroDao {
         String sql = "INSERT INTO livro VALUES(?,?,?,?,?)";
 
         try {
-            PreparedStatement pstm = FactoryConnection.getInstance().prepareStatement(sql);
+            Connection conn = FactoryConnection.getInstance();
+            PreparedStatement pstm = conn.prepareStatement(sql);
 
             int i = 1;
 
@@ -39,6 +41,9 @@ public class LivroBdDao implements LivroDao {
             pstm.setInt(i++, obj.getEstoque());
 
             pstm.executeUpdate();
+            
+            pstm.close();
+            conn.close();
         }
         catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(LivroBdDao.class.getName()).log(Level.SEVERE, null, ex);
@@ -49,13 +54,22 @@ public class LivroBdDao implements LivroDao {
     public Livro recuperarLivroPorIsbn(Long obj) {
         String sql = "SELECT * FROM livro WHERE isbn = ?";
         try {
-            PreparedStatement pstm = FactoryConnection.getInstance().prepareStatement(sql);
+            Connection conn = FactoryConnection.getInstance();
+            PreparedStatement pstm = conn.prepareStatement(sql);
+            
             pstm.setLong(1, obj);
             ResultSet rs = pstm.executeQuery();
 
+            Livro livro = new LivroNulo();
+            
             if (rs.next()) {
-                return formaLivro(rs);
+                livro = formaLivro(rs);
             }
+            
+            pstm.close();
+            conn.close();
+            
+            return livro;
         }
         catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(LivroBdDao.class.getName()).log(Level.SEVERE, null, ex);
@@ -66,13 +80,17 @@ public class LivroBdDao implements LivroDao {
     private List<Livro> selectLivro(String sql) {
         List<Livro> livros = new ArrayList<>();
         try {
-            PreparedStatement pstm = FactoryConnection.getInstance().prepareStatement(sql);
+            Connection conn = FactoryConnection.getInstance();
+            PreparedStatement pstm = conn.prepareStatement(sql);
 
             ResultSet rs = pstm.executeQuery();
 
             while (rs.next()) {
                 livros.add(formaLivro(rs));
             }
+            
+            conn.close();
+            pstm.close();
 
             return livros;
         }
@@ -106,7 +124,8 @@ public class LivroBdDao implements LivroDao {
         String sql = "UPDATE livro SET estoque = ? WHERE isbn = ?";
         
         try {
-            PreparedStatement pstm = FactoryConnection.getInstance().prepareStatement(sql);
+            Connection conn = FactoryConnection.getInstance();
+            PreparedStatement pstm = conn.prepareStatement(sql);
             
             int i = 1;
             
@@ -114,6 +133,9 @@ public class LivroBdDao implements LivroDao {
             pstm.setLong(i++, livro.getIsbn());
             
             pstm.executeUpdate();
+            
+            pstm.close();
+            conn.close();
         }
         catch (ClassNotFoundException | SQLException ex) {
             ex.printStackTrace();

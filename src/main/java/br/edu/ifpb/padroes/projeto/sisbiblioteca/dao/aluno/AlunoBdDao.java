@@ -14,6 +14,7 @@ import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.Endereco;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.aluno.Aluno;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.aluno.AlunoPadrao;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.enums.EstadoAlunoEnum;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -45,7 +46,8 @@ public class AlunoBdDao implements AlunoDao {
         String sql = "INSERT INTO aluno VALUES(?,?,?,?)";
         pessoaBdDao.adicionarPessoa(obj);
         try {
-            PreparedStatement pstm = FactoryConnection.getInstance().prepareStatement(sql);
+            Connection conn = FactoryConnection.getInstance();
+            PreparedStatement pstm = conn.prepareStatement(sql);
 
             int i = 1;
 
@@ -55,6 +57,9 @@ public class AlunoBdDao implements AlunoDao {
             pstm.setString(i++, obj.getCpf());
 
             pstm.executeUpdate();
+            
+            pstm.close();
+            conn.close();
         }
         catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(AlunoBdDao.class.getName()).log(Level.SEVERE, null, ex);
@@ -66,7 +71,8 @@ public class AlunoBdDao implements AlunoDao {
 
         String sql = "SELECT * FROM Aluno a JOIN Pessoa p ON a.cpfPessoa = p.cpf WHERE a.matricula = ?";
         try {
-            PreparedStatement pstm = FactoryConnection.getInstance().prepareStatement(sql);
+            Connection conn = FactoryConnection.getInstance();
+            PreparedStatement pstm = conn.prepareStatement(sql);
 
             int i = 1;
 
@@ -77,6 +83,9 @@ public class AlunoBdDao implements AlunoDao {
             if (rs.next()) {
                 aluno = formaAluno(rs);
             }
+            
+            pstm.close();
+            conn.close();
 
             return aluno;
 
@@ -108,13 +117,17 @@ public class AlunoBdDao implements AlunoDao {
         List<Aluno> alunos = new ArrayList<>();
 
         try {
-            PreparedStatement pstm = FactoryConnection.getInstance().prepareStatement(sql.toString());
+            Connection conn = FactoryConnection.getInstance();
+            PreparedStatement pstm = conn.prepareStatement(sql.toString());
 
             ResultSet rs = pstm.executeQuery();
 
             while (rs.next()) {
                 alunos.add(formaAluno(rs));
             }
+            
+            pstm.close();
+            conn.close();
 
             return alunos;
         }
@@ -181,13 +194,17 @@ public class AlunoBdDao implements AlunoDao {
     private List<Aluno> selectAlunos(String sql) {
         List<Aluno> alunos = new ArrayList<>();
         try {
-            PreparedStatement pstm = FactoryConnection.getInstance().prepareStatement(sql);
+            Connection conn = FactoryConnection.getInstance();
+            PreparedStatement pstm = conn.prepareStatement(sql);
 
             ResultSet rs = pstm.executeQuery();
 
             while (rs.next()) {
                 alunos.add(formaAluno(rs));
             }
+            
+            pstm.close();
+            conn.close();
 
             return alunos;
         }

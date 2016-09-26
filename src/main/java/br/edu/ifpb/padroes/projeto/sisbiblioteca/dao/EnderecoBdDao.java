@@ -7,6 +7,7 @@ package br.edu.ifpb.padroes.projeto.sisbiblioteca.dao;
 
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.Endereco;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.Pessoa;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -28,9 +29,12 @@ public class EnderecoBdDao implements EnderecoDao {
     @Override
     public void adicionarEndereco(Endereco e) {
         String sql = "INSERT INTO endereco(pais,estado,cidade,bairro,rua,numero) VALUES(?,?,?,?,?,?) RETURNING id";
-
+        
         try {
-            pstm = FactoryConnection.getInstance().prepareStatement(sql);
+            
+            Connection conn = FactoryConnection.getInstance();
+            
+            pstm = conn.prepareStatement(sql);
 
             int i = 1;
             pstm.setString(i++, e.getPais());
@@ -45,11 +49,15 @@ public class EnderecoBdDao implements EnderecoDao {
             if (rs.next()) {
                 e.setId(rs.getInt("id"));
             }
+            
+            pstm.close();
+            conn.close();
 
         }
         catch (ClassNotFoundException | SQLException ex) {
             ex.printStackTrace();
         }
+        
     }
 
     @Override
@@ -57,11 +65,16 @@ public class EnderecoBdDao implements EnderecoDao {
         String sql = "DELETE FROM endereco WHERE id = ?";
 
         try {
-            pstm = FactoryConnection.getInstance().prepareStatement(sql);
+            Connection conn = FactoryConnection.getInstance();
+            
+            pstm = conn.prepareStatement(sql);
 
             pstm.setInt(1, id);
 
             pstm.executeUpdate();
+            
+            pstm.close();
+            conn.close();
         }
         catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(EnderecoBdDao.class.getName()).log(Level.SEVERE, null, ex);
@@ -73,7 +86,9 @@ public class EnderecoBdDao implements EnderecoDao {
         String sql = "SELECT * FROM Endereco e JOIN Pessoa p ON e.id = p.idEndereco WHERE p.cpf = ?";
 
         try {
-            pstm = FactoryConnection.getInstance().prepareStatement(sql);
+            
+            Connection conn = FactoryConnection.getInstance();
+            pstm = conn.prepareStatement(sql);
 
             pstm.setString(1, pessoaCpf);
 
@@ -84,13 +99,15 @@ public class EnderecoBdDao implements EnderecoDao {
             if (rs.next()) {
                 endereco = formaEndereco(rs);
             }
+            
+            pstm.close();
+            conn.close();
 
             return endereco;
         }
         catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(EnderecoBdDao.class.getName()).log(Level.SEVERE, null, ex);
         }
-
         return null;
     }
 
@@ -115,7 +132,8 @@ public class EnderecoBdDao implements EnderecoDao {
                 + " WHERE id = ? ";
         
         try {
-            PreparedStatement pstm = FactoryConnection.getInstance().prepareStatement(sql);
+            Connection conn = FactoryConnection.getInstance();
+            pstm = conn.prepareStatement(sql);
             
             int i = 1;
             
@@ -128,6 +146,8 @@ public class EnderecoBdDao implements EnderecoDao {
             pstm.setInt(i++, obj.getId());
             
             pstm.executeUpdate();
+            pstm.close();
+            conn.close();
         }
         catch (ClassNotFoundException | SQLException ex) {
             ex.printStackTrace();
