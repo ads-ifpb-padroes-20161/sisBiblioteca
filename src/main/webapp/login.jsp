@@ -26,7 +26,7 @@
                 <h2>Acesso ao Sistema</h2>
             </div>
             <div class="cad-content">
-                <form method="POST" action="Login" class="login-form">
+                <form method="POST" action="FrontController?action=Login" class="login-form">
                     <div class="group-input login-inputs fix-width">
                         <input type="text" name="matricula" placeholder="Matrícula" required>
                         <i class="fa fa-user" aria-hidden="true"></i>
