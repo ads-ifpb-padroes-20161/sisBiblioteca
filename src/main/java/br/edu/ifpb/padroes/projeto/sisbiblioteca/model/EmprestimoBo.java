@@ -80,7 +80,7 @@ public class EmprestimoBo {
     }
 
     private void finalizeEmprestimoOnDao(Emprestimo emprestimo) {
-
+        
         emprestimoDao.finalizarEmprestimo(emprestimo);
 
         updateAlunoAndLivro(emprestimo.getAluno(), emprestimo.getLivro());

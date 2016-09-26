@@ -56,6 +56,8 @@ public class EmprestimoBdDao implements EmprestimoDao {
             pstm.setDate(i++, java.sql.Date.valueOf(emprestimo.getDataEntregue()));
             pstm.setInt(i++, emprestimo.getId());
             
+            pstm.executeUpdate();
+            
             pstm.close();
             conn.close();
         }

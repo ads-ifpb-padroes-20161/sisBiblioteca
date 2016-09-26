@@ -7,10 +7,13 @@ package br.edu.ifpb.padroes.projeto.sisbiblioteca.control;
 
 import br.edu.ifpb.padroes.projeto.sisbibliotecanotifier.facade.QuartzFacade;
 import br.edu.ifpb.padroes.projeto.sisbibliotecanotifier.job.NotifyStudentsJob;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 import org.jfree.util.Log;
+import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
 
 /**
@@ -20,13 +23,18 @@ import org.quartz.SchedulerException;
 
 @WebListener
 public class InitializeListener implements ServletContextListener {
+    
+    private Scheduler scheduler;
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
         
         QuartzFacade quartzFacade = new QuartzFacade();
         try {
-            quartzFacade.startScheduler(10, NotifyStudentsJob.class);
+            
+            this.scheduler = quartzFacade.createScheduler(10, NotifyStudentsJob.class);
+            this.scheduler.start();
+            
             Log.log(1, "Agendador Iniciado. Verificando Alunos...");
         }
         catch (SchedulerException ex) {
@@ -37,7 +45,13 @@ public class InitializeListener implements ServletContextListener {
     @Override
     public void contextDestroyed(ServletContextEvent sce) {
         
-        Log.log(1, "Encerrando sisBiblioteca... ");
+        try {
+            scheduler.shutdown();
+            Log.log(1, "Finalizando Agendador...");
+        }
+        catch (SchedulerException ex) {
+            Log.log(1, "Não foi possível finalizar o agendador.", ex);
+        }
     }
     
 }

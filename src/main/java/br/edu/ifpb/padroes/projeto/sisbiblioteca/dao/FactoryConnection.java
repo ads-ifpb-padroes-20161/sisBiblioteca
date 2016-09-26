@@ -22,7 +22,7 @@ public class FactoryConnection {
     private static final String driver = "org.postgresql.Driver";
 
     public static Connection getInstance() throws ClassNotFoundException, SQLException {
-        if (conn == null) {
+        if (conn == null || conn.isClosed()) {
             Class.forName(driver);
             conn = DriverManager.getConnection(url, user, pass);
         }

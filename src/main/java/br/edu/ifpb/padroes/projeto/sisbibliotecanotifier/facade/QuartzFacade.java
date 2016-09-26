@@ -22,15 +22,16 @@ import org.quartz.impl.StdSchedulerFactory;
  */
 public class QuartzFacade {
     
-    public void startScheduler(Integer secInterval, Class<? extends Job> job) throws SchedulerException {
+    public Scheduler createScheduler(Integer secInterval, Class<? extends Job> job) throws SchedulerException {
         
         JobDetail jobDetail = createJobDetail(job);
         Trigger trigger = createTrigger(secInterval);
         
-        Scheduler scheduler = createScheduler();
+        Scheduler scheduler = QuartzFacade.this.createScheduler();
         
-        scheduler.start();
-        scheduler.scheduleJob(jobDetail,trigger);        
+        scheduler.scheduleJob(jobDetail,trigger);     
+        
+        return scheduler;
     }
     
     private JobDetail createJobDetail(Class<? extends Job> job) {
