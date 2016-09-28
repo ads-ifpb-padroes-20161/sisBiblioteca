@@ -32,7 +32,7 @@ public class EnderecoBdDao implements EnderecoDao {
         
         try {
             
-            Connection conn = FactoryConnection.getInstance();
+            Connection conn = ConnectionProvider.getInstance().getConnection();
             
             pstm = conn.prepareStatement(sql);
 
@@ -65,7 +65,7 @@ public class EnderecoBdDao implements EnderecoDao {
         String sql = "DELETE FROM endereco WHERE id = ?";
 
         try {
-            Connection conn = FactoryConnection.getInstance();
+            Connection conn = ConnectionProvider.getInstance().getConnection();
             
             pstm = conn.prepareStatement(sql);
 
@@ -87,7 +87,7 @@ public class EnderecoBdDao implements EnderecoDao {
 
         try {
             
-            Connection conn = FactoryConnection.getInstance();
+            Connection conn = ConnectionProvider.getInstance().getConnection();
             pstm = conn.prepareStatement(sql);
 
             pstm.setString(1, pessoaCpf);
@@ -132,7 +132,7 @@ public class EnderecoBdDao implements EnderecoDao {
                 + " WHERE id = ? ";
         
         try {
-            Connection conn = FactoryConnection.getInstance();
+            Connection conn = ConnectionProvider.getInstance().getConnection();
             pstm = conn.prepareStatement(sql);
             
             int i = 1;

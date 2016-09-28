@@ -5,7 +5,7 @@
  */
 package br.edu.ifpb.padroes.projeto.sisbiblioteca.dao.bloqueio;
 
-import br.edu.ifpb.padroes.projeto.sisbiblioteca.dao.FactoryConnection;
+import br.edu.ifpb.padroes.projeto.sisbiblioteca.dao.ConnectionProvider;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.Bloqueio;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.enums.EstadoBloqueioEnum;
 import java.sql.Connection;
@@ -26,7 +26,7 @@ public class BloqueioBdDao implements BloqueioDao {
                 + " VALUES(?,?,?,?) RETURNING id";
         
         try {
-            Connection conn = FactoryConnection.getInstance();
+            Connection conn = ConnectionProvider.getInstance().getConnection();
             PreparedStatement pstm = conn.prepareStatement(sql);
             
             int i = 1;
@@ -54,7 +54,7 @@ public class BloqueioBdDao implements BloqueioDao {
         String sql = "UPDATE bloqueio SET status = ? WHERE id = ?";
         
         try {
-            Connection conn = FactoryConnection.getInstance();
+            Connection conn = ConnectionProvider.getInstance().getConnection();
             PreparedStatement pstm = conn.prepareStatement(sql);
             
             int i = 1;
@@ -73,22 +73,17 @@ public class BloqueioBdDao implements BloqueioDao {
     }
 
     @Override
-    public List<Bloqueio> lista() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
     public void verificaEDesbloqueiaAlunos() {
         String sql = "UPDATE aluno SET idEstado = 1 FROM Bloqueio b"
                 + " WHERE matricula = b.alunoMatricula AND b.datafim <= current_date AND b.status = 0 RETURNING b.id";
         
         try {
-            Connection conn = FactoryConnection.getInstance();
+            Connection conn = ConnectionProvider.getInstance().getConnection();
             PreparedStatement pstm = conn.prepareStatement(sql);
             
             ResultSet rs = pstm.executeQuery();
             
-            if(rs.next()) {
+            while(rs.next()) {
                 alterarEstado(rs.getInt("id"), EstadoBloqueioEnum.FINALIZADO);
             }
             

@@ -6,9 +6,15 @@
 package br.edu.ifpb.padroes.projeto.sisbiblioteca.commands;
 
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.Emprestimo;
-import br.edu.ifpb.padroes.projeto.sisbiblioteca.model.EmprestimoRelatorioBo;
+import br.edu.ifpb.padroes.projeto.sisbiblioteca.model.EmprestimoBo;
+import br.edu.ifpb.padroes.projeto.sisbiblioteca.model.QueryEmprestimoBo;
+import br.edu.ifpb.padroes.projeto.sisbiblioteca.relatorios.EmprestimoRelatorioBo;
+import br.edu.ifpb.padroes.projeto.sisbiblioteca.relatorios.RelatorioTipo;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -26,14 +32,21 @@ public class GerarRelatorio implements Command {
         response.setHeader("Content-Disposition", "inline; filename=\"application.pdf\"");
         response.setContentType("application/pdf");
         
-        String path = request.getSession().getServletContext().getRealPath("/") + "relatorios/emprestimos.jrxml";
+        String key = "idEstado";
+        String value = request.getParameter("tipoRelatorio");
         
-        List<Emprestimo> emprestimos = (List<Emprestimo>) request.getSession().getAttribute("emprestimosCached");
+        Map<String, String> attributes = new HashMap<>();
+        attributes.put(key, value);
         
-        EmprestimoRelatorioBo relatorio = new EmprestimoRelatorioBo();
+        Integer enumValue = Integer.parseInt(value);
         
-        System.out.println("Path: "+path);
+        RelatorioTipo relatorioTipo = RelatorioTipo.getByValue(enumValue);
         
+        String path = request.getSession().getServletContext().getRealPath("/") + relatorioTipo.getFileName();
+        
+        List<Emprestimo> emprestimos = new QueryEmprestimoBo().listEmprestimosByAttributes(attributes);
+        
+        EmprestimoRelatorioBo relatorio = new EmprestimoRelatorioBo();     
         relatorio.generatePdfStream(emprestimos,path,response.getOutputStream());
     }
     

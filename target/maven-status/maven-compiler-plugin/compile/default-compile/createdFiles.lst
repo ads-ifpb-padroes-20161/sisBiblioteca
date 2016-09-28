@@ -1,5 +1,6 @@
 br\edu\ifpb\padroes\projeto\sisbiblioteca\commands\GerarRelatorio.class
 br\edu\ifpb\padroes\projeto\sisbiblioteca\entities\aluno\Aluno.class
+br\edu\ifpb\padroes\projeto\sisbiblioteca\dao\ConnectionProvider.class
 br\edu\ifpb\padroes\projeto\sisbiblioteca\dao\emprestimo\EmprestimoBdDao.class
 br\edu\ifpb\padroes\projeto\sisbiblioteca\entities\Emprestimo.class
 br\edu\ifpb\padroes\projeto\sisbiblioteca\dao\UsuarioBdDao.class
@@ -12,7 +13,6 @@ br\edu\ifpb\padroes\projeto\sisbiblioteca\entities\IPessoa.class
 br\edu\ifpb\padroes\projeto\sisbiblioteca\model\AlunoBo.class
 br\edu\ifpb\padroes\projeto\sisbiblioteca\commands\FinalizarEmprestimo.class
 br\edu\ifpb\padroes\projeto\sisbiblioteca\entities\livro\Livro.class
-br\edu\ifpb\padroes\projeto\sisbiblioteca\model\EmprestimoRelatorioBo.class
 br\edu\ifpb\padroes\projeto\sisbibliotecanotifier\job\NotifyStudentsJob.class
 br\edu\ifpb\padroes\projeto\sisbiblioteca\model\EmprestimoBo.class
 br\edu\ifpb\padroes\projeto\sisbiblioteca\dao\UsuarioDao.class
@@ -46,6 +46,7 @@ br\edu\ifpb\padroes\projeto\sisbiblioteca\model\QueryAlunoBo.class
 br\edu\ifpb\padroes\projeto\sisbiblioteca\model\UsuarioBo.class
 br\edu\ifpb\padroes\projeto\sisbiblioteca\commands\Login.class
 br\edu\ifpb\padroes\projeto\sisbiblioteca\dao\emprestimo\EmprestimoDao.class
+br\edu\ifpb\padroes\projeto\sisbiblioteca\relatorios\EmprestimoRelatorioBo.class
 br\edu\ifpb\padroes\projeto\sisbiblioteca\dao\bloqueio\BloqueioBdDao.class
 br\edu\ifpb\padroes\projeto\sisbiblioteca\entities\aluno\AlunoNulo.class
 br\edu\ifpb\padroes\projeto\sisbiblioteca\enums\TipoUsuario.class
@@ -59,7 +60,6 @@ br\edu\ifpb\padroes\projeto\sisbiblioteca\dao\FactoryDaoIF.class
 br\edu\ifpb\padroes\projeto\sisbiblioteca\exceptions\MatriculaJaExisteException.class
 br\edu\ifpb\padroes\projeto\sisbiblioteca\entities\aluno\AlunoPadrao.class
 br\edu\ifpb\padroes\projeto\sisbiblioteca\entities\Bloqueio.class
-br\edu\ifpb\padroes\projeto\sisbiblioteca\model\Loader.class
 br\edu\ifpb\padroes\projeto\sisbiblioteca\commands\CadastrarLivro.class
 br\edu\ifpb\padroes\projeto\sisbiblioteca\entities\livro\LivroNulo.class
 br\edu\ifpb\padroes\projeto\sisbiblioteca\dao\FactoryBdDao.class
@@ -69,8 +69,8 @@ br\edu\ifpb\padroes\projeto\sisbiblioteca\entities\Usuario.class
 br\edu\ifpb\padroes\projeto\sisbiblioteca\enums\EstadoEmprestimoEnum$1.class
 br\edu\ifpb\padroes\projeto\sisbiblioteca\dao\bloqueio\BloqueioDao.class
 br\edu\ifpb\padroes\projeto\sisbiblioteca\enums\EstadoAlunoEnum$1.class
-br\edu\ifpb\padroes\projeto\sisbiblioteca\dao\FactoryConnection.class
 br\edu\ifpb\padroes\projeto\sisbiblioteca\enums\EstadoBloqueioEnum.class
+br\edu\ifpb\padroes\projeto\sisbiblioteca\relatorios\RelatorioTipo.class
 br\edu\ifpb\padroes\projeto\sisbibliotecanotifier\facade\QuartzFacade.class
 br\edu\ifpb\padroes\projeto\sisbiblioteca\utils\DateUtils.class
 br\edu\ifpb\padroes\projeto\sisbiblioteca\dao\EnderecoDao.class

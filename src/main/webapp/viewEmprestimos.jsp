@@ -82,7 +82,6 @@
             <div class='cad-header'>
                 <h2>
                     Empréstimos Realizados 
-                    <a class="btn btn-primary" href="FrontController?action=GerarRelatorio"><i class="fa fa-print" aria-hidden="true"></i></a>
                 </h2>
             </div>
             <div class='cad-content'>

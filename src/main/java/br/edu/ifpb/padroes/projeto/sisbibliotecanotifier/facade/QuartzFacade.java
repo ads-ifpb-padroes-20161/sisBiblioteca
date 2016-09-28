@@ -5,7 +5,6 @@
  */
 package br.edu.ifpb.padroes.projeto.sisbibliotecanotifier.facade;
 
-import br.edu.ifpb.padroes.projeto.sisbibliotecanotifier.job.NotifyStudentsJob;
 import org.quartz.Scheduler;
 import org.quartz.Trigger;
 import org.quartz.Job;

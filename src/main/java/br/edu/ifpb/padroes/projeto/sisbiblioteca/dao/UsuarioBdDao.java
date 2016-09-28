@@ -38,7 +38,7 @@ public class UsuarioBdDao implements UsuarioDao {
         String sql = "INSERT INTO usuario VALUES(?,?,?,?)";
         pessoaDao.adicionarPessoa(obj);
         try {
-            Connection conn = FactoryConnection.getInstance();
+            Connection conn = ConnectionProvider.getInstance().getConnection();
             PreparedStatement pstm = conn.prepareStatement(sql);
 
             int i = 1;
@@ -63,7 +63,7 @@ public class UsuarioBdDao implements UsuarioDao {
         String sql = "DELETE FROM usuario WHERE matricula = ?";
         
         try {
-            Connection conn = FactoryConnection.getInstance();
+            Connection conn = ConnectionProvider.getInstance().getConnection();
             PreparedStatement pstm = conn.prepareStatement(sql);
             
             pstm.setString(1, matricula);
@@ -83,7 +83,7 @@ public class UsuarioBdDao implements UsuarioDao {
         String sql = "UPDATE usuario SET senha = ? WHERE matricula = ?";
         
         try {
-            Connection conn = FactoryConnection.getInstance();
+            Connection conn = ConnectionProvider.getInstance().getConnection();
             PreparedStatement pstm = conn.prepareStatement(sql);
             
             int i = 1;
@@ -108,7 +108,7 @@ public class UsuarioBdDao implements UsuarioDao {
         List<Usuario> usuarios = new ArrayList<>();
 
         try {
-            Connection conn = FactoryConnection.getInstance();
+            Connection conn = ConnectionProvider.getInstance().getConnection();
             PreparedStatement pstm = conn.prepareStatement(sql);
 
             ResultSet rs = pstm.executeQuery();

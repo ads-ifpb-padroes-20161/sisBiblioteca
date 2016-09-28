@@ -5,7 +5,7 @@
  */
 package br.edu.ifpb.padroes.projeto.sisbiblioteca.dao.livro;
 
-import br.edu.ifpb.padroes.projeto.sisbiblioteca.dao.FactoryConnection;
+import br.edu.ifpb.padroes.projeto.sisbiblioteca.dao.ConnectionProvider;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.livro.Livro;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.livro.LivroNulo;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.livro.LivroPadrao;
@@ -29,7 +29,7 @@ public class LivroBdDao implements LivroDao {
         String sql = "INSERT INTO livro VALUES(?,?,?,?,?)";
 
         try {
-            Connection conn = FactoryConnection.getInstance();
+            Connection conn = ConnectionProvider.getInstance().getConnection();
             PreparedStatement pstm = conn.prepareStatement(sql);
 
             int i = 1;
@@ -54,7 +54,7 @@ public class LivroBdDao implements LivroDao {
     public Livro recuperarLivroPorIsbn(Long obj) {
         String sql = "SELECT * FROM livro WHERE isbn = ?";
         try {
-            Connection conn = FactoryConnection.getInstance();
+            Connection conn = ConnectionProvider.getInstance().getConnection();
             PreparedStatement pstm = conn.prepareStatement(sql);
             
             pstm.setLong(1, obj);
@@ -80,7 +80,7 @@ public class LivroBdDao implements LivroDao {
     private List<Livro> selectLivro(String sql) {
         List<Livro> livros = new ArrayList<>();
         try {
-            Connection conn = FactoryConnection.getInstance();
+            Connection conn = ConnectionProvider.getInstance().getConnection();
             PreparedStatement pstm = conn.prepareStatement(sql);
 
             ResultSet rs = pstm.executeQuery();
@@ -124,7 +124,7 @@ public class LivroBdDao implements LivroDao {
         String sql = "UPDATE livro SET estoque = ? WHERE isbn = ?";
         
         try {
-            Connection conn = FactoryConnection.getInstance();
+            Connection conn = ConnectionProvider.getInstance().getConnection();
             PreparedStatement pstm = conn.prepareStatement(sql);
             
             int i = 1;

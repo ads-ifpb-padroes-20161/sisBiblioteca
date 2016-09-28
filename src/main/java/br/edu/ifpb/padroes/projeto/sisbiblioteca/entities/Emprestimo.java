@@ -7,6 +7,7 @@ package br.edu.ifpb.padroes.projeto.sisbiblioteca.entities;
 
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.aluno.Aluno;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.livro.Livro;
+import br.edu.ifpb.padroes.projeto.sisbiblioteca.enums.EstadoEmprestimoEnum;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.exceptions.AlunoInabilitadoException;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.exceptions.EmprestimoAtrasadoException;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.exceptions.EmprestimoEmAndamentoException;
@@ -70,6 +71,9 @@ public class Emprestimo implements Comparable<Emprestimo>, Serializable {
     }
     
     public LocalDate getDataEntregue(){
+        if(this.estado == EstadoEmprestimoEnum.ANDAMENTO)
+            throw new EmprestimoEmAndamentoException(("O Empréstimo "+this.id+" ainda se encontra em andamento."
+                    + "Logo ainda não possui data de finalização."));
         return this.dataEntregue;
     }
     

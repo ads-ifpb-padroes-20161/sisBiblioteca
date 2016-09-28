@@ -5,7 +5,7 @@
  */
 package br.edu.ifpb.padroes.projeto.sisbiblioteca.dao.emprestimo;
 
-import br.edu.ifpb.padroes.projeto.sisbiblioteca.dao.FactoryConnection;
+import br.edu.ifpb.padroes.projeto.sisbiblioteca.dao.ConnectionProvider;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.dao.FactoryProvider;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.dao.aluno.AlunoBdDao;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.dao.aluno.AlunoDao;
@@ -47,7 +47,7 @@ public class EmprestimoBdDao implements EmprestimoDao {
     public void finalizarEmprestimo(Emprestimo emprestimo) {
         String sql = "UPDATE emprestimo SET idEstado = ?, dataEntrega = ? WHERE id = ?";
         try {
-            Connection conn = FactoryConnection.getInstance();
+            Connection conn = ConnectionProvider.getInstance().getConnection();
             PreparedStatement pstm = conn.prepareStatement(sql);
             
             int i = 1;
@@ -72,7 +72,7 @@ public class EmprestimoBdDao implements EmprestimoDao {
                 + " VALUES(?,?,?,?,?) RETURNING id";
         
         try {
-            Connection conn = FactoryConnection.getInstance();
+            Connection conn = ConnectionProvider.getInstance().getConnection();
             PreparedStatement pstm = conn.prepareStatement(sql);
             
             int i=1;
@@ -101,7 +101,7 @@ public class EmprestimoBdDao implements EmprestimoDao {
         try {
             String sql = "SELECT * FROM emprestimo WHERE id = ?";
             
-            Connection conn = FactoryConnection.getInstance();
+            Connection conn = ConnectionProvider.getInstance().getConnection();
             PreparedStatement pstm = conn.prepareStatement(sql);
             
             int i=1;
@@ -129,7 +129,7 @@ public class EmprestimoBdDao implements EmprestimoDao {
         List<Emprestimo> emprestimos = new LinkedList<>();
         
         try {
-            Connection conn = FactoryConnection.getInstance();
+            Connection conn = ConnectionProvider.getInstance().getConnection();
             PreparedStatement pstm = conn.prepareStatement(sql);
             
             ResultSet rs = pstm.executeQuery();
@@ -180,7 +180,7 @@ public class EmprestimoBdDao implements EmprestimoDao {
         List<Emprestimo> emprestimos = new LinkedList<>();
 
         try {
-            Connection conn = FactoryConnection.getInstance();
+            Connection conn = ConnectionProvider.getInstance().getConnection();
             PreparedStatement pstm = conn.prepareStatement(sql.toString());
 
             ResultSet rs = pstm.executeQuery();
@@ -211,7 +211,7 @@ public class EmprestimoBdDao implements EmprestimoDao {
         
         try {
             
-            Connection conn = FactoryConnection.getInstance();
+            Connection conn = ConnectionProvider.getInstance().getConnection();
             PreparedStatement pstm = conn.prepareStatement(sql);
             
             pstm.setInt(1, daysQuantity);
@@ -266,7 +266,7 @@ public class EmprestimoBdDao implements EmprestimoDao {
         String sql = "INSERT INTO emprestimos_notificados VALUES(?,?)";
         
         try {
-            Connection conn = FactoryConnection.getInstance();
+            Connection conn = ConnectionProvider.getInstance().getConnection();
             PreparedStatement pstm = conn.prepareStatement(sql);
             
             Integer i = 1;

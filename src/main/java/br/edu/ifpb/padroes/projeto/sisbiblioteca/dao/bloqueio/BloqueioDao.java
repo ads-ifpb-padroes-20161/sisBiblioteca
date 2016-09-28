@@ -17,6 +17,5 @@ public interface BloqueioDao {
     
     void inserir(Bloqueio bloqueio);
     void alterarEstado(Integer bloqueioId, EstadoBloqueioEnum estado);
-    List<Bloqueio> lista();
     void verificaEDesbloqueiaAlunos();
 }

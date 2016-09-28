@@ -26,7 +26,7 @@ public class NotifyStudentsJob implements Job {
 
     @Override
     public void execute(JobExecutionContext jec) throws JobExecutionException {
-        System.out.println("O Processo de verificação & notificação de alunos começou...");
+        System.out.println("1 - O Processo de verificação & notificação de alunos começou...");
         emprestimoBo.notificaAlunos();
     }
     
