@@ -6,7 +6,6 @@
 package br.edu.ifpb.padroes.projeto.sisbiblioteca.commands;
 
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.livro.LivroPadrao;
-import br.edu.ifpb.padroes.projeto.sisbiblioteca.exceptions.ISBNJaExisteException;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.model.LivroBo;
 import java.io.IOException;
 import javax.servlet.RequestDispatcher;
@@ -40,6 +39,7 @@ public class EditarLivro implements Command {
         try {
             bo.atualizarLivro(livro);
             request.setAttribute("success", true);
+            request.setAttribute("msg", "O livro "+livro.getIsbn()+" foi atualizado com sucesso!");
         }
         finally {
             dispatcher.forward(request, response);

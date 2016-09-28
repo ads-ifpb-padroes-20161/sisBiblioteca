@@ -5,14 +5,11 @@
  */
 package br.edu.ifpb.padroes.projeto.sisbiblioteca.commands;
 
-import br.com.caelum.stella.validation.InvalidStateException;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.Endereco;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.aluno.Aluno;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.aluno.AlunoPadrao;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.enums.EstadoAlunoEnum;
-import br.edu.ifpb.padroes.projeto.sisbiblioteca.exceptions.CPFJaExisteException;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.exceptions.EmailJaExisteException;
-import br.edu.ifpb.padroes.projeto.sisbiblioteca.exceptions.MatriculaJaExisteException;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.model.AlunoBo;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.utils.DateUtils;
 import java.io.IOException;
@@ -68,6 +65,7 @@ public class EditarAluno implements Command {
             bo.atualizarAluno(aluno);
 
             request.setAttribute("success", true);
+            request.setAttribute("msg", "O Aluno "+aluno.getMatricula()+" foi atualizado com sucesso!");
         }
         catch (EmailJaExisteException ex) {
             request.setAttribute("success", false);

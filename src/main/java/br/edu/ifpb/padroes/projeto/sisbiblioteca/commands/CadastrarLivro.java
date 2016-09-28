@@ -38,9 +38,11 @@ public class CadastrarLivro implements Command {
         try {
             bo.cadastraLivro(livro);
             request.setAttribute("success", true);
+            request.setAttribute("msg", "O livro "+titulo+" foi cadastrado com sucesso!");
         }
         catch (ISBNJaExisteException ex) {
             request.setAttribute("success", false);
+            request.setAttribute("msg", ex.getMessage());
         }
         finally {
             dispatcher.forward(request, response);

@@ -177,15 +177,16 @@
                     <c:if test="${requestScope.success == true}">
                         <div id="successMsg" class="alert alert-success" style="margin: 10px 10px 5px 10px;">
                             <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                            <strong>Success!</strong> Aluno cadastrado com sucesso!
+                            <strong>Success!</strong> ${requestScope.msg}
                         </div>
                     </c:if>
                     <c:if test="${requestScope.success == false}">
                         <div id="errorMsg" class="alert alert-danger" style="margin: 10px 10px 5px 10px;">
                             <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                            <strong>Error!</strong> ${requestScope.errorMsg}
+                            <strong>Error!</strong> ${requestScope.msg}
                         </div>
                     </c:if>
+
                 </div>
             </div>
             <div class='cad-container cad-aluno-container'>

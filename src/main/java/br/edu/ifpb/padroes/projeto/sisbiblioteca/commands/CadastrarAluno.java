@@ -71,11 +71,11 @@ public class CadastrarAluno implements Command {
         }
         catch (InvalidStateException ex) {
             request.setAttribute("success", false);
-            request.setAttribute("errorMsg", "O CPF digitado é inválido!");
+            request.setAttribute("msg", "O CPF digitado é inválido!");
         }
         catch (CPFJaExisteException | MatriculaJaExisteException | EmailJaExisteException ex) {
             request.setAttribute("success", false);
-            request.setAttribute("errorMsg", ex.getMessage());
+            request.setAttribute("msg", ex.getMessage());
         }
         finally {
             dispatcher.forward(request, response);
