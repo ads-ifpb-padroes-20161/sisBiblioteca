@@ -30,4 +30,9 @@ public class NotifyStudentsJob implements Job {
         emprestimoBo.notificaAlunos();
     }
     
+    @Override
+    public String toString() {
+        return "NotifyStudentsJob";
+    }
+    
 }

@@ -28,7 +28,7 @@ public class QueryAlunoBo {
     }
 
     public List<Aluno> listar() {
-        bloqueioDao.verificaEDesbloqueiaAlunos();
+        //bloqueioDao.verificaEDesbloqueiaAlunos();
         return Collections.unmodifiableList(alunoDao.listarAlunos());
     }
     
