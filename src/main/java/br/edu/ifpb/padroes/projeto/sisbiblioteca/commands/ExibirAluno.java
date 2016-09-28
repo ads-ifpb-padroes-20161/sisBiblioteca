@@ -6,10 +6,7 @@
 package br.edu.ifpb.padroes.projeto.sisbiblioteca.commands;
 
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.aluno.Aluno;
-import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.aluno.AlunoPadrao;
-import br.edu.ifpb.padroes.projeto.sisbiblioteca.model.AlunoBo;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.model.QueryAlunoBo;
-import com.google.gson.Gson;
 import java.io.IOException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;

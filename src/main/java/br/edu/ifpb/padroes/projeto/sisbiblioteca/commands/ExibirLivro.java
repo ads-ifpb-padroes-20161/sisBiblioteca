@@ -7,7 +7,6 @@ package br.edu.ifpb.padroes.projeto.sisbiblioteca.commands;
 
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.livro.Livro;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.model.LivroBo;
-import com.google.gson.Gson;
 import java.io.IOException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
