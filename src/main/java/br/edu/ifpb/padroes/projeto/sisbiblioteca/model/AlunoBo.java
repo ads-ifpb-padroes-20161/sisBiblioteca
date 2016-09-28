@@ -29,7 +29,7 @@ public class AlunoBo {
     public void cadastrarAluno(Aluno aluno) throws InvalidStateException, CPFJaExisteException, MatriculaJaExisteException, EmailJaExisteException {
         verificaCpf(aluno.getCpf());
         verificaMatricula(aluno.getMatricula());
-        verificaEmail(aluno.getEmail());
+        verificaEmail(aluno.getEmail(),aluno.getMatricula());
         alunoDao.cadastrarAluno(aluno);
     }
 
@@ -41,9 +41,9 @@ public class AlunoBo {
         }
     }
 
-    public void verificaEmail(String email) throws EmailJaExisteException {
+    public void verificaEmail(String email, String matricula) throws EmailJaExisteException {
         for (Aluno a : alunoDao.listarAlunos()) {
-            if (a.getEmail().equals(email)) {
+            if (a.getEmail().equals(email) && !a.getMatricula().equals(matricula)) {
                 throw new EmailJaExisteException("Já existe um Aluno cadastrado com esse e-mail!");
             }
         }
@@ -58,5 +58,10 @@ public class AlunoBo {
                 throw new CPFJaExisteException("Já existe um Aluno cadastrado com esse CPF!");
             }
         }
+    }
+
+    public void atualizarAluno(Aluno aluno) throws EmailJaExisteException {
+        verificaEmail(aluno.getEmail(),aluno.getMatricula());
+        alunoDao.atualizarAluno(aluno);
     }
 }

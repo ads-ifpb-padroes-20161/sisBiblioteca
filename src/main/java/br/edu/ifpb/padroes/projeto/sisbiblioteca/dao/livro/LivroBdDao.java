@@ -153,4 +153,32 @@ public class LivroBdDao implements LivroDao {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    @Override
+    public void atualizarLivro(LivroPadrao livro) {
+        
+        String sql = "UPDATE livro SET titulo = ?, autor = ?, descricao = ?, estoque = ? WHERE isbn = ?";
+        
+        try {
+            Connection conn = ConnectionProvider.getInstance().getConnection();
+            PreparedStatement pstm = conn.prepareStatement(sql);
+            
+            int i = 1;
+            
+            pstm.setString(i++, livro.getTitulo());
+            pstm.setString(i++, livro.getAutor());
+            pstm.setString(i++, livro.getDescricao());
+            pstm.setInt(i++, livro.getEstoque());
+            pstm.setLong(i++, livro.getIsbn());
+            
+            pstm.executeUpdate();
+            
+            pstm.close();
+            conn.close();
+        }
+        catch (SQLException | ClassNotFoundException ex) {
+            ex.printStackTrace();
+        }
+        
+    }
+
 }

@@ -6,6 +6,7 @@
 package br.edu.ifpb.padroes.projeto.sisbiblioteca.dao.livro;
 
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.livro.Livro;
+import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.livro.LivroPadrao;
 import java.util.List;
 
 /**
@@ -20,5 +21,6 @@ public interface LivroDao {
     List<Livro> listarLivros();
     void atualizarEstoque(Livro livro);
     List<Livro> listarLivrosDisponiveis();
+    void atualizarLivro(LivroPadrao livro);
     
 }

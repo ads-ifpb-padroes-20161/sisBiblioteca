@@ -44,5 +44,9 @@ public class LivroBo {
     public List<Livro> list() {
         return livroDao.listarLivros();
     }
+
+    public void atualizarLivro(LivroPadrao livro) {
+        livroDao.atualizarLivro(livro);
+    }
     
 }

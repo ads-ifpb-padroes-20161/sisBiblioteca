@@ -19,5 +19,6 @@ public interface AlunoDao {
     Aluno recuperarAlunoPorMatricula(String matricula);
     void cadastrarAluno(Aluno aluno);
     List<Aluno> listarAlunos();
+    void atualizarAluno(Aluno aluno);
     
 }

@@ -32,8 +32,8 @@ public class InitializeListener implements ServletContextListener {
         try {    
             
             this.scheduler = new SchedulerBuilder()
-                    .addJob(10, NotifyStudentsJob.class, "notify")
-                    .addJob(10, VerifyAndDisblockStudentsJob.class, "verify")
+                    .addJob(20, NotifyStudentsJob.class, "notify")
+                    .addJob(8, VerifyAndDisblockStudentsJob.class, "verify")
                     .getInstance();
             
             scheduler.start();

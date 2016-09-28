@@ -227,4 +227,31 @@ public class AlunoBdDao implements AlunoDao {
         return selectAlunos(sql);
     }
 
+    @Override
+    public void atualizarAluno(Aluno aluno) {
+        
+        String sql = "UPDATE aluno SET email = ? WHERE matricula = ?";
+
+        try {
+            Connection conn = ConnectionProvider.getInstance().getConnection();
+            PreparedStatement pstm = conn.prepareStatement(sql);
+            
+            int i=1;
+            
+            pstm.setString(i++, aluno.getEmail());
+            pstm.setString(i++, aluno.getMatricula());
+            
+            pstm.executeUpdate();
+            
+            pessoaBdDao.atualizarPessoa(aluno);
+            
+            pstm.close();
+            conn.close();
+        }
+        catch (SQLException | ClassNotFoundException ex) {
+            ex.printStackTrace();
+        }
+        
+    }
+
 }

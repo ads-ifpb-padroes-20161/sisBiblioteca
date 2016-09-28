@@ -26,8 +26,8 @@
     </head>
     <body>
         <%@include file="menus.jsp" %>
-        
-        
+
+
         <div class='content-container'>
             <!-- LIVRO VIEW -->
             <div class='cad-container'>
@@ -35,38 +35,85 @@
                     <h2>Cadastro de <span>Livros</span></h2>
                 </div>
                 <div class='cad-content'>
-                    <form id="livroForm" method="POST" action="FrontController?action=CadastrarLivro">
-                        <div class='inputs'>
-                            <div class='group-form'>
-                                <p class='form-title'>Livro</p>
-                                <div class='group-input'>
-                                    <input type="text" name="isbn" placeholder='ISBN' required>
-                                    <i class="fa fa-book" aria-hidden="true"></i>
+                    <c:if test="${isEdit == false || isEdit == null}">
+                        <form id="livroForm" method="POST" action="FrontController?action=CadastrarLivro">
+                            <div class='inputs'>
+                                <div class='group-form'>
+                                    <p class='form-title'>Livro</p>
+                                    <div class='group-input'>
+                                        <input type="text" name="isbn" placeholder='ISBN' required>
+                                        <i class="fa fa-book" aria-hidden="true"></i>
+                                    </div>
+                                    <div class='group-input'>
+                                        <input type="text" name="titulo" placeholder='Título' required>
+                                        <i class="fa fa-book" aria-hidden="true"></i>
+                                    </div>
+                                    <div class='group-input'>
+                                        <input type="text" name="descricao" placeholder='Descrição' required>
+                                        <i class="fa fa-book" aria-hidden="true"></i>
+                                    </div>
+                                    <div class='group-input'>
+                                        <input type="text" name="autor" placeholder='Autor do Livro' required>
+                                        <i class="fa fa-user" aria-hidden="true"></i>
+                                    </div>
                                 </div>
-                                <div class='group-input'>
-                                    <input type="text" name="titulo" placeholder='Título' required>
-                                    <i class="fa fa-book" aria-hidden="true"></i>
+                                <div class='group-form'>
+                                    <p class='form-title'>Item Livro</p>
+                                    <div class='group-input'>
+                                        <input type="number" name="estoque" placeholder='Estoque' required>
+                                        <i class="fa fa-sort-numeric-asc" aria-hidden="true"></i>
+                                    </div>
                                 </div>
-                                <div class='group-input'>
-                                    <input type="text" name="descricao" placeholder='Descrição' required>
-                                    <i class="fa fa-book" aria-hidden="true"></i>
-                                </div>
-                                <div class='group-input'>
-                                    <input type="text" name="autor" placeholder='Autor do Livro' required>
-                                    <i class="fa fa-user" aria-hidden="true"></i>
-                                </div>
+
                             </div>
-                            <div class='group-form'>
-                                <p class='form-title'>Item Livro</p>
-                                <div class='group-input'>
-                                    <input type="number" name="estoque" placeholder='Estoque' required>
-                                    <i class="fa fa-sort-numeric-asc" aria-hidden="true"></i>
+                            <button type='submit' class='submit-button success' onclick="valid(${requestScope.success});"><i class="fa fa-plus" aria-hidden="true"></i> Cadastrar Livro </button>  
+                        </form>
+                    </c:if>
+                    <c:if test="${isEdit == true}">
+                        <form id="livroForm" method="POST" action="FrontController?action=EditarLivro">
+                            <div class='inputs'>
+                                <div class='group-form'>
+                                    <p class='form-title'>Livro</p>
+                                    <div class='group-input'>
+                                        <input type="text" name="isbn" placeholder='ISBN' value="${livro.isbn}" required readonly="readonly">
+                                        <i class="fa fa-book" aria-hidden="true"></i>
+                                    </div>
+                                    <div class='group-input'>
+                                        <input type="text" name="titulo" placeholder='Título' value="${livro.titulo}" required>
+                                        <i class="fa fa-book" aria-hidden="true"></i>
+                                    </div>
+                                    <div class='group-input'>
+                                        <input type="text" name="descricao" placeholder='Descrição' value="${livro.descricao}" required>
+                                        <i class="fa fa-book" aria-hidden="true"></i>
+                                    </div>
+                                    <div class='group-input'>
+                                        <input type="text" name="autor" placeholder='Autor do Livro' value="${livro.autor}" required>
+                                        <i class="fa fa-user" aria-hidden="true"></i>
+                                    </div>
                                 </div>
+                                <div class='group-form'>
+                                    <p class='form-title'>Item Livro</p>
+                                    <div class='group-input'>
+                                        <input type="number" name="estoque" placeholder='Estoque' value="${livro.estoque}" required>
+                                        <i class="fa fa-sort-numeric-asc" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+
                             </div>
 
-                        </div>
-                        <button type='submit' class='submit-button success' onclick="valid(${requestScope.success});"><i class="fa fa-plus" aria-hidden="true"></i> Cadastrar Livro </button>  
-                    </form>
+                            <ul class='list-buttons'>
+                                <li>
+                                    <button type='submit' class='submit-button success' onclick="valid(${requestScope.success});" disabled><i class="fa fa-plus" aria-hidden="true"></i> Cadastrar Livro </button> 
+                                </li>
+                                <li>
+                                    <button type='submit' class='submit-button success'><i class="fa fa-floppy-o" aria-hidden="true"></i> Salvar Alterações </button>
+                                </li>
+                                <li>
+                                    <a href="livros.jsp" class='submit-button danger'> Cancelar </a>
+                                </li>
+                            </ul>
+                        </form>
+                    </c:if>
                     <c:if test="${requestScope.success == true}">
                         <div id="successMsg" class="alert alert-success" style="margin: 10px 10px 5px 10px;">
                             <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
@@ -105,7 +152,7 @@
                                         out.print("<td>" + item.getTitulo() + "</td>");
                                         out.print("<td>" + item.getAutor() + "</td>");
                                         out.print("<td>" + item.getEstoque() + "</td>");
-                                        out.print("<td><a href='FrontController?action=RemoverLivro?isbn=" + item.getIsbn() + "'>Remover</a></td>");
+                                        out.print("<td><a href='FrontController?action=ExibirLivro&isbn=" + item.getIsbn() + "'>Editar</a></td>");
                                         out.print("</tr>");
                                     }
                                 %>
