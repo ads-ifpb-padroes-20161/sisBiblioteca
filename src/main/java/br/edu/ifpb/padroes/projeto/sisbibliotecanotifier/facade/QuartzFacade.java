@@ -21,43 +21,30 @@ import org.quartz.impl.StdSchedulerFactory;
  */
 public class QuartzFacade {
     
-    public Scheduler createScheduler(Integer secInterval, Class<? extends Job> job) throws SchedulerException {
-        
-        JobDetail jobDetail = createJobDetail(job);
-        Trigger trigger = createTrigger(secInterval);
-        
-        Scheduler scheduler = QuartzFacade.this.createScheduler();
-        
-        scheduler.scheduleJob(jobDetail,trigger);     
-        
-        return scheduler;
-    }
-    
-    private JobDetail createJobDetail(Class<? extends Job> job) {
+    public static JobDetail createJobDetail(Class<? extends Job> job, String jobGroupName, String jobName) {
         
         JobDetail jobDetail = JobBuilder
                 .newJob(job)
-                .withIdentity("studentNotifierJob", "notifier")
+                .withIdentity(jobGroupName, jobName)
                 .build();
         
         return jobDetail;
     }
     
-    private Trigger createTrigger(Integer secInterval) {
+    public static Trigger createTrigger(Integer secInterval, String triggerName, String triggerGroupName) {
         
         Trigger trigger = TriggerBuilder
                 .newTrigger()
-                .withIdentity("studentNotifierTrigger","notifier")
+                .withIdentity(triggerName,triggerGroupName)
                 .withSchedule(SimpleScheduleBuilder.simpleSchedule().withIntervalInSeconds(secInterval).repeatForever())
                 .build();
         
         return trigger;
     }
     
-    private Scheduler createScheduler() throws SchedulerException {
+    public static Scheduler createScheduler() throws SchedulerException {
         
         Scheduler scheduler = new StdSchedulerFactory().getScheduler();
-        
         return scheduler;
     }
 }
