@@ -47,7 +47,7 @@ public class FactoryBdDao implements FactoryDaoIF {
     }
 
     @Override
-    public Dao<Bloqueio, Integer> getBloqueioDao() {
+    public BloqueioDao getBloqueioDao() {
         return new BloqueioBdDao();
     }
 
