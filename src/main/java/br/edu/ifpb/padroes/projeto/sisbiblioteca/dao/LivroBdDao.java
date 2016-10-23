@@ -71,10 +71,8 @@ public class LivroBdDao implements LivroDao {
         }
         return new LivroNulo();
     }
-
-    @Override
-    public List<Livro> list() {
-        String sql = "SELECT * FROM livro";
+    
+    private List<Livro> selectLivro(String sql) {
         List<Livro> livros = new ArrayList<>();
         try {
             PreparedStatement pstm = FactoryConnection.createConnection().prepareStatement(sql);
@@ -91,6 +89,12 @@ public class LivroBdDao implements LivroDao {
             Logger.getLogger(LivroBdDao.class.getName()).log(Level.SEVERE, null, ex);
         }
         return livros;
+    }
+
+    @Override
+    public List<Livro> list() {
+        String sql = "SELECT * FROM livro";
+        return selectLivro(sql);
     }
 
     private Livro formaLivro(ResultSet rs) throws SQLException {
@@ -123,6 +127,12 @@ public class LivroBdDao implements LivroDao {
         catch (ClassNotFoundException | SQLException ex) {
             ex.printStackTrace();
         }
+    }
+
+    @Override
+    public List<Livro> listarLivrosDisponiveis() {
+        String sql = "SELECT * FROM livro WHERE estoque > 0";
+        return selectLivro(sql);
     }
 
 }
