@@ -5,6 +5,7 @@
  */
 package br.edu.ifpb.padroes.projeto.sisbiblioteca.entities;
 
+import br.edu.ifpb.padroes.projeto.sisbiblioteca.enums.EstadoBloqueioEnum;
 import java.time.LocalDate;
 
 /**
@@ -13,15 +14,17 @@ import java.time.LocalDate;
  */
 public class Bloqueio {
     
-    private Integer id;
+    private Integer    id;
     private LocalDate  dataInicio;
     private LocalDate  dataFim;
     private Aluno      aluno;
+    private EstadoBloqueioEnum estado;
     
-    public Bloqueio(LocalDate dataInicio, LocalDate dataFim, Aluno aluno) {
+    public Bloqueio(LocalDate dataInicio, LocalDate dataFim, Aluno aluno, EstadoBloqueioEnum estado) {
         this.dataInicio  = dataInicio;
         this.dataFim     = dataFim;
         this.aluno       = aluno;
+        this.estado = estado;
     }
     
     public Integer getId() {
@@ -39,11 +42,15 @@ public class Bloqueio {
     public Aluno getAluno() {
         return this.aluno;
     }
+    
+    public EstadoBloqueioEnum getEstado() {
+        return this.estado;
+    }
 
     @Override
     public String toString()
     {
-        return "Bloqueio{" + "dataInicio=" + dataInicio + ", dataFim=" + dataFim + ", aluno=" + aluno + '}';
+        return "Bloqueio{" + "dataInicio=" + dataInicio + ", dataFim=" + dataFim + ", aluno=" + aluno + ", estado=" + estado + "}";
     }
 
     public void setId(Integer id) {
