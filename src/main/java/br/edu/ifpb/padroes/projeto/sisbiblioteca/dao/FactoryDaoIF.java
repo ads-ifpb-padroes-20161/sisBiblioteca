@@ -5,7 +5,6 @@
  */
 package br.edu.ifpb.padroes.projeto.sisbiblioteca.dao;
 
-import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.Bloqueio;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.Endereco;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.Pessoa;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.Usuario;
@@ -28,5 +27,5 @@ public interface FactoryDaoIF {
     
     EmprestimoDao getEmprestimoDao();
     
-    Dao<Bloqueio, Integer> getBloqueioDao();
+    BloqueioDao getBloqueioDao();
 }
