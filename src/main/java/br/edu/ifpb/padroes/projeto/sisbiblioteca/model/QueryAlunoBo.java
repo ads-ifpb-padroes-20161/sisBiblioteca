@@ -5,7 +5,8 @@
  */
 package br.edu.ifpb.padroes.projeto.sisbiblioteca.model;
 
-import br.edu.ifpb.padroes.projeto.sisbiblioteca.dao.Dao;
+import br.edu.ifpb.padroes.projeto.sisbiblioteca.dao.AlunoDao;
+import br.edu.ifpb.padroes.projeto.sisbiblioteca.dao.BloqueioDao;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.dao.FactoryProvider;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.Aluno;
 import java.util.Collections;
@@ -17,13 +18,26 @@ import java.util.List;
  */
 public class QueryAlunoBo {
 
-    private final Dao<Aluno, String> alunoDao;
+    private final AlunoDao alunoDao;
+    private final BloqueioDao bloqueioDao;
+   
 
     public QueryAlunoBo() {
         alunoDao = FactoryProvider.createFactory(1).getAlunoDao();
+        bloqueioDao = FactoryProvider.createFactory(1).getBloqueioDao();
     }
 
     public List<Aluno> listar() {
+        bloqueioDao.verificaEDesbloqueiaAlunos();
         return Collections.unmodifiableList(alunoDao.list());
+    }
+    
+    public List<Aluno> listarAlunosHabilitados() {
+        return Collections.unmodifiableList(alunoDao.listarAlunosHabilitados());
+    }
+    
+    public Aluno getAlunoByMatricula(String matricula) {
+        bloqueioDao.verificaEDesbloqueiaAlunos();
+        return alunoDao.get(matricula);
     }
 }

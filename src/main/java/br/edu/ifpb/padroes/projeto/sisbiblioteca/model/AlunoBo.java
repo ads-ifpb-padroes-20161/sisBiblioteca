@@ -7,6 +7,7 @@ package br.edu.ifpb.padroes.projeto.sisbiblioteca.model;
 
 import br.com.caelum.stella.validation.CPFValidator;
 import br.com.caelum.stella.validation.InvalidStateException;
+import br.edu.ifpb.padroes.projeto.sisbiblioteca.dao.BloqueioDao;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.dao.Dao;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.dao.FactoryProvider;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.Aluno;
