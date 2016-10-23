@@ -68,8 +68,26 @@ public class AlunoBdDao implements AlunoDao {
 
     @Override
     public Aluno get(String obj) {
-        verifyAndDisblock();
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
+        String sql = "SELECT * FROM Aluno a JOIN Pessoa p ON a.cpfPessoa = p.cpf WHERE a.matricula = ?";
+        try{
+            PreparedStatement pstm = FactoryConnection.createConnection().prepareStatement(sql);
+            
+            int i = 1;
+            
+            pstm.setString(i++, obj);
+            
+            ResultSet rs = pstm.executeQuery();
+            Aluno aluno = null;
+            if(rs.next())
+                aluno = formaAluno(rs);
+            
+            return aluno;
+            
+        }catch(ClassNotFoundException | SQLException ex) {
+            ex.printStackTrace();
+        }
+        return null;
     }
 
     public List<Aluno> getByAttributes(Map<String, String> attributes) {
@@ -111,25 +129,9 @@ public class AlunoBdDao implements AlunoDao {
 
     @Override
     public List<Aluno> list() {
-        verifyAndDisblock();
+        
         String sql = "SELECT * FROM Aluno a JOIN Pessoa p ON a.cpfPessoa = p.cpf";
-        List<Aluno> alunos = new ArrayList<>();
-        try {
-            PreparedStatement pstm = FactoryConnection.createConnection().prepareStatement(sql);
-
-            ResultSet rs = pstm.executeQuery();
-
-            while (rs.next()) {
-                alunos.add(formaAluno(rs));
-            }
-
-            return alunos;
-        }
-        catch (ClassNotFoundException | SQLException ex) {
-            Logger.getLogger(AlunoBdDao.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        return alunos;
+        return selectAlunos(sql);
     }
 
     private Aluno formaAluno(ResultSet rs) throws SQLException {
@@ -174,19 +176,31 @@ public class AlunoBdDao implements AlunoDao {
         }
     }
     
-    private void verifyAndDisblock() {
-        String sql = "UPDATE aluno SET idEstado = 1 "
-                + "FROM bloqueio b WHERE b.alunoMatricula = matricula"
-                + " AND b.dataFim >= current_date";
-        
+    private List<Aluno> selectAlunos(String sql) {
+        List<Aluno> alunos = new ArrayList<>();
         try {
             PreparedStatement pstm = FactoryConnection.createConnection().prepareStatement(sql);
-            
-            pstm.executeUpdate();
+
+            ResultSet rs = pstm.executeQuery();
+
+            while (rs.next()) {
+                alunos.add(formaAluno(rs));
+            }
+
+            return alunos;
         }
         catch (ClassNotFoundException | SQLException ex) {
-            ex.printStackTrace();
+            Logger.getLogger(AlunoBdDao.class.getName()).log(Level.SEVERE, null, ex);
         }
+
+        return alunos;
+    }
+
+    @Override
+    public List<Aluno> listarAlunosHabilitados() {
+        
+        String sql = "SELECT * FROM Aluno a JOIN Pessoa p ON a.cpfPessoa = p.cpf WHERE a.idEstado = 1";
+        return selectAlunos(sql);
     }
 
 }

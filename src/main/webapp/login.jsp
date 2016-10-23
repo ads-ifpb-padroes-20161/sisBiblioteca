@@ -35,7 +35,7 @@
                         <input type="password" name="senha" placeholder="Senha" required>
                         <i class="fa fa-key" aria-hidden="true"></i>
                     </div>
-                    <button class="submit-button">Login</button>
+                    <button class="submit-button success">Login</button>
                 </form>
 
                 <c:if test="${success == false}">
