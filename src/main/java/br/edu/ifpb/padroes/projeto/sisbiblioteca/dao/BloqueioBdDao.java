@@ -6,6 +6,7 @@
 package br.edu.ifpb.padroes.projeto.sisbiblioteca.dao;
 
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.Bloqueio;
+import br.edu.ifpb.padroes.projeto.sisbiblioteca.enums.EstadoBloqueioEnum;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -15,12 +16,12 @@ import java.util.List;
  *
  * @author kieckegard
  */
-public class BloqueioBdDao implements Dao<Bloqueio, Integer> {
+public class BloqueioBdDao implements BloqueioDao {
 
     @Override
-    public void add(Bloqueio obj) {
-        String sql = "INSERT INTO bloqueio(alunoMatricula,dataInicio,dataFim)"
-                + " VALUES(?,?,?) RETURNING id";
+    public void inserir(Bloqueio obj) {
+        String sql = "INSERT INTO bloqueio(alunoMatricula,dataInicio,dataFim,status)"
+                + " VALUES(?,?,?,?) RETURNING id";
         
         try {
             PreparedStatement pstm = FactoryConnection.createConnection().prepareStatement(sql);
@@ -30,6 +31,7 @@ public class BloqueioBdDao implements Dao<Bloqueio, Integer> {
             pstm.setString(i++, obj.getAluno().getMatricula());
             pstm.setDate(i++, java.sql.Date.valueOf(obj.getDataInicio()));
             pstm.setDate(i++, java.sql.Date.valueOf(obj.getDataFim()));
+            pstm.setInt(i++, obj.getEstado().getId());
             
             ResultSet rs = pstm.executeQuery();
             
@@ -40,25 +42,54 @@ public class BloqueioBdDao implements Dao<Bloqueio, Integer> {
             ex.printStackTrace();
         }
     }
-
+    
     @Override
-    public void rem(Bloqueio obj) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void alterarEstado(Integer bloqueioId, EstadoBloqueioEnum estado) {
+        String sql = "UPDATE bloqueio SET status = ? WHERE id = ?";
+        
+        try {
+            PreparedStatement pstm = FactoryConnection.createConnection().prepareStatement(sql);
+            
+            int i = 1;
+            
+            pstm.setInt(i++, estado.getId());
+            pstm.setInt(i++, bloqueioId);
+            
+            pstm.executeUpdate();
+        }
+        catch (ClassNotFoundException | SQLException ex) {
+            ex.printStackTrace();
+        }
     }
 
     @Override
-    public void update(Bloqueio obj) {
+    public List<Bloqueio> lista() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    private Bloqueio formaBloqueio(ResultSet rs) throws SQLException{
+        return null;
     }
 
     @Override
-    public Bloqueio get(Integer obj) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void verificaEDesbloqueiaAlunos() {
+        String sql = "UPDATE aluno SET idEstado = 1 FROM Bloqueio b"
+                + " WHERE matricula = b.alunoMatricula AND b.datafim <= current_date AND b.status = 0 RETURNING b.id";
+        
+        try {
+            PreparedStatement pstm = FactoryConnection.createConnection().prepareStatement(sql);
+            
+            ResultSet rs = pstm.executeQuery();
+            
+            if(rs.next()) {
+                alterarEstado(rs.getInt("id"), EstadoBloqueioEnum.FINALIZADO);
+            }
+        }
+        catch (ClassNotFoundException | SQLException ex) {
+            ex.printStackTrace();
+        }
     }
-
-    @Override
-    public List<Bloqueio> list() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    
+    
     
 }
