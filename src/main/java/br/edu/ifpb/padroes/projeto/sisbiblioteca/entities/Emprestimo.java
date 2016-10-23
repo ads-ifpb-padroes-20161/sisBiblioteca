@@ -7,6 +7,7 @@ package br.edu.ifpb.padroes.projeto.sisbiblioteca.entities;
 
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.exceptions.AlunoInabilitadoException;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.exceptions.EmprestimoAtrasadoException;
+import br.edu.ifpb.padroes.projeto.sisbiblioteca.exceptions.EmprestimoJaFinalizadoException;
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.exceptions.LivroIndisponivelException;
 import java.time.LocalDate;
 
@@ -14,7 +15,7 @@ import java.time.LocalDate;
  *
  * @author kieckegard
  */
-public class Emprestimo {
+public class Emprestimo implements Comparable<Emprestimo> {
     
     private Integer id;
     private Aluno aluno;
@@ -30,6 +31,10 @@ public class Emprestimo {
         this.startDate = startDate;
         this.endDate = endDate;
         this.estado = estado;
+    }
+    
+    public Emprestimo() {
+        
     }
     
     public boolean estaEmDia() {
@@ -82,7 +87,7 @@ public class Emprestimo {
         this.aluno.realizarEmprestimo();
     }
     
-    public void finalizarEmprestimo() throws EmprestimoAtrasadoException {
+    public void finalizarEmprestimo() throws EmprestimoAtrasadoException, EmprestimoJaFinalizadoException {
         this.estado = estado.finalizarEmprestimo();
         this.dataEntregue = LocalDate.now();
         this.livro.devolver();
@@ -95,5 +100,14 @@ public class Emprestimo {
         if(now.isAfter(endDate))
             throw new EmprestimoAtrasadoException("O Empréstimo encontra-se atrasado!"
                     + " O Aluno vai recorrer a um bloqueio de 3 dias!");
+    }
+
+    @Override
+    public int compareTo(Emprestimo o) {
+        String s;
+        if(estado.getValue() == 0)
+            return -1;
+        else
+            return startDate.compareTo(o.startDate);
     }
 }
