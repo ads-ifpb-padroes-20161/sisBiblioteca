@@ -26,31 +26,16 @@
         <!-- END OF BOOTSTRAP -->
     </head>
     <body>
-        <header>
-            <a href="index.html"><h1>SisBiblioteca</h1></a>
-        </header>
-        <aside class='vertical-nav'>
-            <p class='title'>Navigation</p>
-            <ul class='navigation'>
-                <li><a href="alunos.jsp"><i class="fa fa-user" aria-hidden="true"></i>  Alunos</a></li>
-                <li><a href="livros.jsp"><i class="fa fa-book" aria-hidden="true"></i> Livros</a></li>
-                <li><a href="#"><i class="fa fa-sticky-note-o" aria-hidden="true"></i> Empréstimos</a></li>
-            </ul>
-            <div class="profile">
-                <p class="welcome-msg">Bem vindo, <span>${sessionScope.loggedUser.getNome()}</span></p>
-                <a class="submit-button" href="Logout">Sair</a>
-            </div>
-        </aside>
+
+        <%@include file="menus.jsp" %>
         <div class='content-container'>
-
-
             <!-- Aluno view -->
             <div class='cad-container cad-aluno-container'>
                 <div class='cad-header'>
                     <h2>Cadastro de <span>Alunos</span></h2>
                 </div>
                 <div class='cad-content'>
-                    <form method="POST" action="CadastrarAluno">
+                    <form id="formCadastroAluno" method="POST" action="CadastrarAluno">
                         <div class='inputs'>
                             <div class='group-form'>
                                 <p class='form-title'>Pessoa</p>
@@ -108,7 +93,7 @@
                             </div>
                         </div>
 
-                        <button type='submit' class='submit-button'><i class="fa fa-user-plus" aria-hidden="true"></i> Cadastrar Aluno </button>
+                        <button type='submit' class='submit-button success'><i class="fa fa-user-plus" aria-hidden="true"></i> Cadastrar Aluno </button>
                     </form>
 
                     <c:if test="${requestScope.success == true}">
@@ -141,13 +126,18 @@
                             </thead>
                             <tbody>
                                 <%
-                                    QueryAlunoBo queryBo = new QueryAlunoBo();
-                                    for (Aluno aluno : queryBo.listar()) {
+                                    QueryAlunoBo queryAlunoBo = new QueryAlunoBo();
+                                    for (Aluno aluno : queryAlunoBo.listar()) {
                                         out.print("<tr>");
                                         out.print("<td>" + aluno.getMatricula() + "</td>");
                                         out.print("<td>" + aluno.getNome() + "</td>");
                                         out.print("<td>" + aluno.getEmail() + "</td>");
-                                        out.print("<td>" + aluno.getEstado().name() + "</td>");
+                                        if (aluno.getValorEstado() == 1) {
+                                            out.print("<td class='light-green'>" + aluno.getDescricaoEstado() + "</td>");
+                                        }
+                                        else {
+                                            out.print("<td class='light-red'>" + aluno.getDescricaoEstado() + "</td>");
+                                        }
                                         out.print("<td><a href='RemoverAluno?matricula=" + aluno.getMatricula() + "'>Remover</a></td>");
                                         out.print("</tr>");
                                     }
