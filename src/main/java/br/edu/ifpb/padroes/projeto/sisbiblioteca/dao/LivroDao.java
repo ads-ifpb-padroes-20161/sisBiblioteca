@@ -6,6 +6,7 @@
 package br.edu.ifpb.padroes.projeto.sisbiblioteca.dao;
 
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.Livro;
+import java.util.List;
 
 /**
  *
@@ -14,5 +15,6 @@ import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.Livro;
 public interface LivroDao extends Dao<Livro, Long> {
     
     void atualizarEstoque(Livro livro);
+    List<Livro> listarLivrosDisponiveis();
     
 }
