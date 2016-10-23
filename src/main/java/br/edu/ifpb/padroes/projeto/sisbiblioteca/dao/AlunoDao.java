@@ -6,6 +6,7 @@
 package br.edu.ifpb.padroes.projeto.sisbiblioteca.dao;
 
 import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.Aluno;
+import java.util.List;
 
 /**
  *
@@ -14,5 +15,6 @@ import br.edu.ifpb.padroes.projeto.sisbiblioteca.entities.Aluno;
 public interface AlunoDao extends Dao<Aluno, String> {
     
     void atualizarEstadoAluno(Aluno aluno);
+    List<Aluno> listarAlunosHabilitados();
     
 }
