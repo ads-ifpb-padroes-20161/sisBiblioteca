@@ -90,7 +90,25 @@ public class EmprestimoBdDao implements EmprestimoDao {
 
     @Override
     public Emprestimo get(Integer obj) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            String sql = "SELECT * FROM emprestimo WHERE id = ?";
+            
+            PreparedStatement pstm = FactoryConnection.createConnection().prepareStatement(sql);
+            
+            int i=1;
+            
+            pstm.setInt(i++, obj);
+            
+            ResultSet rs = pstm.executeQuery();
+            
+            if(rs.next())
+                return formaEmprestimo(rs);
+        }
+        catch (ClassNotFoundException | SQLException ex) {
+            ex.printStackTrace();
+        }
+        
+        return null;
     }
 
     @Override
@@ -144,6 +162,7 @@ public class EmprestimoBdDao implements EmprestimoDao {
         
         Emprestimo emprestimo = new Emprestimo(aluno,livro,dataInicio,dataFim,estadoEmprestimo);
         emprestimo.setDataEntrega(dataEntrega);
+        emprestimo.setId(id);
         
         return emprestimo;
     }
