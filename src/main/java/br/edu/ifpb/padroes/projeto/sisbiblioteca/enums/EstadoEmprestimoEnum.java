@@ -13,7 +13,7 @@ import br.edu.ifpb.padroes.projeto.sisbiblioteca.exceptions.EmprestimoJaFinaliza
  * @author kieckegard
  */
 public enum EstadoEmprestimoEnum implements EmprestimoEstadoIF {
-    CORRENTE{
+    ANDAMENTO{
 
         @Override
         public EmprestimoEstadoIF processarEmprestimo() {
@@ -27,7 +27,7 @@ public enum EstadoEmprestimoEnum implements EmprestimoEstadoIF {
 
         @Override
         public String getDescricao() {
-            return "Corrente";
+            return "Em Andamento";
         }
 
         @Override
