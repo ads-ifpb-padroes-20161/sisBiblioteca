@@ -56,7 +56,7 @@ header h1{
     font-size: 1.2em;
 }
 
-.welcome-msg span{
+.blue-title {
     color: rgb(8,102,198);
 }
 
@@ -102,6 +102,11 @@ header h1{
 	background-color: #333;
 
 	box-shadow: -1px 7px 5px -8px rgba(0,0,0,0.75);
+}
+
+.centered-container {
+    width: 80%;
+    margin: 70px auto;
 }
 
 .cad-aluno-container{
@@ -167,11 +172,9 @@ header h1{
 
 .submit-button{
 	padding: 8px 15px;
-	background-color: rgb(51,204,153);
 
 	border-radius: 5px;
 	border: none;
-	border-bottom: 2px solid rgb(22,116,71);
 
 	color: #fff;
 	font-size: 1.2em;
@@ -179,8 +182,26 @@ header h1{
 	transition: 0.2s;
 }
 
-.submit-button:hover{
-	background-color: rgb(45,176,134);
+.submit-button:hover {
+    color: #fff;
+}
+
+.success {
+    background-color: rgb(51,204,153);
+    border-bottom: 2px solid rgb(22,116,71);
+}
+
+.danger {
+    background-color: rgb(205,16,26);
+    border-bottom: 2px solid rgb(140,11,17);
+}
+
+.success:hover {
+    background-color: rgb(45,176,134);
+}
+
+.danger:hover {
+    background-color: rgb(155,13,20);
 }
 
 .cad-content form .submit-button{
@@ -193,6 +214,7 @@ header h1{
 
 .panel{
 	border: none !important;
+        background-color: #333;
 }
 
 .table{
@@ -242,6 +264,19 @@ header h1{
 
 .login-form .submit-button{
 	margin: 20px 5px 0px 0px !important;
+}
+
+.selected {
+    transition: 0.2s;
+    background-color: rgb(8,102,198);
+}
+
+.light-red {
+    color: #ce8483;
+}
+
+.light-green {
+    color: #b2dba1;
 }
 
 

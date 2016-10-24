@@ -24,11 +24,11 @@ import java.time.Month;
 public class Loader {
     public static void main(String[] args) {
         /*Aluno aluno = new Aluno("","",LocalDate.now(),"12312341231","email");
-        aluno.setEstado(EstadoAlunoEnum.INABILITADO);
-        Livro livro = new LivroPadrao(100200300,"","","",9);
+        //aluno.setEstado(EstadoAlunoEnum.INABILITADO);
+        Livro livro = new LivroPadrao(100200300,"","","",10);
         
         EmprestimoBo bo = new EmprestimoBo();
-        /*try {
+        try {
             bo.realizarEmprestimo(aluno, livro, LocalDate.now());
             System.out.println("Empréstimo realizado com sucesso!");
         }
@@ -46,10 +46,8 @@ public class Loader {
         catch (EmprestimoAtrasadoException ex) {
             System.out.println(ex.getMessage());
         }*/
-        QueryAlunoBo bo = new QueryAlunoBo();
         
-        for(Aluno aluno : bo.listar()){
-            System.out.println(aluno);
-        }
+        EmprestimoBo bo = new EmprestimoBo();
+        System.out.println(bo.getEmprestimoById(7));
     }
 }
